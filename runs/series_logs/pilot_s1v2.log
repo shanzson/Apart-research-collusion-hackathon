@@ -17,3 +17,5 @@ spent $0.0764 over 518 calls
 spent $0.0329 over 319 calls
 {"arm": "C0", "seed": 101, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s1v2/study1/C0/qwen_qwen3.5_9b/seed0101.jsonl", "ok": true, "rounds": 15, "completed": true}
 {"arm": "C0", "seed": 102, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s1v2/study1/C0/qwen_qwen3.5_9b/seed0102.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "C0", "seed": 100, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s1v2/study1/C0/qwen_qwen3.5_9b/seed0100.jsonl", "ok": true, "rounds": 17, "completed": true}
+spent $0.0844 over 779 calls
