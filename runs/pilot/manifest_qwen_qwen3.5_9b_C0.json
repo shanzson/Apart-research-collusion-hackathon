@@ -1,0 +1,48 @@
+{
+  "arms": [
+    "C0"
+  ],
+  "seeds": [
+    100,
+    101,
+    102
+  ],
+  "subject_model": "qwen/qwen3.5-9b",
+  "agent_model": "openai/gpt-4.1-mini",
+  "x_model": "qwen/qwen3.5-9b",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "spent_usd": 0.2661,
+  "calls": 605,
+  "results": [
+    {
+      "arm": "C0",
+      "seed": 100,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot/study1/C0/qwen_qwen3.5_9b/seed0100.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 101,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot/study1/C0/qwen_qwen3.5_9b/seed0101.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 102,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot/study1/C0/qwen_qwen3.5_9b/seed0102.jsonl",
+      "ok": true,
+      "rounds": 17,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}

@@ -1,0 +1,248 @@
+{
+  "arms": [
+    "A0",
+    "A1"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "subject_model": "qwen/qwen3.5-9b",
+  "agent_model": "openai/gpt-4.1-mini",
+  "x_model": "qwen/qwen3.5-9b",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b",
+    "qwen/qwen3.6-35b-a3b"
+  ],
+  "spent_usd": 0.6134,
+  "calls": 2208,
+  "results": [
+    {
+      "arm": "A0",
+      "seed": 0,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0000.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 1,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0001.jsonl",
+      "ok": true,
+      "rounds": 7,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 2,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0002.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 3,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0003.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 4,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0004.jsonl",
+      "ok": true,
+      "rounds": 9,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 5,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0005.jsonl",
+      "ok": true,
+      "rounds": 19,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 6,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0006.jsonl",
+      "ok": true,
+      "rounds": 6,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 7,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0007.jsonl",
+      "ok": true,
+      "rounds": 4,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 8,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0008.jsonl",
+      "ok": true,
+      "rounds": 9,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 9,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0009.jsonl",
+      "ok": true,
+      "rounds": 5,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 10,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0010.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "A0",
+      "seed": 11,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A0/qwen_qwen3.5_9b/seed0011.jsonl",
+      "ok": true,
+      "rounds": 16,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 0,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0000.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 1,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0001.jsonl",
+      "ok": true,
+      "rounds": 5,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 2,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0002.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 3,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0003.jsonl",
+      "ok": true,
+      "rounds": 12,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 4,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0004.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 5,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0005.jsonl",
+      "ok": true,
+      "rounds": 20,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 6,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0006.jsonl",
+      "ok": true,
+      "rounds": 8,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 7,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0007.jsonl",
+      "ok": true,
+      "rounds": 3,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 8,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0008.jsonl",
+      "ok": true,
+      "rounds": 9,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 9,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0009.jsonl",
+      "ok": true,
+      "rounds": 6,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 10,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0010.jsonl",
+      "ok": true,
+      "rounds": 7,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 11,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/main/study2/A1/qwen_qwen3.5_9b/seed0011.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}

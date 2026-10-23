@@ -1,0 +1,9 @@
+{"arm": "C0", "seed": 101, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study1/C0/qwen_qwen_2.5_7b_instruct/seed0101.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "C0", "seed": 100, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study1/C0/qwen_qwen_2.5_7b_instruct/seed0100.jsonl", "ok": true, "rounds": 20, "completed": true}
+{"arm": "C0", "seed": 102, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study1/C0/qwen_qwen_2.5_7b_instruct/seed0102.jsonl", "ok": true, "rounds": 19, "completed": true}
+spent $0.4909 over 1183 calls
+{"arm": "A1", "seed": 101, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study2/A1/qwen_qwen_2.5_7b_instruct/seed0101.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "C3", "seed": 101, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study1/C3/qwen_qwen_2.5_7b_instruct/seed0101.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "A1", "seed": 100, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study2/A1/qwen_qwen_2.5_7b_instruct/seed0100.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "C3", "seed": 100, "subject_model": "qwen/qwen-2.5-7b-instruct", "path": "runs/pilot/study1/C3/qwen_qwen_2.5_7b_instruct/seed0100.jsonl", "ok": true, "rounds": 19, "completed": true}
+spent $0.4363 over 1296 calls

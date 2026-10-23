@@ -1,0 +1,34 @@
+Frozen: 2026-10-23T10:30:22Z (local freeze, not committed)
+Base commit: e2a0ab1f3ac1a914b4370251189ae243651d5953
+
+23835172359ccd4470ce258d8a0061f5d9f6b6ee2be3028eeeb0f2b267cbc76e  prereg/PREREGISTRATION.md
+f0e02138f725d6c244f87c39c2503f638adbddbe6ec974f1a3153a3af95dbd27  scripts/analyse.py
+3ed37868211e952db926bca92bf7ea0b38d8c1720681226f8e829348c460cba1  scripts/check_models.py
+15e781fb64abe36c72761d976aeb5d5a5b17af977f9fdcb47dede159fc5f6b91  scripts/make_matrix.py
+ce99c9133257df105ca504b1cf3068c42f297e4559ba803e76c80213abf03c50  scripts/summarise.py
+b0415fbe73ef9f2967718a71e3580688a1087283b94fc0d192842f6c45aa3aac  sting/__init__.py
+4965791bf9a9427834697cd484599d6bc2c7a243a7c69a9d1b477c6cd911e5ca  sting/arms.py
+c9c30c27c0c3bb351ffa151044849aa4f66b5d15bca1204276d58a15e511a555  sting/engine.py
+fdf8126e8961f52e3406e60e0f3987a8630db005ecf76481948fed8f4764efcd  sting/llm.py
+78bd3b61c5ff75775af6c893a5d325e07b9b5e5f36df19378a39d1ba4ae7c527  sting/prompts.py
+8de4343367525458a3c16e2c39e4321545e7867ffa47a51eb34af5f259523597  sting/run.py
+caa08a69153739b092efb63af53ee69a9ab86712781009cd50e28237a46c6a43  requirements.txt
+
+Addendum 1: 2026-10-23T10:33:06Z, before any main-study data were viewed
+Verbal-outcome rubric and judge fixed (section 7). Judge: anthropic/claude-haiku-5.5, temperature 0, reasoning
+disabled. Classifies each subject's first reply to H and, as a control, to S. Adds a descriptive flag "proposes"
+(the reply itself suggests cooperating), introduced after the pilot showed subjects volunteering cooperation to S.
+Tuned on pilot replies only (seeds >= 100).
+8e6f472ac7c26f41dcf0ef1e2a73b702bb8fa8dfaf28687ea1d1d491c68a1b62  scripts/classify_replies.py
+
+Addendum 2: 2026-10-23T13:05:21Z, before any main series game was played (prereg/ADDENDUM_2_series.md)
+Code for the Study 2 series follow-up (Study 1 game logic unchanged; additions only, see tests).
+6b00b6e0af38657c65a8b02c4a35b4fb977d896b4b7567f7f2c6d961d58e9bbf  prereg/ADDENDUM_2_series.md
+b0415fbe73ef9f2967718a71e3580688a1087283b94fc0d192842f6c45aa3aac  sting/__init__.py
+b476289d789880173633f16ec80afddd43a2a8ef5eea0cad992e928bbb893435  sting/arms.py
+59422040b2fcbde81993de8100e0255ce7b2398bb00e781c1566509e42b57da1  sting/engine.py
+81f12f79751317a6f25e589a9028380c6a48de39f89e7cfc9d2f12232f8f1853  sting/llm.py
+78bd3b61c5ff75775af6c893a5d325e07b9b5e5f36df19378a39d1ba4ae7c527  sting/prompts.py
+d74fb0fe733064f80b347d5f67f79cdcb9be54dee1c69e6da3f18a26a5315aee  sting/run.py
+15cf0031b06f3b62785bf8a55892115a5ece803303ad44b8f3a7737da1f0ee6d  scripts/analyse_series.py
+a0529d67351323379a7cc7aef6914c80a2bebd3969dfe3414c73aeb9278b2439  tests/test_engine.py

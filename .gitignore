@@ -1,0 +1,18 @@
+# secrets
+.env
+.env.*
+*.key
+
+# local outputs (game logs under runs/ are kept in git so progress survives a new session;
+# derived copies made for analysis are not)
+runs/pilot_all/
+runs/s2only/
+runs/local/
+all_logs/
+# session handoff material stays out of the repo
+handoff/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/

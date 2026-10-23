@@ -1,0 +1,9 @@
+{"arm": "C0", "seed": 101, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study1/C0/meta_llama_llama_3.1_8b_instruct/seed0101.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "C0", "seed": 102, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study1/C0/meta_llama_llama_3.1_8b_instruct/seed0102.jsonl", "ok": true, "rounds": 16, "completed": true}
+{"arm": "C0", "seed": 100, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study1/C0/meta_llama_llama_3.1_8b_instruct/seed0100.jsonl", "ok": true, "rounds": 16, "completed": true}
+spent $0.2604 over 623 calls
+{"arm": "A1", "seed": 101, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study2/A1/meta_llama_llama_3.1_8b_instruct/seed0101.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "A1", "seed": 100, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study2/A1/meta_llama_llama_3.1_8b_instruct/seed0100.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "C3", "seed": 101, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study1/C3/meta_llama_llama_3.1_8b_instruct/seed0101.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "C3", "seed": 100, "subject_model": "meta-llama/llama-3.1-8b-instruct", "path": "runs/pilot/study1/C3/meta_llama_llama_3.1_8b_instruct/seed0100.jsonl", "ok": true, "rounds": 16, "completed": true}
+spent $0.2400 over 719 calls

@@ -1,0 +1,5 @@
+{"arm": "C0", "seed": 101, "subject_model": "qwen/qwen3.6-35b-a3b", "path": "runs/pilot2/study1/C0/qwen_qwen3.6_35b_a3b/seed0101.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "C3", "seed": 101, "subject_model": "qwen/qwen3.6-35b-a3b", "path": "runs/pilot2/study1/C3/qwen_qwen3.6_35b_a3b/seed0101.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "C0", "seed": 100, "subject_model": "qwen/qwen3.6-35b-a3b", "path": "runs/pilot2/study1/C0/qwen_qwen3.6_35b_a3b/seed0100.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "C3", "seed": 100, "subject_model": "qwen/qwen3.6-35b-a3b", "path": "runs/pilot2/study1/C3/qwen_qwen3.6_35b_a3b/seed0100.jsonl", "ok": true, "rounds": 15, "completed": true}
+spent $0.4165 over 949 calls

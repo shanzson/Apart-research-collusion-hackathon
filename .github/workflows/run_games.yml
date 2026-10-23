@@ -1,0 +1,140 @@
+name: run-games
+
+# Manually triggered experiment runs. The OpenRouter key comes only from the repository secret
+# OPENROUTER_API_KEY and is exposed to the single step that needs it.
+on:
+  workflow_dispatch:
+    inputs:
+      arms:
+        description: "Comma-separated arms (e.g. C0,B,C2,C3,C3NE or A0,A1 or D0,DP,DW)"
+        required: true
+        default: "C0,C3"
+      seeds:
+        description: "Seed range, e.g. 0-1 or 0-23"
+        required: true
+        default: "0-1"
+      subject_models:
+        description: "Comma-separated OpenRouter model IDs for the agents under test (T and X)"
+        required: true
+        default: "meta-llama/llama-3.1-8b-instruct"
+      agent_model:
+        description: "OpenRouter model ID for the trusted agent H and the decoy S"
+        required: true
+        default: "openai/gpt-4.1-mini"
+      seeds_per_job:
+        description: "Seeds per matrix job (each job runs all arms for its seeds)"
+        required: true
+        default: "4"
+      cap_usd_per_job:
+        description: "Hard spend cap per matrix job in USD"
+        required: true
+        default: "2"
+      workers:
+        description: "Concurrent games per job"
+        required: true
+        default: "4"
+      store_prompts:
+        description: "Store full prompts in logs (large)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: run-games-${{ github.ref }}-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.mk.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Unit tests (mock players, no API)
+        run: python -m pytest -q tests
+      - name: Check model IDs exist on OpenRouter (public endpoint, no key)
+        env:
+          MODELS: ${{ inputs.subject_models }},${{ inputs.agent_model }}
+        run: python scripts/check_models.py "$MODELS"
+      - name: Build matrix
+        id: mk
+        env:
+          SUBJECTS: ${{ inputs.subject_models }}
+          SEEDS: ${{ inputs.seeds }}
+          PER_JOB: ${{ inputs.seeds_per_job }}
+        run: python scripts/make_matrix.py >> "$GITHUB_OUTPUT"
+
+  run:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Run games
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          ARMS: ${{ inputs.arms }}
+          SUBJECT: ${{ matrix.model }}
+          SEEDS: ${{ matrix.seeds }}
+          AGENT: ${{ inputs.agent_model }}
+          CAP: ${{ inputs.cap_usd_per_job }}
+          WORKERS: ${{ inputs.workers }}
+          STORE_PROMPTS: ${{ inputs.store_prompts }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then echo "OPENROUTER_API_KEY secret is not set"; exit 1; fi
+          EXTRA=""
+          if [ "$STORE_PROMPTS" = "true" ]; then EXTRA="--store-prompts"; fi
+          python -m sting.run --arms "$ARMS" --seeds "$SEEDS" --subject-model "$SUBJECT" \
+            --agent-model "$AGENT" --out runs --cap-usd "$CAP" --workers "$WORKERS" $EXTRA
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.slug }}-${{ matrix.shard }}
+          path: runs/
+          if-no-files-found: warn
+          retention-days: 30
+
+  collect:
+    needs: run
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: logs-*
+          path: all_logs
+          merge-multiple: true
+      - name: Summarise
+        run: python scripts/summarise.py all_logs | tee summary.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload merged logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-logs-${{ github.run_id }}
+          path: |
+            all_logs/
+            summary.txt
+          retention-days: 90

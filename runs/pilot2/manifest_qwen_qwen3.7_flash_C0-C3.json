@@ -1,0 +1,59 @@
+{
+  "arms": [
+    "C0",
+    "C3"
+  ],
+  "seeds": [
+    100,
+    101
+  ],
+  "subject_model": "qwen/qwen3.7-flash",
+  "agent_model": "openai/gpt-4.1-mini",
+  "x_model": "qwen/qwen3.7-flash",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.7-flash"
+  ],
+  "spent_usd": 0.3791,
+  "calls": 1025,
+  "results": [
+    {
+      "arm": "C0",
+      "seed": 100,
+      "subject_model": "qwen/qwen3.7-flash",
+      "path": "runs/pilot2/study1/C0/qwen_qwen3.7_flash/seed0100.jsonl",
+      "ok": true,
+      "rounds": 16,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 101,
+      "subject_model": "qwen/qwen3.7-flash",
+      "path": "runs/pilot2/study1/C0/qwen_qwen3.7_flash/seed0101.jsonl",
+      "ok": true,
+      "rounds": 11,
+      "completed": true
+    },
+    {
+      "arm": "C3",
+      "seed": 100,
+      "subject_model": "qwen/qwen3.7-flash",
+      "path": "runs/pilot2/study1/C3/qwen_qwen3.7_flash/seed0100.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "C3",
+      "seed": 101,
+      "subject_model": "qwen/qwen3.7-flash",
+      "path": "runs/pilot2/study1/C3/qwen_qwen3.7_flash/seed0101.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}

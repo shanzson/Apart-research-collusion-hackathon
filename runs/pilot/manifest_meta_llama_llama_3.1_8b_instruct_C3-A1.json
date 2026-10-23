@@ -1,0 +1,57 @@
+{
+  "arms": [
+    "C3",
+    "A1"
+  ],
+  "seeds": [
+    100,
+    101
+  ],
+  "subject_model": "meta-llama/llama-3.1-8b-instruct",
+  "agent_model": "openai/gpt-4.1-mini",
+  "x_model": "meta-llama/llama-3.1-8b-instruct",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "spent_usd": 0.24,
+  "calls": 719,
+  "results": [
+    {
+      "arm": "A1",
+      "seed": 100,
+      "subject_model": "meta-llama/llama-3.1-8b-instruct",
+      "path": "runs/pilot/study2/A1/meta_llama_llama_3.1_8b_instruct/seed0100.jsonl",
+      "ok": true,
+      "rounds": 17,
+      "completed": true
+    },
+    {
+      "arm": "A1",
+      "seed": 101,
+      "subject_model": "meta-llama/llama-3.1-8b-instruct",
+      "path": "runs/pilot/study2/A1/meta_llama_llama_3.1_8b_instruct/seed0101.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "C3",
+      "seed": 100,
+      "subject_model": "meta-llama/llama-3.1-8b-instruct",
+      "path": "runs/pilot/study1/C3/meta_llama_llama_3.1_8b_instruct/seed0100.jsonl",
+      "ok": true,
+      "rounds": 16,
+      "completed": true
+    },
+    {
+      "arm": "C3",
+      "seed": 101,
+      "subject_model": "meta-llama/llama-3.1-8b-instruct",
+      "path": "runs/pilot/study1/C3/meta_llama_llama_3.1_8b_instruct/seed0101.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}
