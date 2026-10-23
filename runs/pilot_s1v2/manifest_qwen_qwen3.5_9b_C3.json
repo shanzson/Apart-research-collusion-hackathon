@@ -1,0 +1,43 @@
+{
+  "arms": [
+    "C3"
+  ],
+  "seeds": [
+    100,
+    101
+  ],
+  "subject_model": "qwen/qwen3.5-9b",
+  "agent_model": "google/gemma-3-12b-it",
+  "x_model": "qwen/qwen3.5-9b",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "series_games": 1,
+  "offer_game": null,
+  "max_tokens": null,
+  "s_model": "google/gemma-3-12b-it",
+  "paper_sampling": false,
+  "spent_usd": 0.0329,
+  "calls": 319,
+  "results": [
+    {
+      "arm": "C3",
+      "seed": 100,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s1v2/study1/C3/qwen_qwen3.5_9b/seed0100.jsonl",
+      "ok": true,
+      "rounds": 16,
+      "completed": true
+    },
+    {
+      "arm": "C3",
+      "seed": 101,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s1v2/study1/C3/qwen_qwen3.5_9b/seed0101.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}
