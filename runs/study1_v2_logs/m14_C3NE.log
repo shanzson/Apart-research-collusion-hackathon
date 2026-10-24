@@ -1,0 +1,2 @@
+{"arm": "C3NE", "seed": 1, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0001.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "C3NE", "seed": 0, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0000.jsonl", "ok": true, "rounds": 15, "completed": true}

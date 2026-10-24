@@ -1,0 +1,2 @@
+{"arm": "C0", "seed": 1, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0001.jsonl", "ok": true, "rounds": 7, "completed": true}
+{"arm": "C0", "seed": 0, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0000.jsonl", "ok": true, "rounds": 15, "completed": true}
