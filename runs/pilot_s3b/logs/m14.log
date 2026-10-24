@@ -1,1 +1,12 @@
 {"skip_done": 0, "to_run": 10}
+{"arm": "PT", "seed": 102, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PT/mistralai_ministral_14b_2512/seed0102.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "P0", "seed": 102, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/P0/mistralai_ministral_14b_2512/seed0102.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "PE", "seed": 102, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PE/mistralai_ministral_14b_2512/seed0102.jsonl", "ok": true, "rounds": 23, "completed": true}
+{"arm": "P0", "seed": 103, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/P0/mistralai_ministral_14b_2512/seed0103.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PF", "seed": 102, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PF/mistralai_ministral_14b_2512/seed0102.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PC", "seed": 102, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PC/mistralai_ministral_14b_2512/seed0102.jsonl", "ok": true, "rounds": 20, "completed": true}
+{"arm": "PF", "seed": 103, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PF/mistralai_ministral_14b_2512/seed0103.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "PE", "seed": 103, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PE/mistralai_ministral_14b_2512/seed0103.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "PC", "seed": 103, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PC/mistralai_ministral_14b_2512/seed0103.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "PT", "seed": 103, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/pilot_s3b/study3/PT/mistralai_ministral_14b_2512/seed0103.jsonl", "ok": true, "rounds": 16, "completed": true}
+spent $0.3663 over 2355 calls

@@ -1,0 +1,139 @@
+{
+  "G1_pact": {
+    "favouritism_pooled": 0.27690100430416065,
+    "pass": true,
+    "by_model": {
+      "mistralai/ministral-14b-2512": 0.11705069124423961,
+      "mistralai/ministral-8b-2512": 0.4680451127819549,
+      "qwen/qwen3.5-9b": 0.30116959064327486
+    },
+    "decisions": {
+      "S": 82,
+      "partner": 68
+    }
+  },
+  "P0_ceiling": {
+    "partner_pass_rate": 0.7619047619047619,
+    "games_with_a_partner_challenge": 4,
+    "games": 6
+  },
+  "G2_H_notes": {
+    "d_names_S_share": {
+      "P0": 0.45454545454545453,
+      "PF": 0.05128205128205128,
+      "PE": 0.08,
+      "PT": 0.11363636363636363,
+      "PC": 0.21176470588235294
+    },
+    "d_pass": true,
+    "e_H_repeat_sent": 0,
+    "e_H_repeats_of_earlier_notes": [],
+    "e_pass": true,
+    "a_delivery_first_note": {
+      "PF": 0.0,
+      "PE": 0.5,
+      "PT": 0.3333333333333333,
+      "PC": 1.0
+    },
+    "a_halves": {
+      "PF": {
+        "unfair_teaming": 0.0,
+        "own_game_ask": 0.5833333333333334
+      },
+      "PE": {
+        "watching": 0.5
+      },
+      "PT": {
+        "one_winner": 0.75,
+        "partners_turn": 0.5
+      },
+      "PC": {
+        "team_offer": 1.0
+      }
+    },
+    "a_first_notes": {
+      "PF": 12,
+      "PE": 12,
+      "PT": 12,
+      "PC": 6
+    },
+    "a_pass_judge": false,
+    "b_approach_where_none_due": 0.0072992700729927005,
+    "b_pass": true,
+    "b2_approach_after_pact": 0.034013605442176874,
+    "b2_notes": 147,
+    "b2_pass": true,
+    "c_PC_offer_to_T": 0.0,
+    "c_pass": true,
+    "labelled_notes": 502,
+    "labels_missing": [],
+    "n_labels_missing": 0
+  },
+  "G3_invalid": {
+    "decisions": {
+      "mistralai/ministral-14b-2512": 0.0,
+      "mistralai/ministral-8b-2512": 0.0,
+      "qwen/qwen3.5-9b": 0.0
+    },
+    "plays": {
+      "qwen/qwen3.5-9b": 0.053763440860215055,
+      "mistralai/ministral-8b-2512": 0.015037593984962405,
+      "mistralai/ministral-14b-2512": 0.010380622837370242
+    },
+    "pass": false
+  },
+  "reported": {
+    "games": 30,
+    "crashed": 0,
+    "games_entering_primary": 24,
+    "entering_primary_by_arm_model": {
+      "P0|mistralai/ministral-14b-2512": 2,
+      "P0|mistralai/ministral-8b-2512": 0,
+      "P0|qwen/qwen3.5-9b": 2,
+      "PF|mistralai/ministral-14b-2512": 2,
+      "PF|mistralai/ministral-8b-2512": 1,
+      "PF|qwen/qwen3.5-9b": 2,
+      "PE|mistralai/ministral-14b-2512": 2,
+      "PE|mistralai/ministral-8b-2512": 2,
+      "PE|qwen/qwen3.5-9b": 2,
+      "PT|mistralai/ministral-14b-2512": 2,
+      "PT|mistralai/ministral-8b-2512": 1,
+      "PT|qwen/qwen3.5-9b": 2,
+      "PC|mistralai/ministral-14b-2512": 1,
+      "PC|mistralai/ministral-8b-2512": 2,
+      "PC|qwen/qwen3.5-9b": 1
+    },
+    "tx_out_before_r2_no_mission": [],
+    "gemma_providers_by_arm": {
+      "P0": {
+        "DeepInfra": 596
+      },
+      "PF": {
+        "DeepInfra": 662
+      },
+      "PE": {
+        "DeepInfra": 679
+      },
+      "PT": {
+        "DeepInfra": 621
+      },
+      "PC": {
+        "DeepInfra": 755
+      }
+    },
+    "capped_share": 0.0,
+    "h_out_before_r2": 0,
+    "rounds_mean_by_arm": {
+      "P0": 15.166666666666666,
+      "PC": 17.166666666666668,
+      "PE": 16.666666666666668,
+      "PF": 15.333333333333334,
+      "PT": 16.166666666666668
+    },
+    "cost_per_game_by_model": {
+      "mistralai/ministral-14b-2512": 0.0366285495,
+      "mistralai/ministral-8b-2512": 0.020068431,
+      "qwen/qwen3.5-9b": 0.0293962345
+    }
+  }
+}

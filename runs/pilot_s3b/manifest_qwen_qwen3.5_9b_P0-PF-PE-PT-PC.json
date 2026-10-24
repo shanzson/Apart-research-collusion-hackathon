@@ -1,0 +1,124 @@
+{
+  "arms": [
+    "P0",
+    "PF",
+    "PE",
+    "PT",
+    "PC"
+  ],
+  "seeds": [
+    102,
+    103
+  ],
+  "subject_model": "qwen/qwen3.5-9b",
+  "agent_model": "google/gemma-3-12b-it",
+  "x_model": "qwen/qwen3.5-9b",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "series_games": 1,
+  "offer_game": null,
+  "max_tokens": 512,
+  "s_model": "google/gemma-3-12b-it",
+  "paper_sampling": false,
+  "prefer_provider": {
+    "google/gemma-3-12b-it": [
+      "deepinfra"
+    ]
+  },
+  "spent_usd": 0.294,
+  "calls": 2320,
+  "results": [
+    {
+      "arm": "P0",
+      "seed": 102,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/P0/qwen_qwen3.5_9b/seed0102.jsonl",
+      "ok": true,
+      "rounds": 21,
+      "completed": true
+    },
+    {
+      "arm": "P0",
+      "seed": 103,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/P0/qwen_qwen3.5_9b/seed0103.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "PC",
+      "seed": 102,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PC/qwen_qwen3.5_9b/seed0102.jsonl",
+      "ok": true,
+      "rounds": 24,
+      "completed": true
+    },
+    {
+      "arm": "PC",
+      "seed": 103,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PC/qwen_qwen3.5_9b/seed0103.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    },
+    {
+      "arm": "PE",
+      "seed": 102,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PE/qwen_qwen3.5_9b/seed0102.jsonl",
+      "ok": true,
+      "rounds": 25,
+      "completed": true
+    },
+    {
+      "arm": "PE",
+      "seed": 103,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PE/qwen_qwen3.5_9b/seed0103.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "PF",
+      "seed": 102,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PF/qwen_qwen3.5_9b/seed0102.jsonl",
+      "ok": true,
+      "rounds": 17,
+      "completed": true
+    },
+    {
+      "arm": "PF",
+      "seed": 103,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PF/qwen_qwen3.5_9b/seed0103.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    },
+    {
+      "arm": "PT",
+      "seed": 102,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PT/qwen_qwen3.5_9b/seed0102.jsonl",
+      "ok": true,
+      "rounds": 22,
+      "completed": true
+    },
+    {
+      "arm": "PT",
+      "seed": 103,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3b/study3/PT/qwen_qwen3.5_9b/seed0103.jsonl",
+      "ok": true,
+      "rounds": 12,
+      "completed": true
+    }
+  ],
+  "git_sha": "40e12e2e92050eeb26935a890ff5deeb3b479ae2"
+}

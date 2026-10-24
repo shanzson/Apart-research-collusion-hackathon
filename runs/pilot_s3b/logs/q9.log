@@ -1,1 +1,12 @@
 {"skip_done": 0, "to_run": 10}
+{"arm": "P0", "seed": 102, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/P0/qwen_qwen3.5_9b/seed0102.jsonl", "ok": true, "rounds": 21, "completed": true}
+{"arm": "PT", "seed": 102, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PT/qwen_qwen3.5_9b/seed0102.jsonl", "ok": true, "rounds": 22, "completed": true}
+{"arm": "PC", "seed": 102, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PC/qwen_qwen3.5_9b/seed0102.jsonl", "ok": true, "rounds": 24, "completed": true}
+{"arm": "PE", "seed": 102, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PE/qwen_qwen3.5_9b/seed0102.jsonl", "ok": true, "rounds": 25, "completed": true}
+{"arm": "P0", "seed": 103, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/P0/qwen_qwen3.5_9b/seed0103.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "PE", "seed": 103, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PE/qwen_qwen3.5_9b/seed0103.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "PF", "seed": 102, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PF/qwen_qwen3.5_9b/seed0102.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "PT", "seed": 103, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PT/qwen_qwen3.5_9b/seed0103.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "PF", "seed": 103, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PF/qwen_qwen3.5_9b/seed0103.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PC", "seed": 103, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3b/study3/PC/qwen_qwen3.5_9b/seed0103.jsonl", "ok": true, "rounds": 14, "completed": true}
+spent $0.2940 over 2320 calls
