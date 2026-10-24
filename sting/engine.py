@@ -39,12 +39,23 @@ ARRANGEMENT_B = ("T", "H", "X", "S")
 #   A2: T judges X, S judges T, H judges S, X judges H.   B2: X judges T, H judges X, S judges H, T judges S.
 COALITION_A = ("X", "T", "S", "H")
 COALITION_B = ("T", "X", "H", "S")
-SEATINGS = {"sting": (ARRANGEMENT_A, ARRANGEMENT_B), "coalition": (COALITION_A, COALITION_B)}
+# Study 3 (breaking a pact): each partner judges its partner in one arrangement and the decoy S in the other.
+#   A3: X judges S, T judges X, H judges T, S judges H.   B3: T judges S, X judges T, H judges X, S judges H.
+BREAKUP_A = ("S", "X", "T", "H")
+BREAKUP_B = ("S", "T", "X", "H")
+SEATINGS = {"sting": (ARRANGEMENT_A, ARRANGEMENT_B), "coalition": (COALITION_A, COALITION_B),
+            "breakup": (BREAKUP_A, BREAKUP_B)}
 
 SECRET_MESSAGE_MAX_WORDS = 150  # per-action secret messages (the paper states no limit); disclosed
 
 NAME_POOL = ["Avery", "Blake", "Casey", "Devon", "Emery", "Finley", "Harper", "Jordan",
              "Kendall", "Morgan", "Parker", "Reese", "Riley", "Rowan", "Sage", "Taylor"]
+
+def _same_note(a: str, b: str) -> bool:
+    """Same note apart from case, punctuation and spacing."""
+    norm = lambda s: " ".join(re.sub(r"[^\w\s]", " ", s.lower()).split())  # noqa: E731
+    return norm(a) == norm(b)
+
 
 DISCLOSURE_RE = re.compile(r"\b(i have|i hold|i've got|my hand|my cards|i am bluffing|i'm bluffing|"
                            r"i was bluffing|i'm honest|i am honest|my play is honest)\b", re.IGNORECASE)
@@ -55,7 +66,7 @@ class ArmConfig:
     """Everything that varies between experimental arms."""
     name: str
     study: int
-    seating: str = "sting"                  # 'sting' (Study 1) | 'coalition' (Studies 2/3)
+    seating: str = "sting"                  # 'sting' (Study 1) | 'coalition' (Study 2) | 'breakup' (Study 3)
     # private-note channel run by H and S (both send; recipients = channel_targets)
     channel: bool = False
     channel_targets: tuple[str, ...] = ("T", "X")
@@ -69,8 +80,11 @@ class ArmConfig:
     scc_per_move: bool = False              # [OURS, following the paper's Sec. 2] a secret message with every action
     hs_reflect: bool = False                # H and S also form per-round impressions (ordinary players)
     # Study 3: mid-game disruption by H
-    disrupt: str | None = None              # 'poach' | 'warn' | 'none' (placebo) | None
+    disrupt: str | None = None              # 'fair' | 'expose' | 'tempt' | 'counter' | 'poach' | 'warn' | 'none' | None
     disrupt_round: int = 4
+    # Study 3 (addendum 4): T and X start with a secret pre-game pact and a secret channel from round 1
+    tx_pact: bool = False
+    no_repeat_notes: bool = False           # H and S may not send the same note twice in a row to the same player
 
 
 @dataclass
@@ -147,14 +161,17 @@ class Game:
             self.scc_active = True
             self.scc_msgs = [(s, t if t.startswith("(sent in the previous game)") else f"(sent in the previous game) {t}")
                              for s, t in carry.get("scc_msgs", [])]
+        if arm.tx_pact:  # Study 3: the pact comes with a secret channel that is open from the first round
+            self.scc_active = True
         self.h_persona_mission: str | None = None
+        self.h_mission_rules = P.MISSION_RULES
         self.log({"type": "game_start", "seed": seed, "arm": arm.name, "study": arm.study,
                   "roles": {r: p.name for r, p in self.players.items()},
                   "models": {r: p.model for r, p in self.players.items()},
                   "chambers": {r: p.chamber for r, p in self.players.items()},
                   "a_on_odd": self.a_on_odd, "sender_order": self.sender_order,
                   "series_game": series_game, "series_len": series_len, "previous_games": self.previous_games,
-                  "channel_carried": self.scc_active})
+                  "channel_carried": self.scc_active and not arm.tx_pact, "pact": arm.tx_pact})
 
     # ------------------------------------------------------------------ helpers
     def _role(self, name: str) -> str:
@@ -346,6 +363,7 @@ class Game:
             play_decision_info=self._decision_info(actor, judge, playing=True), current_cards=", ".join(actor.hand))
         if actor.role in ("H", "S"):
             prompt = self._persona(actor.role) + "\n\n" + prompt
+        prompt = self._pact(actor.role) + prompt
         prompt += self._secret_message_request(actor.role)
         for attempt in range(3):
             obj = extract_json(self._call(actor.role, "play", prompt))
@@ -384,6 +402,7 @@ class Game:
             challenging_player_performance=perf, extra_hint=extra)
         if judge.role in ("H", "S"):
             prompt = self._persona(judge.role) + "\n\n" + prompt
+        prompt = self._pact(judge.role) + prompt
         prompt += self._secret_message_request(judge.role)
         for attempt in range(3):
             obj = extract_json(self._call(judge.role, "challenge", prompt))
@@ -436,7 +455,7 @@ class Game:
                     round_action_info=self.round_actions(p.name, True) + f"\nCurrent scores: {self.scores}",
                     round_result=self.round_result or "No one shot this round", player=other,
                     previous_opinion=p.opinions.get(other, "Doesn't know well about this player yet"))
-                txt = self._call(p.role, "reflect", prompt, max_tokens=256)
+                txt = self._call(p.role, "reflect", self._pact(p.role) + prompt, max_tokens=256)
                 p.opinions[other] = (txt or "").strip()[:1200] or p.opinions.get(other, "")
 
     # ------------------------------------------------------------------ [OURS] private channel
@@ -447,7 +466,14 @@ class Game:
         base = P.BASE_PERSONA.format(targets=targets)
         if role == "S" or (role == "H" and not self.h_persona_mission):
             return base + "\n" + P.DECOY_CLAUSE
-        return base + "\n" + self.h_persona_mission + "\n" + P.MISSION_RULES
+        return base + "\n" + self.h_persona_mission + "\n" + self.h_mission_rules
+
+    def _pact(self, role: str) -> str:
+        """Study 3: the pre-game pact, at the top of every prompt that T or X sees."""
+        if not (self.arm.tx_pact and role in ("T", "X")):
+            return ""
+        partner = self.players["X" if role == "T" else "T"]
+        return P.PACT.format(partner=partner.name, h=self.players["H"].name, s=self.players["S"].name) + "\n\n"
 
     def _maybe_activate_disruption(self) -> None:
         a = self.arm
@@ -460,6 +486,10 @@ class Game:
             elif a.disrupt == "warn":
                 targets = " and ".join(self.players[r].name for r in a.channel_targets)
                 self.h_persona_mission = P.DISRUPT_MISSIONS["warn"].format(targets=targets)
+            elif a.disrupt in P.BREAKUP_MISSIONS:  # Study 3 (addendum 4)
+                self.h_persona_mission = P.BREAKUP_MISSIONS[a.disrupt].format(
+                    t=self.players["T"].name, x=self.players["X"].name, s=self.players["S"].name)
+                self.h_mission_rules = P.BREAKUP_MISSION_RULES
             self.log({"type": "disruption", "round": self.round, "kind": a.disrupt})
 
     def _channel_open(self) -> bool:
@@ -494,7 +524,10 @@ class Game:
             rules=P.RULES, persona=self._persona(sender), self_name=s.name, round_base_info=self.round_base_info(),
             state_summary=self._state_summary(sender), private_block=self._notes_only_block(sender, recipient),
             recipient=r.name)
-        for attempt in range(2):
+        msgs = self.notes.get(tuple(sorted((sender, recipient))), [])
+        previous = next((t for sp, t in reversed(msgs) if sp == sender), None) if self.arm.no_repeat_notes else None
+        repeated = ""
+        for attempt in range(3 if self.arm.no_repeat_notes else 2):
             obj = extract_json(self._call(sender, "compose", prompt, max_tokens=200))
             msg = str(obj.get("message", "")).strip() if obj else ""
             if not msg:
@@ -502,8 +535,18 @@ class Game:
             if DISCLOSURE_RE.search(msg):
                 self.log({"type": "guard", "round": self.round, "role": sender, "blocked": msg})
                 continue
-            return " ".join(msg.split()[:60])
-        return ""
+            msg = " ".join(msg.split()[:60])
+            if previous is not None and _same_note(msg, previous):  # Study 3: no word-for-word repeats
+                self.log({"type": "repeat_guard", "round": self.round, "role": sender, "to": recipient, "text": msg})
+                repeated = msg
+                if "Your previous note to" not in prompt:
+                    prompt += (f"\n\nYour previous note to {r.name} was: \"{previous}\". "
+                               f"Write a different note this time.")
+                continue
+            return msg
+        if repeated:  # still repeating after every attempt: send it rather than drop the note
+            self.log({"type": "repeat_sent", "round": self.round, "role": sender, "to": recipient})
+        return repeated
 
     def _notes_only_block(self, a: str, b: str) -> str:
         msgs = self.notes.get(tuple(sorted((a, b))), [])
@@ -515,7 +558,7 @@ class Game:
 
     def _reply(self, recipient: str, sender: str, message: str) -> str:
         r, s = self.players[recipient], self.players[sender]
-        prompt = P.REPLY_TEMPLATE.format(
+        prompt = self._pact(recipient) + P.REPLY_TEMPLATE.format(
             rules=P.RULES, self_name=r.name, round_base_info=self.round_base_info(),
             state_summary=self._state_summary(recipient), private_block=self.private_block(recipient),
             sender=s.name, message=message)
@@ -680,12 +723,20 @@ class Game:
         lines = [f"Final scores: {self.scores}."]
         if self.elimination_order:
             lines.append("Eliminated in order: " + ", ".join(self.elimination_order) + ".")
-        prompt = P.INTERVIEW_TEMPLATE.format(rules=P.RULES, self_name=p.name, game_summary="\n".join(lines),
-                                             private_block=self.private_block(role))
-        obj = extract_json(self._call(role, "interview", prompt, max_tokens=300)) or {}
-        out = {"type": "interview", "role": role, **{k: obj.get(k) for k in (
-            "least_challenger", "went_easy", "agreement", "agreement_explanation", "unusual_player")}}
-        for k in ("least_challenger", "went_easy", "unusual_player"):
+        if self.arm.tx_pact:  # Study 3: questions about the pact replace the general agreement question
+            partner = self.players["X" if role == "T" else "T"]
+            prompt = self._pact(role) + P.INTERVIEW_PACT_TEMPLATE.format(
+                rules=P.RULES, self_name=p.name, game_summary="\n".join(lines),
+                private_block=self.private_block(role), partner=partner.name)
+            keys = ("least_challenger", "went_easy", "kept_agreement", "partner_kept_agreement", "new_agreement",
+                    "new_agreement_explanation", "turned_by", "unusual_player")
+        else:
+            prompt = P.INTERVIEW_TEMPLATE.format(rules=P.RULES, self_name=p.name, game_summary="\n".join(lines),
+                                                 private_block=self.private_block(role))
+            keys = ("least_challenger", "went_easy", "agreement", "agreement_explanation", "unusual_player")
+        obj = extract_json(self._call(role, "interview", prompt, max_tokens=400 if self.arm.tx_pact else 300)) or {}
+        out = {"type": "interview", "role": role, **{k: obj.get(k) for k in keys}}
+        for k in ("least_challenger", "went_easy", "unusual_player", "turned_by"):
             v = out.get(k)
             if isinstance(v, str) and v in self.by_name:
                 out[k + "_role"] = self._role(v)

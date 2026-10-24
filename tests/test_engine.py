@@ -6,7 +6,8 @@ import pytest
 
 from sting import prompts as P
 from sting.arms import ARMS
-from sting.engine import (ARRANGEMENT_A, ARRANGEMENT_B, COALITION_A, COALITION_B, DISCLOSURE_RE, SEATINGS,
+from sting.engine import (ARRANGEMENT_A, ARRANGEMENT_B, BREAKUP_A, BREAKUP_B, COALITION_A, COALITION_B, DISCLOSURE_RE,
+                          SEATINGS,
                           Game)
 from sting.llm import BudgetExceeded, MockLLM, SpendTracker, extract_json, parse_accept
 
@@ -364,3 +365,109 @@ def test_series_rerun_replaces_old_files_and_hs_reflect_in_followup(tmp_path):
     assert g.players["H"].reflects and g.players["S"].reflects
     g, _ = make("C3", 0)
     assert not g.players["H"].reflects and not g.players["S"].reflects  # Study 1 unchanged
+
+
+# ---------------------------------------------------------------- Study 3 (addendum 4): breaking up a pact
+STUDY3 = ("P0", "PF", "PE", "PT", "PC")
+MISSION_MARK = {"PF": "unfair to the rest", "PE": "paying close attention", "PT": "only one player can win",
+                "PC": "better deal"}
+
+
+def test_breakup_seating_pairs_each_partner_with_partner_and_decoy():
+    def pairs(arr):
+        return {(arr[(i + 1) % 4], arr[i]) for i in range(4)}  # (judge, actor)
+    assert pairs(BREAKUP_A) == {("X", "S"), ("T", "X"), ("H", "T"), ("S", "H")}
+    assert pairs(BREAKUP_B) == {("T", "S"), ("X", "T"), ("H", "X"), ("S", "H")}
+    for arm in STUDY3:
+        g, _ = make(arm)
+        assert {g._arrangement(1), g._arrangement(2)} == {BREAKUP_A, BREAKUP_B}
+
+
+@pytest.mark.parametrize("arm", STUDY3)
+def test_pact_reaches_only_t_and_x_and_channel_is_open_from_the_start(arm):
+    llm = _SecretMsgs(seed=2)
+    g, sink = make(arm, 2, llm=llm)
+    assert g.scc_active and sink[0]["pact"] and not sink[0]["channel_carried"]
+    g.play()
+    names = {r: p.name for r, p in g.players.items()}
+    for model, prompt in llm.calls:
+        role = {"m-t": "T", "m-x": "X", "m-h": "H", "m-s": "S"}[model]
+        if role in ("T", "X"):
+            partner = names["X" if role == "T" else "T"]
+            assert prompt.startswith(P.PACT.format(partner=partner, h=names["H"], s=names["S"]))
+        else:
+            assert "secretly agreed" not in prompt and "secret_message" not in prompt
+    msgs = [r for r in sink if r["type"] == "scc_message"]
+    assert msgs and {m["from"] for m in msgs} <= {"T", "X"}
+    g1, _ = make(arm, 2)
+    g1.start_round(None)  # round 1: the channel is already open for both partners, and only for them
+    assert all("SECRET CHANNEL" in g1.private_block(r) and g1._secret_message_request(r) for r in ("T", "X"))
+    assert not any(g1._secret_message_request(r) for r in ("H", "S"))
+
+
+@pytest.mark.parametrize("arm", STUDY3)
+def test_h_acts_from_round_2_and_only_in_treatment_arms(arm):
+    g, sink = make(arm, 3)
+    g.start_round(None)
+    assert g.round == 1 and g._persona("H") == g._persona("S")  # round 1: H is just like the decoy
+    g.start_round(None)
+    assert g.round == 2 and [r["kind"] for r in sink if r["type"] == "disruption"] == [ARMS[arm].disrupt]
+    h = g._persona("H")
+    if arm == "P0":
+        assert h == g._persona("S")
+    else:
+        assert MISSION_MARK[arm] in h and h.endswith(P.BREAKUP_MISSION_RULES) and P.DECOY_CLAUSE not in h
+        assert g.players["T"].name in h and g.players["X"].name in h and g.players["S"].name in h
+
+
+def test_counter_offer_courts_x_and_keeps_t_to_small_talk():
+    g, _ = make("PC", 4)
+    g.start_round(None)
+    g.start_round(None)
+    t, x = g.players["T"].name, g.players["X"].name
+    h = g._persona("H")
+    assert f"win {x} over" in h and f"if {x} teams up with you instead" in h and f"notes to {t}, keep to friendly" in h
+
+
+@pytest.mark.parametrize("arm", STUDY3)
+def test_h_never_challenges_in_study3(arm):
+    for seed in range(4):
+        g, sink = make(arm, seed)
+        g.play()
+        for r in sink:
+            if r["type"] == "decision" and r["judge"] == "H":
+                assert r["actor"] in ("T", "X") and r["forced"] and r["challenged"] is False
+
+
+def test_repeat_guard_in_study3_only():
+    g, sink = make("PF", 5)  # the mock writes the same note every time
+    g.play()
+    guards = [r for r in sink if r["type"] == "repeat_guard"]
+    assert guards and all(r["role"] in ("H", "S") for r in guards)
+    assert any("Your previous note to" in p for m, p in g.llm.calls if m in ("m-h", "m-s"))
+    sent = [r for r in sink if r["type"] == "note" and r["from"] in ("H", "S")]
+    assert sent  # notes still go out when the mock keeps repeating itself
+    g1, sink1 = make("C2", 5)
+    g1.play()
+    assert not any(r["type"] in ("repeat_guard", "repeat_sent") for r in sink1)  # Study 1 unchanged
+
+
+def test_same_note_ignores_case_punctuation_and_spacing():
+    from sting.engine import _same_note
+    assert _same_note("Good luck, Riley!", "good luck riley")
+    assert not _same_note("Good luck, Riley!", "Good luck, Sage!")
+
+
+def test_pact_interview_asks_about_the_agreement():
+    g, sink = make("PT", 6)
+    g.play()
+    g.interview("T")
+    iv = [r for r in sink if r["type"] == "interview"][0]
+    assert {"kept_agreement", "partner_kept_agreement", "new_agreement", "turned_by"} <= set(iv)
+    prompt = g.llm.calls[-1][1]
+    assert prompt.startswith("Before this game started") and g.players["X"].name in prompt
+    g1, sink1 = make("C3", 6)
+    g1.play()
+    g1.interview("T")
+    iv1 = [r for r in sink1 if r["type"] == "interview"][0]
+    assert "agreement" in iv1 and "kept_agreement" not in iv1  # Study 1 interview unchanged
