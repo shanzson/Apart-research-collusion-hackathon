@@ -139,8 +139,9 @@ H acts) and, from round 2, each partner's first reply to H's first note
 (AGREE, REFUSE, DENY, SUSPICIOUS or OTHER, and whether it reveals the partnership); and the partners' secret messages
 (mentions H, reaffirms the pact, plans to hide it, turns on the partner). Judge: `anthropic/claude-haiku-5.5`,
 temperature 0, reasoning off; it sees only the text and the players' names, never the arm. The rubric is tuned on
-pilot data only and frozen before the main run. A blind hand-labelled sample (40 items of each kind; key file kept
-separate) checks it, with agreement reported as Cohen's kappa (`scripts/kappa_study3.py`). The judge saves each
+pilot data only and frozen before the main run. A blind hand-labelled sample (40 items of each kind, equal numbers per arm,
+notes from round 2 only; key file kept separate) checks it, with agreement reported as Cohen's kappa and raw agreement
+(`scripts/kappa_study3.py`). The judge saves each
 label as it comes in and resumes after a stop at its spending cap (notes $4, replies $1, secret messages $8).
 
 ## Before the main run

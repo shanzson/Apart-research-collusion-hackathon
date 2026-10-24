@@ -117,6 +117,8 @@ def load_items(root: Path, task: str, include_pilot: bool) -> list[dict]:
                 continue
         if not recs or recs[0].get("type") != "game_start" or recs[0].get("arm") not in ARMS3:
             continue  # empty or headerless logs are crashed games, rerun before labelling
+        if not any(r.get("type") == "game_end" for r in recs):
+            continue  # cut-off logs are crashed games too; the analysis leaves them out, so the judge does as well
         st = recs[0]
         if int(st["seed"]) >= PILOT_SEED_MIN and not include_pilot:
             continue
@@ -180,7 +182,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--cap-usd", type=float, default=None, help="default per task: notes 4, replies 1, secret 8")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--hand-sample", type=int, default=0,
-                    help="instead of calling the judge, write N random items blind (opaque ids; key file separate)")
+                    help="instead of calling the judge, write N items blind, stratified by arm (opaque ids; key separate)")
     args = ap.parse_args(argv)
     items = load_items(Path(args.root), args.task, args.include_pilot)
     out = Path(args.out)
@@ -189,7 +191,17 @@ def main(argv: list[str] | None = None) -> int:
         print("nothing to label")
         return 1
     if args.hand_sample:
-        sample = random.Random(20261024).sample(items, min(args.hand_sample, len(items)))
+        # stratified by arm (equal shares, notes from round 2 only, where the approaches are) so that every flag
+        # occurs in the sample and kappa is defined; shuffled afterwards so the order does not give the arm away
+        rng = random.Random(20261024)
+        pool = [it for it in items if args.task != "notes" or it["round"] >= 2]
+        arms = sorted({it["arm"] for it in pool})
+        sample = []
+        for k, arm in enumerate(arms):
+            in_arm = [it for it in pool if it["arm"] == arm]
+            n = args.hand_sample // len(arms) + (k < args.hand_sample % len(arms))
+            sample += rng.sample(in_arm, min(n, len(in_arm)))
+        rng.shuffle(sample)
         shown = {"notes": ("sender", "recipient", "text"), "replies": ("sender", "recipient", "partner", "note", "reply"),
                  "secret": ("sender", "partner", "h", "s", "text")}[args.task]
         flags = {"notes": NOTE_FLAGS, "replies": ("label", "reveals_partnership"), "secret": SECRET_FLAGS}[args.task]

@@ -2,6 +2,7 @@
 cut-off logs); run this only when no game process is running. Games that hit the round cap have a game_end record
 and are NOT rerun (they are kept and analysed up to the cap). Each crashed log is copied to <ROOT>_failed/ first,
 because a rerun overwrites it; a game that already has a copy there was rerun before and is not rerun again.
+Without --execute this is a dry run: it lists the reruns and copies nothing, so it does not mark any game as rerun.
 Usage: python runs/study3_logs/rerun_failed.py [ROOT] [--execute]"""
 import collections, json, re, shutil, subprocess, sys, time
 from pathlib import Path
@@ -10,7 +11,9 @@ from sting.run import slug  # noqa: E402
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
 root = Path(args[0] if args else "runs/study3")
 failed_root = Path(str(root) + "_failed")
-models = {}  # model slug -> model id, from the run manifests
+execute = "--execute" in sys.argv
+# model slug -> model id: the three Study 3 models, plus any found in the run manifests (a killed run leaves none)
+models = {slug(m): m for m in ("mistralai/ministral-14b-2512", "qwen/qwen3.5-9b", "mistralai/ministral-8b-2512")}
 for m in root.glob("manifest_*.json"):
     mid = json.loads(m.read_text())["subject_model"]
     models[slug(mid)] = mid
@@ -28,9 +31,10 @@ for f in sorted(root.glob("study3/*/*/seed*.jsonl")):
     if model_slug not in models:
         print(f"no manifest for model {model_slug}; cannot rerun {rel}")
         continue
-    dest = failed_root / stamp / rel
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(f, dest)
+    if execute:  # the copy is also the "rerun once" marker, so only a real run makes it
+        dest = failed_root / stamp / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(f, dest)
     todo[(models[model_slug], arm)].append(int(re.search(r"seed(\d+)", f.name).group(1)))
 common = ["--agent-model", "google/gemma-3-12b-it", "--no-reasoning-models", "qwen/qwen3.5-9b", "--max-tokens", "512",
           "--out", str(root), "--cap-usd", "1.0", "--workers", "4"]
@@ -38,7 +42,8 @@ for (model, arm), seeds in sorted(todo.items()):
     cmd = ["python", "-m", "sting.run", "--subject-model", model, "--arms", arm,
            "--seeds", ",".join(map(str, sorted(seeds)))] + common
     print(" ".join(cmd))
-    if "--execute" in sys.argv:
+    if execute:
         subprocess.run(cmd, check=False)
-print(f"{sum(len(v) for v in todo.values())} crashed games to rerun (logs copied to {failed_root}/{stamp}/); "
+where = f"logs copied to {failed_root}/{stamp}/" if execute else "dry run: nothing copied or run; add --execute"
+print(f"{sum(len(v) for v in todo.values())} crashed games to rerun ({where}); "
       f"{len(skipped)} already rerun once, not rerun again: {skipped[:5]}")

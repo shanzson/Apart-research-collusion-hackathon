@@ -45,8 +45,8 @@ def pilot_logs(root: Path):
     for f in sorted(root.rglob("seed*.jsonl")):
         recs = S3.read_log(f)
         if recs and recs[0].get("type") == "game_start" and recs[0].get("arm") in S3.ARMS3 \
-                and int(recs[0]["seed"]) >= 100:
-            yield recs
+                and int(recs[0]["seed"]) >= 100 and any(r.get("type") == "game_end" for r in recs):
+            yield recs  # crashed games (no game_end) are left out, as in the analysis
 
 
 def main(argv: list[str] | None = None) -> int:
