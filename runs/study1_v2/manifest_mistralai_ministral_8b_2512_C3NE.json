@@ -1,0 +1,143 @@
+{
+  "arms": [
+    "C3NE"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "subject_model": "mistralai/ministral-8b-2512",
+  "agent_model": "google/gemma-3-12b-it",
+  "x_model": "mistralai/ministral-8b-2512",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "series_games": 1,
+  "offer_game": null,
+  "max_tokens": null,
+  "s_model": "google/gemma-3-12b-it",
+  "paper_sampling": false,
+  "spent_usd": 0.1801,
+  "calls": 1808,
+  "results": [
+    {
+      "arm": "C3NE",
+      "seed": 0,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0000.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 1,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0001.jsonl",
+      "ok": true,
+      "rounds": 6,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 2,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0002.jsonl",
+      "ok": true,
+      "rounds": 11,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 3,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0003.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 4,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0004.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 5,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0005.jsonl",
+      "ok": true,
+      "rounds": 20,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 6,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0006.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 7,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0007.jsonl",
+      "ok": true,
+      "rounds": 4,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 8,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0008.jsonl",
+      "ok": true,
+      "rounds": 7,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 9,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0009.jsonl",
+      "ok": true,
+      "rounds": 5,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 10,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0010.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "C3NE",
+      "seed": 11,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_8b_2512/seed0011.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}

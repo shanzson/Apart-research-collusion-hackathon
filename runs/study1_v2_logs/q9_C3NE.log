@@ -1,3 +1,4 @@
 {"arm": "C3NE", "seed": 1, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0001.jsonl", "ok": true, "rounds": 6, "completed": true}
 {"arm": "C3NE", "seed": 2, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0002.jsonl", "ok": true, "rounds": 15, "completed": true}
 {"arm": "C3NE", "seed": 0, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0000.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "C3NE", "seed": 4, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0004.jsonl", "ok": true, "rounds": 9, "completed": true}
