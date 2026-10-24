@@ -9,3 +9,5 @@
 {"arm": "C3NE", "seed": 8, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0008.jsonl", "ok": true, "rounds": 6, "completed": true}
 {"arm": "C3NE", "seed": 10, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0010.jsonl", "ok": true, "rounds": 8, "completed": true}
 {"arm": "C3NE", "seed": 9, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0009.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "C3NE", "seed": 11, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3NE/qwen_qwen3.5_9b/seed0011.jsonl", "ok": true, "rounds": 19, "completed": true}
+spent $0.2182 over 2093 calls

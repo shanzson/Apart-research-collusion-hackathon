@@ -1,0 +1,263 @@
+{
+  "arms": [
+    "C0"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "subject_model": "qwen/qwen3.5-9b",
+  "agent_model": "google/gemma-3-12b-it",
+  "x_model": "qwen/qwen3.5-9b",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "series_games": 1,
+  "offer_game": null,
+  "max_tokens": null,
+  "s_model": "google/gemma-3-12b-it",
+  "paper_sampling": false,
+  "spent_usd": 0.4087,
+  "calls": 3885,
+  "results": [
+    {
+      "arm": "C0",
+      "seed": 0,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0000.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 1,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0001.jsonl",
+      "ok": true,
+      "rounds": 7,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 2,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0002.jsonl",
+      "ok": true,
+      "rounds": 18,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 3,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0003.jsonl",
+      "ok": true,
+      "rounds": 16,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 4,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0004.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 5,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0005.jsonl",
+      "ok": true,
+      "rounds": 22,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 6,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0006.jsonl",
+      "ok": true,
+      "rounds": 8,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 7,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0007.jsonl",
+      "ok": true,
+      "rounds": 7,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 8,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0008.jsonl",
+      "ok": true,
+      "rounds": 5,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 9,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0009.jsonl",
+      "ok": true,
+      "rounds": 8,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 10,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0010.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 11,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0011.jsonl",
+      "ok": true,
+      "rounds": 17,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 12,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0012.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 13,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0013.jsonl",
+      "ok": true,
+      "rounds": 13,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 14,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0014.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 15,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0015.jsonl",
+      "ok": true,
+      "rounds": 5,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 16,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0016.jsonl",
+      "ok": true,
+      "rounds": 9,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 17,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0017.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 18,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0018.jsonl",
+      "ok": true,
+      "rounds": 9,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 19,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0019.jsonl",
+      "ok": true,
+      "rounds": 12,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 20,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0020.jsonl",
+      "ok": true,
+      "rounds": 10,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 21,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0021.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 22,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0022.jsonl",
+      "ok": true,
+      "rounds": 11,
+      "completed": true
+    },
+    {
+      "arm": "C0",
+      "seed": 23,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0023.jsonl",
+      "ok": true,
+      "rounds": 12,
+      "completed": true
+    }
+  ],
+  "git_sha": "local"
+}

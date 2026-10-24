@@ -20,3 +20,6 @@
 {"arm": "C0", "seed": 20, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C0/mistralai_ministral_14b_2512/seed0020.jsonl", "ok": true, "rounds": 11, "completed": true}
 {"arm": "C0", "seed": 19, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C0/mistralai_ministral_14b_2512/seed0019.jsonl", "ok": true, "rounds": 13, "completed": true}
 {"arm": "C0", "seed": 21, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C0/mistralai_ministral_14b_2512/seed0021.jsonl", "ok": true, "rounds": 11, "completed": true}
+{"arm": "C0", "seed": 22, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C0/mistralai_ministral_14b_2512/seed0022.jsonl", "ok": true, "rounds": 11, "completed": true}
+{"arm": "C0", "seed": 23, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C0/mistralai_ministral_14b_2512/seed0023.jsonl", "ok": true, "rounds": 13, "completed": true}
+spent $0.7691 over 5089 calls
