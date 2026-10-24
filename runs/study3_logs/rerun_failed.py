@@ -37,6 +37,7 @@ for f in sorted(root.glob("study3/*/*/seed*.jsonl")):
         shutil.copy2(f, dest)
     todo[(models[model_slug], arm)].append(int(re.search(r"seed(\d+)", f.name).group(1)))
 common = ["--agent-model", "google/gemma-3-12b-it", "--no-reasoning-models", "qwen/qwen3.5-9b", "--max-tokens", "512",
+          "--prefer-provider", "google/gemma-3-12b-it=deepinfra",  # as in launch.sh
           "--out", str(root), "--cap-usd", "1.0", "--workers", "4"]
 for (model, arm), seeds in sorted(todo.items()):
     cmd = ["python", "-m", "sting.run", "--subject-model", model, "--arms", arm,

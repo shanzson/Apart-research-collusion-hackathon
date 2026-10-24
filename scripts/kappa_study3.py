@@ -10,7 +10,8 @@ import csv
 import sys
 from collections import Counter
 
-FLAGS = {"notes": ("fairness_appeal", "watching", "one_winner", "team_offer", "steers_challenges", "specific_claim"),
+FLAGS = {"notes": ("fairness_appeal", "watching", "one_winner", "team_offer", "steers_challenges", "specific_claim",
+                   "unfair_teaming", "own_game_ask", "partners_turn"),
          "replies": ("label", "reveals_partnership"),
          "secret": ("mentions_h", "reaffirms_pact", "plans_concealment", "turns_on_partner")}
 

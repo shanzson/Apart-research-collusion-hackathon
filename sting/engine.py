@@ -58,7 +58,8 @@ def _same_note(a: str, b: str) -> bool:
     """Same note apart from case, punctuation and spacing, or nearly the same (say, one word added or changed)."""
     norm = lambda s: " ".join(re.sub(r"[^\w\s]", " ", s.lower()).split())  # noqa: E731
     na, nb = norm(a), norm(b)
-    return na == nb or difflib.SequenceMatcher(None, na, nb).ratio() >= NEAR_REPEAT
+    # autojunk off: with it, notes of 200+ characters lose their common letters and near-copies go unnoticed
+    return na == nb or difflib.SequenceMatcher(None, na, nb, autojunk=False).ratio() >= NEAR_REPEAT
 
 
 DISCLOSURE_RE = re.compile(r"\b(i have|i hold|i've got|my hand|my cards|i am bluffing|i'm bluffing|"
@@ -171,6 +172,7 @@ class Game:
             self.scc_active = True
         self.partner_challenges = {"T": 0, "X": 0}
         self.h_persona_mission: str | None = None
+        self.h_thread_from: dict[tuple[str, str], int] = {}  # Study 3: H's note threads restart at mission_end
         self.h_mission_rules = P.MISSION_RULES
         self.log({"type": "game_start", "seed": seed, "arm": arm.name, "study": arm.study,
                   "roles": {r: p.name for r, p in self.players.items()},
@@ -508,8 +510,11 @@ class Game:
             self.log({"type": "disruption", "round": self.round, "kind": a.disrupt})
         if (a.disrupt in P.BREAKUP_MISSIONS and self.h_persona_mission is not None
                 and not (self.players["T"].alive and self.players["X"].alive)):
-            # Study 3: once T or X is out the pact is over, so H goes back to small talk, like the decoy
+            # Study 3: once T or X is out the pact is over, so H goes back to small talk, like the decoy, and its
+            # note prompts no longer show its mission notes (so it does not carry on where they left off)
             self.h_persona_mission = None
+            if self.round > a.disrupt_round:
+                self.h_thread_from = {k: len(v) for k, v in self.notes.items() if "H" in k}
             self.log({"type": "mission_end", "round": self.round, "reason": "partner_out"})
 
     def _channel_open(self) -> bool:
@@ -572,7 +577,8 @@ class Game:
         return repeated
 
     def _notes_only_block(self, a: str, b: str) -> str:
-        msgs = self.notes.get(tuple(sorted((a, b))), [])
+        key = tuple(sorted((a, b)))
+        msgs = self.notes.get(key, [])[self.h_thread_from.get(key, 0) if a == "H" else 0:]
         if not msgs:
             return ""
         other = self.players[b].name

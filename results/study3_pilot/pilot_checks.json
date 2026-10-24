@@ -27,19 +27,52 @@
     },
     "d_pass": true,
     "e_H_repeat_sent": 0,
-    "e_pass": true,
+    "e_H_repeats_of_earlier_notes": [
+      "PE|qwen/qwen3.5-9b|100 r4 to T",
+      "PF|mistralai/ministral-8b-2512|101 r6 to T",
+      "PT|mistralai/ministral-14b-2512|100 r12 to X",
+      "PT|qwen/qwen3.5-9b|101 r9 to T"
+    ],
+    "e_pass": false,
     "a_delivery_first_note": {
-      "PF": 1.0,
-      "PE": 1.0,
-      "PT": 1.0,
+      "PF": 0.1,
+      "PE": 0.5,
+      "PT": 0.7,
       "PC": 1.0
     },
-    "a_pass": true,
-    "b_approach_where_none_due": 0.08759124087591241,
-    "b_pass": false,
-    "c_PC_offer_to_T": 0.02127659574468085,
+    "a_halves": {
+      "PF": {
+        "unfair_teaming": 0.1,
+        "own_game_ask": 0.9
+      },
+      "PE": {
+        "watching": 0.5
+      },
+      "PT": {
+        "one_winner": 1.0,
+        "partners_turn": 0.7
+      },
+      "PC": {
+        "team_offer": 1.0
+      }
+    },
+    "a_first_notes": {
+      "PF": 10,
+      "PE": 8,
+      "PT": 10,
+      "PC": 5
+    },
+    "a_pass_judge": false,
+    "b_approach_where_none_due": 0.0072992700729927005,
+    "b_pass": true,
+    "b2_approach_after_pact": 0.532967032967033,
+    "b2_notes": 182,
+    "b2_pass": false,
+    "c_PC_offer_to_T": 0.0,
     "c_pass": true,
-    "labelled_notes": 477
+    "labelled_notes": 477,
+    "labels_missing": [],
+    "n_labels_missing": 0
   },
   "G3_invalid": {
     "decisions": {
@@ -48,15 +81,64 @@
       "qwen/qwen3.5-9b": 0.0
     },
     "plays": {
-      "mistralai/ministral-8b-2512": 0.0,
       "qwen/qwen3.5-9b": 0.03731343283582089,
-      "mistralai/ministral-14b-2512": 0.0035971223021582736
+      "mistralai/ministral-14b-2512": 0.0035971223021582736,
+      "mistralai/ministral-8b-2512": 0.0
     },
     "pass": true
   },
   "reported": {
     "games": 30,
     "crashed": 0,
+    "games_entering_primary": 15,
+    "entering_primary_by_arm_model": {
+      "P0|mistralai/ministral-14b-2512": 2,
+      "P0|mistralai/ministral-8b-2512": 0,
+      "P0|qwen/qwen3.5-9b": 1,
+      "PF|mistralai/ministral-14b-2512": 2,
+      "PF|mistralai/ministral-8b-2512": 1,
+      "PF|qwen/qwen3.5-9b": 2,
+      "PE|mistralai/ministral-14b-2512": 2,
+      "PE|mistralai/ministral-8b-2512": 0,
+      "PE|qwen/qwen3.5-9b": 1,
+      "PT|mistralai/ministral-14b-2512": 2,
+      "PT|mistralai/ministral-8b-2512": 0,
+      "PT|qwen/qwen3.5-9b": 1,
+      "PC|mistralai/ministral-14b-2512": 0,
+      "PC|mistralai/ministral-8b-2512": 0,
+      "PC|qwen/qwen3.5-9b": 1
+    },
+    "tx_out_before_r2_no_mission": [
+      "P0|mistralai/ministral-8b-2512|101",
+      "P0|qwen/qwen3.5-9b|101",
+      "PC|mistralai/ministral-14b-2512|101",
+      "PE|mistralai/ministral-8b-2512|101",
+      "PE|qwen/qwen3.5-9b|101",
+      "PF|mistralai/ministral-8b-2512|101",
+      "PT|mistralai/ministral-8b-2512|101"
+    ],
+    "gemma_providers_by_arm": {
+      "P0": {
+        "DeepInfra": 40,
+        "NextBit": 754
+      },
+      "PF": {
+        "NextBit": 600,
+        "DeepInfra": 34
+      },
+      "PE": {
+        "DeepInfra": 40,
+        "NextBit": 702
+      },
+      "PT": {
+        "DeepInfra": 39,
+        "NextBit": 679
+      },
+      "PC": {
+        "DeepInfra": 38,
+        "NextBit": 735
+      }
+    },
     "capped_share": 0.0,
     "h_out_before_r2": 0,
     "rounds_mean_by_arm": {

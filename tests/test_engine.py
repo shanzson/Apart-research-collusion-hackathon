@@ -489,6 +489,30 @@ def test_same_note_counts_near_copies():
     assert not _same_note("Good luck this round, Jordan!", "Only one of us can win, Jordan, so alliances never last.")
 
 
+def test_same_note_catches_near_copies_of_long_notes():
+    from sting.engine import _same_note
+    base = ("Only one of us can win tonight, Jordan, so think about where every partnership at this table ends up: "
+            "sooner or later someone has to turn on their partner, and you do not want to be the one caught out last.")
+    assert len(base) > 200
+    assert _same_note(base.replace("tonight", "today"), base) and _same_note(base, base.replace("tonight", "today"))
+
+
+def test_after_mission_end_h_no_longer_sees_its_mission_notes():
+    g, sink = make("PC", 4)
+    g.start_round(None)
+    g.start_round(None)  # round 2: the mission is on and H has written to X
+    before = len(g.notes[("H", "X")])
+    old_h = {t for sp, t in g.notes[("H", "X")] if sp == "H"}
+    assert old_h == {"Good luck this round."}
+    g.players["T"].alive = False
+    g.llm = _ScriptedNotes([f"Fresh small talk number {i}." for i in range(20)])
+    g.start_round(None)  # round 3: the pact is over
+    assert g.h_thread_from[("H", "X")] == before
+    block = g._notes_only_block("H", "X")
+    assert "Fresh small talk number" in block and "Good luck this round." not in block
+    assert "Good luck this round." in g._notes_only_block("S", "X")  # the decoy's thread is untouched
+
+
 class _ScriptedNotes(MockLLM):
     """Mock whose notes are taken from a fixed list, one per compose call."""
     def __init__(self, notes, seed=0):

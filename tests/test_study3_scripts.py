@@ -76,3 +76,62 @@ def test_skip_done_replays_only_unfinished_games_and_keeps_their_logs(tmp_path, 
     assert any(json.loads(l).get("type") == "game_end" for l in cut.read_text().splitlines())  # replayed
     kept = list((tmp_path / "runs_failed").glob("*/study3/PE/*/seed0001.jsonl"))
     assert len(kept) == 1 and kept[0].read_text().endswith('"fr')
+
+
+def _mock_pilot(root: Path) -> None:
+    from sting import run as R
+    assert R.main(["--arms", "P0,PF,PE,PT,PC", "--seeds", "100-101", "--mock", "--no-interview", "--workers", "4",
+                   "--out", str(root)]) == 0
+
+
+def test_pilot_check_matches_labels_to_notes_and_gates_post_pact_pitching(tmp_path):
+    import csv
+    import classify_study3 as C
+    import study3_pilot_check as PC
+    root = tmp_path / "runs"
+    _mock_pilot(root)
+    items = C.load_items(root, "notes", include_pilot=True)
+    assert items and any(not it["pact"] for it in items if it["round"] >= 2)
+    path = tmp_path / "labels.csv"
+
+    def write(rows):
+        with path.open("w", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=["key", *rows[0][0].keys(), *C.NOTE_FLAGS, "parsed"])
+            w.writeheader()
+            for it, flags in rows:
+                w.writerow({"key": C.item_key("notes", it), **it, **{k: k in flags for k in C.NOTE_FLAGS},
+                            "parsed": True})
+
+    def delivered(it):  # every approach note carries the whole point, nothing else carries anything
+        return set(PC.LABEL_OF[it["arm"]]) if it["arm"] in PC.LABEL_OF and it["round"] >= 2 and it["pact"] \
+            and (it["arm"] != "PC" or it["to"] == "X") else set()
+    write([(it, delivered(it)) for it in items])
+    PC.main([str(root), str(tmp_path / "out1"), "--notes-labels", str(path)])
+    g = json.loads((tmp_path / "out1" / "pilot_checks.json").read_text())["G2_H_notes"]
+    assert g["n_labels_missing"] == 0 and g["a_pass_judge"] and g["b_pass"] and g["b2_pass"] and g["c_pass"]
+    assert "PACT_OVER" in (tmp_path / "out1" / "notes_for_reading.txt").read_text()
+    # pitching after the pact is over fails b2 (and only b2)
+    write([(it, delivered(it) | ({"one_winner"} if it["arm"] == "PT" and it["round"] >= 2 and not it["pact"] else set()))
+           for it in items])
+    PC.main([str(root), str(tmp_path / "out2"), "--notes-labels", str(path)])
+    g = json.loads((tmp_path / "out2" / "pilot_checks.json").read_text())["G2_H_notes"]
+    assert not g["b2_pass"] and g["b_pass"] and g["a_pass_judge"]
+    # labels from another run (different text) do not count: the check is incomplete, not passed
+    write([({**it, "text": it["text"] + " (other run)"}, delivered(it)) for it in items])
+    PC.main([str(root), str(tmp_path / "out3"), "--notes-labels", str(path)])
+    g = json.loads((tmp_path / "out3" / "pilot_checks.json").read_text())["G2_H_notes"]
+    assert g["n_labels_missing"] == len(items) and not (g["a_pass_judge"] or g["b_pass"] or g["b2_pass"] or g["c_pass"])
+
+
+def test_hand_sample_of_notes_draws_only_where_an_approach_can_be_due(tmp_path):
+    import csv
+    import classify_study3 as C
+    root = tmp_path / "runs"
+    _mock_pilot(root)
+    out = tmp_path / "hand.csv"
+    assert C.main([str(root), "--task", "notes", "--include-pilot", "--hand-sample", "40", "--out", str(out)]) == 0
+    key = list(csv.DictReader((tmp_path / "hand_KEY.csv").open()))
+    items = {C.item_key("notes", it): it for it in C.load_items(root, "notes", include_pilot=True)}
+    drawn = [items[k["key"]] for k in key]
+    assert drawn and all(it["round"] >= 2 and it["pact"] and (it["arm"] != "PC" or it["to"] == "X") for it in drawn)
+    assert {it["arm"] for it in drawn} == {"P0", "PF", "PE", "PT", "PC"}
