@@ -417,7 +417,9 @@ def test_h_acts_from_round_2_and_only_in_treatment_arms(arm):
         assert h == g._persona("S")
     else:
         assert MISSION_MARK[arm] in h and h.endswith(P.BREAKUP_MISSION_RULES) and P.DECOY_CLAUSE not in h
-        assert g.players["T"].name in h and g.players["X"].name in h and g.players["S"].name in h
+        assert g.players["T"].name in h and g.players["X"].name in h
+        assert g.players["S"].name not in h  # the decoy is never mentioned to H (it is the comparison player)
+        assert g._persona("H", for_notes=False) == g._persona("S")  # H's play prompts carry the decoy text
 
 
 def test_counter_offer_courts_x_and_keeps_t_to_small_talk():
@@ -431,12 +433,33 @@ def test_counter_offer_courts_x_and_keeps_t_to_small_talk():
 
 @pytest.mark.parametrize("arm", STUDY3)
 def test_h_never_challenges_in_study3(arm):
-    for seed in range(4):
+    judged = set()
+    for seed in range(60):
         g, sink = make(arm, seed)
         g.play()
         for r in sink:
             if r["type"] == "decision" and r["judge"] == "H":
-                assert r["actor"] in ("T", "X") and r["forced"] and r["challenged"] is False
+                judged.add(r["actor"])
+                assert r["forced"] and r["challenged"] is False
+    assert judged == {"T", "X", "S"}  # including the rare case where H judges the decoy
+
+
+def test_h_mission_reaches_notes_but_not_play_prompts():
+    llm = MockLLM(seed=7)
+    g, sink = make("PT", 7, llm=llm)
+    g.play()
+    h_prompts = [p for m, p in llm.calls if m == "m-h"]
+    notes = [p for p in h_prompts if '"message"' in p]
+    plays = [p for p in h_prompts if '"played_cards"' in p]
+    assert plays and not any("only one player can win" in p for p in plays)
+    assert any("only one player can win" in p for p in notes)
+
+
+def test_pact_wording():
+    assert P.PACT.endswith("When the game started, {h} and {s} did not know about your agreement.")
+    assert "{s}" not in "".join(P.BREAKUP_MISSIONS.values())
+    assert "never suggest whom anyone should challenge" in P.BREAKUP_MISSION_RULES
+    assert "do not cite specific plays" in P.BREAKUP_MISSIONS["expose"]
 
 
 def test_repeat_guard_in_study3_only():
@@ -463,9 +486,13 @@ def test_pact_interview_asks_about_the_agreement():
     g.play()
     g.interview("T")
     iv = [r for r in sink if r["type"] == "interview"][0]
-    assert {"kept_agreement", "partner_kept_agreement", "new_agreement", "turned_by"} <= set(iv)
+    assert {"kept_agreement", "partner_kept_agreement", "new_agreement", "turned_by", "suspected_by"} <= set(iv)
     prompt = g.llm.calls[-1][1]
     assert prompt.startswith("Before this game started") and g.players["X"].name in prompt
+    n_tx = sum(r["type"] == "decision" and r["judge"] == "T" and r["actor"] == "X" and r["challenged"] for r in sink)
+    n_xt = sum(r["type"] == "decision" and r["judge"] == "X" and r["actor"] == "T" and r["challenged"] for r in sink)
+    x = g.players["X"].name
+    assert f"You challenged {x}'s plays {n_tx} time(s) this game, and {x} challenged your plays {n_xt} time(s)." in prompt
     g1, sink1 = make("C3", 6)
     g1.play()
     g1.interview("T")

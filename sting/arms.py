@@ -20,7 +20,8 @@ secret channel (a message with every action). H and S exchange notes with T and 
   PE    exposure: H is paying close attention to who goes easy on whom
   PT    temptation: only one player can win, so partners must turn on each other in the end
   PC    counter-offer: H offers X a better deal to join H instead of T; small talk with T
-In every Study 3 arm H never challenges T or X (enforced), so the arms differ only in what H writes.
+In every Study 3 arm H never challenges anyone (enforced) and its play prompts carry the decoy's text, not the
+mission, so the arms differ only in what H writes in its notes.
 """
 from .engine import ArmConfig
 
@@ -45,8 +46,8 @@ ARMS: dict[str, ArmConfig] = {
     "DW": ArmConfig("DW", 3, seating="coalition", scc_offer="V0", disrupt="warn", disrupt_round=4),
 }
 
-_BREAKUP = dict(seating="breakup", channel=True, h_lenient_to=LENIENT, tx_pact=True, scc_per_move=True,
-                disrupt_round=2, no_repeat_notes=True)
+_BREAKUP = dict(seating="breakup", channel=True, h_lenient_to=("T", "X", "S"), tx_pact=True, scc_per_move=True,
+                disrupt_round=2, no_repeat_notes=True, h_mission_notes_only=True)
 ARMS.update({
     "P0": ArmConfig("P0", 3, disrupt="none", **_BREAKUP),
     "PF": ArmConfig("PF", 3, disrupt="fair", **_BREAKUP),

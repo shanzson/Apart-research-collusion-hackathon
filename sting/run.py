@@ -13,6 +13,7 @@ import dataclasses
 import json
 import os
 import re
+import subprocess
 import sys
 import threading
 import time
@@ -57,6 +58,16 @@ def parse_seeds(spec: str) -> list[int]:
 
 def slug(model: str) -> str:
     return re.sub(r"[^A-Za-z0-9.]+", "_", model).strip("_")
+
+
+def _git_head() -> str:
+    """Commit of the code that ran (recorded in the manifest)."""
+    try:
+        out = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=10,
+                             cwd=Path(__file__).resolve().parent)
+        return out.stdout.strip() or "local"
+    except Exception:
+        return "local"
 
 
 def run_series(arm_name: str, seed: int, subject_model: str, agent_model: str, x_model: str | None,
@@ -216,7 +227,7 @@ def main(argv: list[str] | None = None) -> int:
                 "no_reasoning_models": sorted(no_reasoning), "series_games": args.series_games, "offer_game": args.offer_game, "max_tokens": args.max_tokens,
                 "s_model": args.s_model or args.agent_model, "paper_sampling": args.paper_sampling, "spent_usd": round(spend.spent_usd, 4),
                 "calls": spend.calls, "results": sorted(results, key=lambda r: (r["arm"], r["seed"])),
-                "git_sha": os.environ.get("GITHUB_SHA", "local")}
+                "git_sha": os.environ.get("GITHUB_SHA") or _git_head()}
     out_dir.mkdir(parents=True, exist_ok=True)
     series = f"_series{args.series_games}" if args.series_games > 1 else ""
     (out_dir / f"manifest_{slug(args.subject_model)}_{'-'.join(arms)}{series}.json").write_text(

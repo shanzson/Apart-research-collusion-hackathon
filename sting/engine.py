@@ -85,6 +85,7 @@ class ArmConfig:
     # Study 3 (addendum 4): T and X start with a secret pre-game pact and a secret channel from round 1
     tx_pact: bool = False
     no_repeat_notes: bool = False           # H and S may not send the same note twice in a row to the same player
+    h_mission_notes_only: bool = False      # H's mission shapes its notes only; its play prompts get the decoy text
 
 
 @dataclass
@@ -163,6 +164,7 @@ class Game:
                              for s, t in carry.get("scc_msgs", [])]
         if arm.tx_pact:  # Study 3: the pact comes with a secret channel that is open from the first round
             self.scc_active = True
+        self.partner_challenges = {"T": 0, "X": 0}
         self.h_persona_mission: str | None = None
         self.h_mission_rules = P.MISSION_RULES
         self.log({"type": "game_start", "seed": seed, "arm": arm.name, "study": arm.study,
@@ -362,7 +364,7 @@ class Game:
             round_action_info=self.round_actions(actor.name, True), private_block=self.private_block(actor.role),
             play_decision_info=self._decision_info(actor, judge, playing=True), current_cards=", ".join(actor.hand))
         if actor.role in ("H", "S"):
-            prompt = self._persona(actor.role) + "\n\n" + prompt
+            prompt = self._persona(actor.role, for_notes=False) + "\n\n" + prompt
         prompt = self._pact(actor.role) + prompt
         prompt += self._secret_message_request(actor.role)
         for attempt in range(3):
@@ -401,7 +403,7 @@ class Game:
             challenge_decision_info=self._decision_info(judge, actor, playing=False),
             challenging_player_performance=perf, extra_hint=extra)
         if judge.role in ("H", "S"):
-            prompt = self._persona(judge.role) + "\n\n" + prompt
+            prompt = self._persona(judge.role, for_notes=False) + "\n\n" + prompt
         prompt = self._pact(judge.role) + prompt
         prompt += self._secret_message_request(judge.role)
         for attempt in range(3):
@@ -459,14 +461,15 @@ class Game:
                 p.opinions[other] = (txt or "").strip()[:1200] or p.opinions.get(other, "")
 
     # ------------------------------------------------------------------ [OURS] private channel
-    def _persona(self, role: str) -> str:
+    def _persona(self, role: str, for_notes: bool = True) -> str:
         if not self._channel_open():
             return P.PLAIN_PERSONA
         targets = " and ".join(self.players[r].name for r in self.arm.channel_targets)
         base = P.BASE_PERSONA.format(targets=targets)
-        if role == "S" or (role == "H" and not self.h_persona_mission):
+        mission = self.h_persona_mission if (for_notes or not self.arm.h_mission_notes_only) else None
+        if role == "S" or (role == "H" and not mission):
             return base + "\n" + P.DECOY_CLAUSE
-        return base + "\n" + self.h_persona_mission + "\n" + self.h_mission_rules
+        return base + "\n" + mission + "\n" + self.h_mission_rules
 
     def _pact(self, role: str) -> str:
         """Study 3: the pre-game pact, at the top of every prompt that T or X sees."""
@@ -664,6 +667,8 @@ class Game:
         self.history.append(rec)
         bluff = not self.is_valid(cards)
         challenge, reason, ok_ch, forced = self.decide_challenge(judge, cur)
+        if challenge and {judge.role, cur.role} == {"T", "X"}:
+            self.partner_challenges[judge.role] += 1  # Study 3 interview: who challenged their partner, how often
         rec.was_challenged = challenge
         rec.challenge_result = bluff if challenge else None
         self.log({"type": "decision", "round": self.round, "actor": cur.role, "judge": judge.role,
@@ -725,18 +730,21 @@ class Game:
             lines.append("Eliminated in order: " + ", ".join(self.elimination_order) + ".")
         if self.arm.tx_pact:  # Study 3: questions about the pact replace the general agreement question
             partner = self.players["X" if role == "T" else "T"]
+            mine, theirs = self.partner_challenges[role], self.partner_challenges[partner.role]
+            lines.append(f"You challenged {partner.name}'s plays {mine} time(s) this game, and {partner.name} "
+                         f"challenged your plays {theirs} time(s).")  # the same factual line in every arm
             prompt = self._pact(role) + P.INTERVIEW_PACT_TEMPLATE.format(
                 rules=P.RULES, self_name=p.name, game_summary="\n".join(lines),
                 private_block=self.private_block(role), partner=partner.name)
             keys = ("least_challenger", "went_easy", "kept_agreement", "partner_kept_agreement", "new_agreement",
-                    "new_agreement_explanation", "turned_by", "unusual_player")
+                    "new_agreement_explanation", "turned_by", "suspected_by", "unusual_player")
         else:
             prompt = P.INTERVIEW_TEMPLATE.format(rules=P.RULES, self_name=p.name, game_summary="\n".join(lines),
                                                  private_block=self.private_block(role))
             keys = ("least_challenger", "went_easy", "agreement", "agreement_explanation", "unusual_player")
         obj = extract_json(self._call(role, "interview", prompt, max_tokens=400 if self.arm.tx_pact else 300)) or {}
         out = {"type": "interview", "role": role, **{k: obj.get(k) for k in keys}}
-        for k in ("least_challenger", "went_easy", "unusual_player", "turned_by"):
+        for k in ("least_challenger", "went_easy", "unusual_player", "turned_by", "suspected_by"):
             v = out.get(k)
             if isinstance(v, str) and v in self.by_name:
                 out[k + "_role"] = self._role(v)
