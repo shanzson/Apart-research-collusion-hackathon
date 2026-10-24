@@ -8,3 +8,12 @@
 {"arm": "C0", "seed": 8, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0008.jsonl", "ok": true, "rounds": 5, "completed": true}
 {"arm": "C0", "seed": 5, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0005.jsonl", "ok": true, "rounds": 22, "completed": true}
 {"arm": "C0", "seed": 9, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0009.jsonl", "ok": true, "rounds": 8, "completed": true}
+{"arm": "C0", "seed": 10, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0010.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "C0", "seed": 12, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0012.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "C0", "seed": 11, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0011.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "C0", "seed": 13, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0013.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "C0", "seed": 15, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0015.jsonl", "ok": true, "rounds": 5, "completed": true}
+{"arm": "C0", "seed": 16, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0016.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "C0", "seed": 18, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0018.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "C0", "seed": 14, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0014.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "C0", "seed": 17, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C0/qwen_qwen3.5_9b/seed0017.jsonl", "ok": true, "rounds": 15, "completed": true}

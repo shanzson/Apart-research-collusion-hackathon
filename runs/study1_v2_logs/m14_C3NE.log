@@ -5,3 +5,9 @@
 {"arm": "C3NE", "seed": 4, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0004.jsonl", "ok": true, "rounds": 12, "completed": true}
 {"arm": "C3NE", "seed": 6, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0006.jsonl", "ok": true, "rounds": 6, "completed": true}
 {"arm": "C3NE", "seed": 7, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0007.jsonl", "ok": true, "rounds": 7, "completed": true}
+{"arm": "C3NE", "seed": 5, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0005.jsonl", "ok": true, "rounds": 21, "completed": true}
+{"arm": "C3NE", "seed": 8, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0008.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "C3NE", "seed": 9, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0009.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "C3NE", "seed": 10, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0010.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "C3NE", "seed": 11, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study1_v2/study1/C3NE/mistralai_ministral_14b_2512/seed0011.jsonl", "ok": true, "rounds": 15, "completed": true}
+spent $0.3582 over 2638 calls
