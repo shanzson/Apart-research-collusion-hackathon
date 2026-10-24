@@ -166,6 +166,8 @@ label as it comes in and resumes after a stop at its spending cap (notes $4, rep
 3. The AI-judge rubric is tuned on the pilot texts and frozen.
 4. Second independent audit of the code and the pilot, then the study lead's approval.
 5. Main run, detached; monitoring limited to progress, crashes and spend (`runs/study3_logs/status.py`).
+   The launcher passes `--skip-done`: if the run is stopped from outside (a container restart stopped the pilot),
+   the same command resumes it, never replays a finished game, and keeps unfinished logs in `runs/study3_failed/`.
 
 ## Scope and ethics
 

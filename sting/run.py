@@ -13,6 +13,7 @@ import dataclasses
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import threading
@@ -68,6 +69,32 @@ def _git_head() -> str:
         return out.stdout.strip() or "local"
     except Exception:
         return "local"
+
+
+def resume_jobs(jobs: list[tuple[str, int]], out_dir: Path, subject_model: str) -> list[tuple[str, int]]:
+    """[OURS] For --skip-done: drop single games whose log already has a game_end record, so a run stopped from
+    outside (say, a container restart) can be relaunched with the same command. An unfinished log is copied to
+    <out>_failed/<time>/ before its game is played again, because the new game overwrites it."""
+    keep = Path(str(out_dir) + "_failed") / time.strftime("%Y%m%dT%H%M%S")
+    todo, done = [], 0
+    for a, s in jobs:
+        path = out_dir / f"study{ARMS[a].study}" / a / slug(subject_model) / f"seed{s:04d}.jsonl"
+        if path.exists():
+            ended = False
+            for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+                try:
+                    ended = ended or json.loads(line).get("type") == "game_end"
+                except (json.JSONDecodeError, AttributeError):
+                    continue  # a line cut off by the stop
+            if ended:
+                done += 1
+                continue
+            dest = keep / path.relative_to(out_dir)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, dest)
+        todo.append((a, s))
+    print(json.dumps({"skip_done": done, "to_run": len(todo)}), flush=True)
+    return todo
 
 
 def run_series(arm_name: str, seed: int, subject_model: str, agent_model: str, x_model: str | None,
@@ -172,9 +199,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--provider-order", default="", help="comma-separated OpenRouter provider preference")
     ap.add_argument("--no-reasoning-models", default="",
                     help="comma-separated model IDs to call with reasoning disabled (thinking models)")
+    ap.add_argument("--skip-done", action="store_true",
+                    help="single games only: skip games whose log already has a game_end record (to resume a "
+                         "stopped run); unfinished logs are copied to <out>_failed/<time>/ and played again")
     args = ap.parse_args(argv)
     if args.offer_game is not None and not 1 <= args.offer_game <= args.series_games:
         ap.error("--offer-game must be between 1 and --series-games")
+    if args.skip_done and args.series_games > 1:
+        ap.error("--skip-done works for single games only")
 
     arms = [a.strip() for a in args.arms.split(",") if a.strip()]
     for a in arms:
@@ -198,6 +230,8 @@ def main(argv: list[str] | None = None) -> int:
                                     max_attempts=10 if args.series_games > 1 else 5)
 
     jobs = [(a, s) for s in seeds for a in arms]  # interleave arms within each seed
+    if args.skip_done:
+        jobs = resume_jobs(jobs, out_dir, args.subject_model)
     results: list[dict] = []
     stop = False
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
