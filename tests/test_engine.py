@@ -458,7 +458,7 @@ def test_h_mission_reaches_notes_but_not_play_prompts():
 def test_pact_wording():
     assert P.PACT.endswith("When the game started, {h} and {s} did not know about your agreement.")
     assert "{s}" not in "".join(P.BREAKUP_MISSIONS.values())
-    assert "never suggest whom anyone should challenge" in P.BREAKUP_MISSION_RULES
+    assert "apart from what your mission asks, never suggest whom anyone should challenge or trust" in P.BREAKUP_MISSION_RULES
     assert "do not cite specific plays" in P.BREAKUP_MISSIONS["expose"]
 
 
@@ -498,3 +498,17 @@ def test_pact_interview_asks_about_the_agreement():
     g1.interview("T")
     iv1 = [r for r in sink1 if r["type"] == "interview"][0]
     assert "agreement" in iv1 and "kept_agreement" not in iv1  # Study 1 interview unchanged
+
+
+def test_h_and_s_play_prompts_leave_out_their_notes_in_study3():
+    llm = MockLLM(seed=8)
+    g, sink = make("PC", 8, llm=llm)
+    g.play()
+    for model, prompt in llm.calls:
+        if model in ("m-h", "m-s") and '"played_cards"' in prompt:
+            assert P.PRIVATE_BLOCK_HEADER not in prompt and "better deal" not in prompt
+    t_plays = [p for m, p in llm.calls if m == "m-t" and '"played_cards"' in p]
+    assert any(P.PRIVATE_BLOCK_HEADER in p for p in t_plays)  # the partners still see their notes
+    g1, _ = make("C2", 8, llm=MockLLM(seed=8))
+    g1.start_round(None)
+    assert g1._play_private_block("H") == g1.private_block("H")  # Study 1 unchanged

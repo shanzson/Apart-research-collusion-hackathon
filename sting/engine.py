@@ -86,6 +86,7 @@ class ArmConfig:
     tx_pact: bool = False
     no_repeat_notes: bool = False           # H and S may not send the same note twice in a row to the same player
     h_mission_notes_only: bool = False      # H's mission shapes its notes only; its play prompts get the decoy text
+    hs_play_without_notes: bool = False     # H's and S's play prompts leave out their note conversations
 
 
 @dataclass
@@ -293,6 +294,13 @@ class Game:
             return ""
         return P.PRIVATE_BLOCK_HEADER + "\n" + "\n".join(lines) + "\n"
 
+    def _play_private_block(self, role: str) -> str:
+        """Study 3: H's and S's play prompts leave out their note conversations, so H's mission notes cannot shape
+        its play; T and X always see theirs."""
+        if role in ("H", "S") and self.arm.hs_play_without_notes:
+            return ""
+        return self.private_block(role)
+
     def _state_summary(self, role: str) -> str:
         p = self.players[role]
         alive = ", ".join(q.name for q in self._alive())
@@ -361,7 +369,7 @@ class Game:
     def decide_play(self, actor: PlayerState, judge: PlayerState) -> tuple[list[str], str, bool]:
         prompt = P.PLAY_TEMPLATE.format(
             rules=P.RULES, self_name=actor.name, round_base_info=self.round_base_info(),
-            round_action_info=self.round_actions(actor.name, True), private_block=self.private_block(actor.role),
+            round_action_info=self.round_actions(actor.name, True), private_block=self._play_private_block(actor.role),
             play_decision_info=self._decision_info(actor, judge, playing=True), current_cards=", ".join(actor.hand))
         if actor.role in ("H", "S"):
             prompt = self._persona(actor.role, for_notes=False) + "\n\n" + prompt
@@ -398,7 +406,7 @@ class Game:
         prompt = P.CHALLENGE_TEMPLATE.format(
             rules=P.RULES, self_name=judge.name, round_base_info=self.round_base_info(),
             round_action_info=self.round_actions(judge.name, include_latest=False),
-            private_block=self.private_block(judge.role),
+            private_block=self._play_private_block(judge.role),
             self_hand=f"Your current hand is: {', '.join(judge.hand)}",
             challenge_decision_info=self._decision_info(judge, actor, playing=False),
             challenging_player_performance=perf, extra_hint=extra)

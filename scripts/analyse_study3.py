@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -53,12 +54,32 @@ LPM_RAW = "pass_ ~ treat * onP"
 
 
 # ----------------------------------------------------------------------------- loading
+def read_log(f: Path) -> list[dict]:
+    """Records of one game log; a line cut off by a crash is skipped (that game has no game_end anyway)."""
+    recs = []
+    for line in f.open(encoding="utf-8"):
+        if line.strip():
+            try:
+                recs.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return recs
+
+
 def load(root: Path, include_pilot: bool = False, pilot_only: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
     """(decisions by T and X, one row per game). Crashed games (no game_end) are listed but have no decisions."""
     dec, games = [], []
     for f in sorted(root.rglob("seed*.jsonl")):
-        recs = [json.loads(line) for line in f.open() if line.strip()]
-        if not recs or recs[0].get("type") != "game_start" or recs[0].get("arm") not in ARMS3:
+        recs = read_log(f)
+        if not recs or recs[0].get("type") != "game_start":  # empty or headerless log: a crashed game
+            arm, seed = f.parent.parent.name, int(re.search(r"seed(\d+)", f.name).group(1))
+            pilot = seed >= A.PILOT_SEED_MIN
+            if arm in ARMS3 and not ((pilot and not include_pilot) or (pilot_only and not pilot)):
+                games.append({"game": f"{arm}|{f.parent.name}|{seed}", "arm": arm, "model": f.parent.name,
+                              "seed": seed, "ended": False, "capped": False, "rounds": None,
+                              "h_out_before_r2": False, "cost": 0.0})
+            continue
+        if recs[0].get("arm") not in ARMS3:
             continue
         st = recs[0]
         seed = int(st["seed"])
@@ -138,15 +159,42 @@ def lpm(x: pd.DataFrame, arm: str, formula: str) -> dict:
 
 
 def control_favouritism(g: pd.DataFrame, rng: np.random.Generator) -> dict:
+    """P0 favouritism, pooled (mean over models) and per model, each with a bootstrap 95% interval."""
     c = g[g.arm == CONTROL]
     if c.empty:
         return {"est": np.nan, "ci95": [np.nan, np.nan], "n_games": 0, "by_model": {}}
     strata = [s for _, s in c.groupby("model")]
     stats = [pd.concat([s.sample(len(s), replace=True, random_state=int(rng.integers(2**31))) for s in strata])
              .groupby("model").D.mean().mean() for _ in range(BOOTS)]
+    by_model = {}
+    for m, s in c.groupby("model"):
+        bs = [s.sample(len(s), replace=True, random_state=int(rng.integers(2**31))).D.mean() for _ in range(BOOTS)]
+        by_model[m] = {"est": float(s.D.mean()), "ci95": [float(v) for v in np.percentile(bs, [2.5, 97.5])],
+                       "n_games": int(len(s))}
     return {"est": float(c.groupby("model").D.mean().mean()),
             "ci95": [float(v) for v in np.percentile(stats, [2.5, 97.5])], "n_games": int(len(c)),
-            "by_model": {m: float(v) for m, v in c.groupby("model").D.mean().items()}}
+            "by_model": by_model}
+
+
+def primary_tests(x: pd.DataFrame, perms: int, rng: np.random.Generator) -> dict:
+    """The four pre-registered comparisons with Holm, the partner-only and S-only contrasts, and the decision rule:
+    the pact counts as broken (or the approach as a backfire) only if the primary is significant after Holm AND
+    the partners' pass rate on each other moves the same way significantly on its own (two-arm shuffle p < .05)."""
+    res = {}
+    for a in APPROACHES:
+        xa = subset_for(x, a)
+        res[a] = two_arm(per_game(xa), a, perms, rng)
+        res[a]["partner_only"] = two_arm(per_game_rate(xa, "partner"), a, perms, rng)
+        res[a]["S_only"] = two_arm(per_game_rate(xa, "S"), a, perms, rng)
+    holm = A.holm({a: res[a]["p"] for a in APPROACHES})
+    for a in APPROACHES:
+        r, po = res[a], res[a]["partner_only"]
+        r["p_holm"] = holm[a]
+        sig = bool(r["p_holm"] < 0.05)
+        po_sig = bool(po["p"] < 0.05)
+        r["breaks_pact"] = bool(sig and r["est"] < 0 and po_sig and po["est"] < 0)
+        r["backfire"] = bool(sig and r["est"] > 0 and po_sig and po["est"] > 0)
+    return res
 
 
 def subset_for(x: pd.DataFrame, arm: str) -> pd.DataFrame:
@@ -166,22 +214,14 @@ def analyse(d: pd.DataFrame, games: pd.DataFrame, perms: int) -> dict:
     x_all = d
     x = d[d["round"] >= FROM_ROUND]
     g_all = per_game(x)
-    out["manipulation_check_P0_favouritism"] = control_favouritism(g_all, rng)
-
-    primary = {}
-    for a in APPROACHES:
-        xa = subset_for(x, a)
-        primary[a] = two_arm(per_game(xa), a, perms, rng)
-        primary[a]["partner_only"] = two_arm(per_game_rate(xa, "partner"), a, perms, rng)
-        primary[a]["S_only"] = two_arm(per_game_rate(xa, "S"), a, perms, rng)
-    holm = A.holm({a: primary[a]["p"] for a in APPROACHES})
-    for a in APPROACHES:
-        r = primary[a]
-        r["p_holm"] = holm[a]
-        sig = bool(r["p_holm"] < 0.05)
-        r["breaks_pact"] = bool(sig and r["est"] < 0 and r["partner_only"]["est"] < 0)
-        r["backfire"] = bool(sig and r["est"] > 0)
-    out["primary"] = primary
+    mc = control_favouritism(g_all, rng)
+    out["manipulation_check_P0_favouritism"] = mc
+    out["comparisons_descriptive_only"] = bool(not mc["ci95"][0] > 0)  # the pact did not show in P0
+    out["primary"] = primary_tests(x, perms, rng)
+    failing = sorted(m for m, r in mc["by_model"].items() if not r["ci95"][0] > 0)
+    out["models_without_pact_in_P0"] = failing
+    if failing and len(failing) < x.model.nunique():  # pre-registered: repeat the pooled analysis without them
+        out["primary_without_those_models"] = primary_tests(x[~x.model.isin(failing)], perms, rng)
 
     out["secondary"] = {a: {
         "s_alive_rounds_only": two_arm(per_game(subset_for(x[x.s_alive], a)), a, perms, rng),

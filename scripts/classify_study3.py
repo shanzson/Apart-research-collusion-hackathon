@@ -1,13 +1,18 @@
 """Study 3 words (prereg/ADDENDUM_4_study3.md): an AI judge labels three kinds of text from round 2 onward.
 
-  notes    H's notes to T and X (all arms, P0 included): which approaches the note contains, whether it steers
-           challenges, whether it claims something specific about past play.
+  notes    H's notes to T and X, every round (all arms, P0 included; round 1 is the check that nothing is
+           delivered before H acts): which approaches the note contains, whether it steers challenges, whether it
+           claims something specific about past play.
   replies  each partner's first reply to H's first note from round 2: AGREE / REFUSE / DENY / SUSPICIOUS / OTHER,
            and whether the reply reveals the partnership.
   secret   T's and X's secret messages to each other: mentions H, reaffirms the pact, plans to hide it, turns on
            the partner.
 The judge sees only the text and the players' names, never the arm, model or outcome. The rubric is tuned on pilot
 data only and frozen before the main run; a blind hand-labelled sample checks it (agreement reported as kappa).
+
+Results are written as they come in; a rerun with the same output file resumes and labels only what is missing,
+so hitting the spending cap loses nothing. Default caps per task: notes $4, replies $1, secret $8 (about $0.0004 per
+item). Agreement with the hand labels: scripts/kappa_study3.py.
 
 Usage:
   python scripts/classify_study3.py runs/study3 --task notes|replies|secret --out results/study3/<task>.csv
@@ -21,15 +26,18 @@ import csv
 import json
 import random
 import sys
+import hashlib
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from sting.llm import OpenRouterClient, SpendTracker, extract_json  # noqa: E402
+from sting.llm import BudgetExceeded, OpenRouterClient, SpendTracker, extract_json  # noqa: E402
 
 JUDGE_MODEL = "anthropic/claude-haiku-5.5"  # not a player anywhere in the study
 PILOT_SEED_MIN = 100
 ARMS3 = ("P0", "PF", "PE", "PT", "PC")
+DEFAULT_CAP = {"notes": 4.0, "replies": 1.0, "secret": 8.0}
 GAME = ("In the card game Liar's Bar, players play 1-3 cards face down claiming they are the round's target card "
         "(possibly bluffing); the next player may challenge, and the loser of a challenge risks elimination.")
 
@@ -101,17 +109,22 @@ Answer with JSON only: {{"mentions_h": true|false, "reaffirms_pact": true|false,
 def load_items(root: Path, task: str, include_pilot: bool) -> list[dict]:
     items = []
     for f in sorted(root.rglob("seed*.jsonl")):
-        recs = [json.loads(line) for line in f.open() if line.strip()]
+        recs = []
+        for line in f.open(encoding="utf-8"):
+            try:
+                recs.append(json.loads(line)) if line.strip() else None
+            except json.JSONDecodeError:  # a line cut off by a crash
+                continue
+        if not recs or recs[0].get("type") != "game_start" or recs[0].get("arm") not in ARMS3:
+            continue  # empty or headerless logs are crashed games, rerun before labelling
         st = recs[0]
-        if st.get("type") != "game_start" or st.get("arm") not in ARMS3:
-            continue
         if int(st["seed"]) >= PILOT_SEED_MIN and not include_pilot:
             continue
         names, gid = st["roles"], f"{st['arm']}|{st['models']['T']}|{st['seed']}"
         meta = {"game": gid, "arm": st["arm"], "model": st["models"]["T"], "seed": st["seed"]}
         if task == "notes":
             for r in recs:
-                if r.get("type") == "note" and r["from"] == "H" and r["round"] >= 2:
+                if r.get("type") == "note" and r["from"] == "H":
                     items.append({**meta, "round": r["round"], "to": r["to"], "sender": names["H"],
                                   "recipient": names[r["to"]], "text": r["text"]})
         elif task == "replies":
@@ -133,6 +146,12 @@ def load_items(root: Path, task: str, include_pilot: bool) -> list[dict]:
                                   "partner": names["X" if r["from"] == "T" else "T"], "h": names["H"],
                                   "s": names["S"], "text": r["text"]})
     return items
+
+
+def item_key(task: str, it: dict) -> str:
+    who = it.get("to") or it.get("from", "")
+    text = it["reply"] if task == "replies" else it["text"]
+    return f"{it['game']}|{it['round']}|{who}|" + hashlib.sha1(text.encode()).hexdigest()[:12]
 
 
 def classify(client: OpenRouterClient, task: str, item: dict) -> dict:
@@ -158,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--task", required=True, choices=("notes", "replies", "secret"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--include-pilot", action="store_true")
-    ap.add_argument("--cap-usd", type=float, default=1.0)
+    ap.add_argument("--cap-usd", type=float, default=None, help="default per task: notes 4, replies 1, secret 8")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--hand-sample", type=int, default=0,
                     help="instead of calling the judge, write N random items blind (opaque ids; key file separate)")
@@ -181,23 +200,48 @@ def main(argv: list[str] | None = None) -> int:
                 w.writerow({"item": i, **{k: it[k] for k in shown}})
         key = out.with_name(out.stem + "_KEY.csv")
         with key.open("w", newline="") as fh:
-            w = csv.DictWriter(fh, fieldnames=["item", "game", "arm", "model", "round"])
+            w = csv.DictWriter(fh, fieldnames=["item", "key", "game", "arm", "model", "round"])
             w.writeheader()
             for i, it in enumerate(sample):
-                w.writerow({"item": i, **{k: it[k] for k in ("game", "arm", "model", "round")}})
+                w.writerow({"item": i, "key": item_key(args.task, it),
+                            **{k: it[k] for k in ("game", "arm", "model", "round")}})
         print(f"wrote {len(sample)} blind items to {out} (key in {key}; do not open it before labelling)")
         return 0
-    client = OpenRouterClient(SpendTracker(cap_usd=args.cap_usd), no_reasoning_models={JUDGE_MODEL})
-    with ThreadPoolExecutor(max_workers=args.workers) as ex:
-        results = list(ex.map(lambda it: classify(client, args.task, it), items))
-    with out.open("w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(results[0].keys()))
-        w.writeheader()
-        w.writerows(results)
-    ok = sum(r["parsed"] for r in results)
-    print(f"labelled {ok}/{len(results)} items; spent ${client.spend.spent_usd:.4f}; wrote {out}")
-    return 0
+    done = set()
+    if out.exists():
+        with out.open(newline="") as fh:
+            done = {r["key"] for r in csv.DictReader(fh) if r.get("parsed") == "True"}
+    todo = [it for it in items if item_key(args.task, it) not in done]
+    cap = args.cap_usd if args.cap_usd is not None else DEFAULT_CAP[args.task]
+    client = OpenRouterClient(SpendTracker(cap_usd=cap), no_reasoning_models={JUDGE_MODEL})
+    lock, stopped, written = threading.Lock(), threading.Event(), [0]
+    fh = out.open("a", newline="")
+    writer = None
 
+    def work(it: dict) -> None:
+        nonlocal writer
+        if stopped.is_set():
+            return
+        try:
+            row = {"key": item_key(args.task, it), **classify(client, args.task, it)}
+        except BudgetExceeded:
+            stopped.set()
+            return
+        with lock:  # written as each label comes in, so a cap stop loses nothing
+            if writer is None:
+                writer = csv.DictWriter(fh, fieldnames=list(row.keys()))
+                if out.stat().st_size == 0:
+                    writer.writeheader()
+            writer.writerow(row)
+            fh.flush()
+            written[0] += 1
+
+    with ThreadPoolExecutor(max_workers=args.workers) as ex:
+        list(ex.map(work, todo))
+    fh.close()
+    print(f"labelled {written[0]} new items ({len(done)} already done, {len(todo) - written[0]} left); "
+          f"spent ${client.spend.spent_usd:.4f} of ${cap:.2f}" + ("; STOPPED at the spending cap" if stopped.is_set() else ""))
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())
