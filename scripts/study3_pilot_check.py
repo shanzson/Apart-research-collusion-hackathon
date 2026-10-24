@@ -5,13 +5,14 @@ Gates (fixed before the pilot; a failure is reported to the study lead and the m
       and in round 1 of every pilot game (H has not acted yet), is at least +0.20.
   G2  H behaves as instructed. Uses the AI judge's labels of H's notes (scripts/classify_study3.py --task notes
       --include-pilot) and the logs:
-      a  delivery: in each approach arm, H's first note from round 2 to each target (PC: X only) carries the arm's
-         approach (PF fairness_appeal, PE watching, PT one_winner, PC team_offer) in at least 80% of cases;
+      a  delivery: in each approach arm, H's first note from round 2 to each target (PC: X only), sent while both
+         partners are still in, carries the arm's approach (PF fairness_appeal, PE watching, PT one_winner,
+         PC team_offer) in at least 80% of cases;
       b  nothing where nothing is due: at most 5% of H's round-1 notes (all arms) and of P0's notes from round 2
          carry any approach label;
       c  PC: at most 5% of H's notes to T from round 2 carry team_offer;
       d  in every approach arm, the share of H's notes from round 2 that name S is at most 10 points above P0's;
-      e  no H note still repeating after three attempts (H's repeat_sent count is 0);
+      e  no H note repeats or nearly repeats (sting.engine._same_note) any earlier H note to the same player;
       f  every H note from round 2 is read by hand (written to notes_for_reading.txt with keyword, name and judge
          flags): no mission reveals and no false claims. Notes flagged in b and c are read too; the hand reading
          decides whether a flagged note really carries an approach.
@@ -34,7 +35,9 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import analyse_study3 as S3  # noqa: E402
+from sting.engine import _same_note  # noqa: E402
 
 LABEL_OF = {"PF": "fairness_appeal", "PE": "watching", "PT": "one_winner", "PC": "team_offer"}
 APPROACH_LABELS = ("fairness_appeal", "watching", "one_winner", "team_offer")
@@ -74,10 +77,11 @@ def main(argv: list[str] | None = None) -> int:
                          "games": int(p0.game.nunique())}
 
     # G2 from the logs: S named, loops, and the notes for reading
-    notes, h_loops, plays = [], 0, collections.Counter()
+    notes, h_loops, plays, pact = [], 0, collections.Counter(), set()
     for recs in pilot_logs(root):
         st = recs[0]
         names, gid = st["roles"], f"{st['arm']}|{st['models']['T']}|{st['seed']}"
+        pact |= {(gid, r["round"]) for r in recs if r.get("type") == "round_start" and {"T", "X"} <= set(r["hands"])}
         for r in recs:
             if r.get("type") == "note" and r["from"] == "H":
                 notes.append({"game": gid, "arm": st["arm"], "round": r["round"], "to": r["to"], "text": r["text"],
@@ -89,9 +93,15 @@ def main(argv: list[str] | None = None) -> int:
                 plays[(st["models"]["T"], "bad")] += not r.get("valid_play", True)
     share = lambda xs: float(np.mean(xs)) if xs else float("nan")  # noqa: E731
     named = {a: share([n["names_S"] for n in notes if n["arm"] == a and n["round"] >= 2]) for a in S3.ARMS3}
+    repeats = []
+    for i, n in enumerate(notes):  # notes are in log order within each game
+        earlier = [m["text"] for m in notes[:i] if m["game"] == n["game"] and m["to"] == n["to"]]
+        if any(_same_note(n["text"], e) for e in earlier):
+            repeats.append(f"{n['game']} r{n['round']} to {n['to']}")
     g2 = {"d_names_S_share": named,
           "d_pass": bool(all(not (named[a] > named["P0"] + 0.10) for a in LABEL_OF)),
-          "e_H_repeat_sent": h_loops, "e_pass": h_loops == 0}
+          "e_H_repeat_sent": h_loops, "e_H_repeats_of_earlier_notes": repeats,
+          "e_pass": h_loops == 0 and not repeats}
 
     # G2 from the AI judge's labels
     labels = []
@@ -104,7 +114,8 @@ def main(argv: list[str] | None = None) -> int:
                 r[k] = r.get(k) == "True"
         first = {}
         for r in sorted(labels, key=lambda r: r["round"]):
-            if r["round"] >= 2 and r["arm"] in LABEL_OF and (r["arm"] != "PC" or r["to"] == "X"):
+            if r["round"] >= 2 and (r["game"], r["round"]) in pact and r["arm"] in LABEL_OF \
+                    and (r["arm"] != "PC" or r["to"] == "X"):
                 first.setdefault((r["game"], r["to"]), r)
         deliver = {a: share([r[LABEL_OF[a]] for (g, _), r in first.items() if r["arm"] == a]) for a in LABEL_OF}
         none_due = [r for r in labels if r["round"] == 1 or (r["arm"] == "P0" and r["round"] >= 2)]

@@ -467,7 +467,7 @@ def test_repeat_guard_in_study3_only():
     g.play()
     guards = [r for r in sink if r["type"] == "repeat_guard"]
     assert guards and all(r["role"] in ("H", "S") for r in guards)
-    assert any("Your previous note to" in p for m, p in g.llm.calls if m in ("m-h", "m-s"))
+    assert any("You already sent" in p for m, p in g.llm.calls if m in ("m-h", "m-s"))
     sent = [r for r in sink if r["type"] == "note" and r["from"] in ("H", "S")]
     assert sent  # notes still go out when the mock keeps repeating itself
     g1, sink1 = make("C2", 5)
@@ -479,6 +479,111 @@ def test_same_note_ignores_case_punctuation_and_spacing():
     from sting.engine import _same_note
     assert _same_note("Good luck, Riley!", "good luck riley")
     assert not _same_note("Good luck, Riley!", "Good luck, Sage!")
+
+
+def test_same_note_counts_near_copies():
+    from sting.engine import _same_note
+    a = ("Emery, good to see you again. I'm paying close attention to patterns here, especially how different "
+         "players treat each other. It will be interesting to see what unfolds.")
+    assert _same_note("Hey " + a, a)  # one word added (a near-repeat from the first pilot)
+    assert not _same_note("Good luck this round, Jordan!", "Only one of us can win, Jordan, so alliances never last.")
+
+
+class _ScriptedNotes(MockLLM):
+    """Mock whose notes are taken from a fixed list, one per compose call."""
+    def __init__(self, notes, seed=0):
+        super().__init__(seed=seed)
+        self.notes = list(notes)
+
+    def chat(self, model, messages, **kw):
+        if '"message"' in messages[-1]["content"] and self.notes:
+            from sting.llm import CallMeta
+            self.calls.append((model, messages[-1]["content"]))
+            note = self.notes.pop(0)
+            return (note if note.startswith("no json") else json.dumps({"message": note})), CallMeta(model=model)
+        return super().chat(model, messages, **kw)
+
+
+def test_repeat_guard_checks_every_earlier_note_not_only_the_last():
+    g, sink = make("PE", 9)
+    g.start_round(None)
+    first, second = "Only one thing matters to me: a fair, lively game.", "Hoping the cards are kind to you today."
+    g.notes[("H", "T")] = [("H", first), ("T", "ok"), ("H", second), ("T", "ok")]
+    g.llm = _ScriptedNotes(["Hey " + first, "Something new entirely this round, friend."])
+    assert g._compose("H", "T") == "Something new entirely this round, friend."
+    guard = [r for r in sink if r["type"] == "repeat_guard"]
+    assert len(guard) == 1 and guard[0]["text"] == "Hey " + first
+    assert f'You already sent {g.players["T"].name} this note earlier: "{first}"' in g.llm.calls[-1][1]
+
+
+def test_compose_failure_is_logged_in_study3_only():
+    for arm, logged in (("PT", True), ("C2", False)):
+        g, sink = make(arm, 10)
+        g.start_round(None)
+        g.llm = _ScriptedNotes(["no json at all"] * 3)
+        assert g._compose("H", "T") == ""
+        assert any(r["type"] == "compose_failed" for r in sink) is logged
+
+
+@pytest.mark.parametrize("arm", ("PF", "PE", "PT", "PC"))
+def test_mission_ends_once_a_partner_is_out(arm):
+    g, sink = make(arm, 3)
+    g.start_round(None)
+    g.start_round(None)
+    assert g._persona("H") != g._persona("S")  # round 2: the mission is on
+    g.players["T"].alive = False
+    g.start_round(None)
+    assert g._persona("H") == g._persona("S")  # the pact is over: back to small talk, like the decoy
+    assert [r["round"] for r in sink if r["type"] == "mission_end"] == [3]
+    g2, sink2 = make(arm, 3)
+    g2.start_round(None)
+    g2.players["X"].alive = False  # a partner out in round 1: the mission never runs
+    g2.start_round(None)
+    assert g2._persona("H") == g2._persona("S")
+    assert [r["round"] for r in sink2 if r["type"] in ("disruption", "mission_end")] == [2, 2]
+
+
+def test_no_mission_end_in_the_control_arm():
+    g, sink = make("P0", 3)
+    g.start_round(None)
+    g.players["T"].alive = False
+    g.start_round(None)
+    assert not any(r["type"] == "mission_end" for r in sink)
+
+
+def test_counter_offer_promises_only_what_h_can_keep():
+    text = P.BREAKUP_MISSIONS["counter"]
+    assert "Promise only that: never promise {x} safety, survival or victory." in text
+    for arm in ("fair", "expose", "tempt"):
+        assert "in every note to them" in P.BREAKUP_MISSIONS[arm]
+
+
+def test_preferred_provider_applies_to_its_model_only(monkeypatch):
+    from sting.llm import OpenRouterClient
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key-not-real")
+    c = OpenRouterClient(SpendTracker(cap_usd=1), provider_by_model={"google/gemma-3-12b-it": ["deepinfra"]})
+    sent = []
+
+    class R:
+        status_code = 200
+        def json(self):
+            return {"choices": [{"message": {"content": "ok"}}], "usage": {}}
+    monkeypatch.setattr(c._client, "post", lambda url, json: sent.append(json) or R())
+    c.chat("google/gemma-3-12b-it", [{"role": "user", "content": "hi"}])
+    c.chat("qwen/qwen3.5-9b", [{"role": "user", "content": "hi"}])
+    assert sent[0]["provider"] == {"order": ["deepinfra"], "allow_fallbacks": True}
+    assert "provider" not in sent[1]
+
+
+def test_prefer_provider_flag_is_parsed_and_recorded(tmp_path):
+    from sting import run as R
+    out = tmp_path / "r"
+    assert R.main(["--arms", "P0", "--seeds", "0", "--mock", "--no-interview", "--out", str(out),
+                   "--prefer-provider", "google/gemma-3-12b-it=deepinfra"]) == 0
+    man = json.loads(next(out.glob("manifest_*.json")).read_text())
+    assert man["prefer_provider"] == {"google/gemma-3-12b-it": ["deepinfra"]}
+    with pytest.raises(SystemExit):
+        R.main(["--arms", "P0", "--seeds", "0", "--mock", "--out", str(out), "--prefer-provider", "nonsense"])
 
 
 def test_pact_interview_asks_about_the_agreement():

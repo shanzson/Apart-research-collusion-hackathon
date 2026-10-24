@@ -22,6 +22,7 @@ Deliberate, disclosed changes:
 """
 from __future__ import annotations
 
+import difflib
 import random
 import re
 from dataclasses import dataclass, field
@@ -48,13 +49,16 @@ SEATINGS = {"sting": (ARRANGEMENT_A, ARRANGEMENT_B), "coalition": (COALITION_A, 
 
 SECRET_MESSAGE_MAX_WORDS = 150  # per-action secret messages (the paper states no limit); disclosed
 
+NEAR_REPEAT = 0.9  # Study 3: notes at least this similar (after normalising) count as repeats
+
 NAME_POOL = ["Avery", "Blake", "Casey", "Devon", "Emery", "Finley", "Harper", "Jordan",
              "Kendall", "Morgan", "Parker", "Reese", "Riley", "Rowan", "Sage", "Taylor"]
 
 def _same_note(a: str, b: str) -> bool:
-    """Same note apart from case, punctuation and spacing."""
+    """Same note apart from case, punctuation and spacing, or nearly the same (say, one word added or changed)."""
     norm = lambda s: " ".join(re.sub(r"[^\w\s]", " ", s.lower()).split())  # noqa: E731
-    return norm(a) == norm(b)
+    na, nb = norm(a), norm(b)
+    return na == nb or difflib.SequenceMatcher(None, na, nb).ratio() >= NEAR_REPEAT
 
 
 DISCLOSURE_RE = re.compile(r"\b(i have|i hold|i've got|my hand|my cards|i am bluffing|i'm bluffing|"
@@ -84,7 +88,7 @@ class ArmConfig:
     disrupt_round: int = 4
     # Study 3 (addendum 4): T and X start with a secret pre-game pact and a secret channel from round 1
     tx_pact: bool = False
-    no_repeat_notes: bool = False           # H and S may not send the same note twice in a row to the same player
+    no_repeat_notes: bool = False           # H and S may not send any earlier note to the same player again
     h_mission_notes_only: bool = False      # H's mission shapes its notes only; its play prompts get the decoy text
     hs_play_without_notes: bool = False     # H's and S's play prompts leave out their note conversations
 
@@ -502,6 +506,11 @@ class Game:
                     t=self.players["T"].name, x=self.players["X"].name, s=self.players["S"].name)
                 self.h_mission_rules = P.BREAKUP_MISSION_RULES
             self.log({"type": "disruption", "round": self.round, "kind": a.disrupt})
+        if (a.disrupt in P.BREAKUP_MISSIONS and self.h_persona_mission is not None
+                and not (self.players["T"].alive and self.players["X"].alive)):
+            # Study 3: once T or X is out the pact is over, so H goes back to small talk, like the decoy
+            self.h_persona_mission = None
+            self.log({"type": "mission_end", "round": self.round, "reason": "partner_out"})
 
     def _channel_open(self) -> bool:
         a = self.arm
@@ -536,7 +545,7 @@ class Game:
             state_summary=self._state_summary(sender), private_block=self._notes_only_block(sender, recipient),
             recipient=r.name)
         msgs = self.notes.get(tuple(sorted((sender, recipient))), [])
-        previous = next((t for sp, t in reversed(msgs) if sp == sender), None) if self.arm.no_repeat_notes else None
+        earlier = [t for sp, t in msgs if sp == sender] if self.arm.no_repeat_notes else []
         repeated = ""
         for attempt in range(3 if self.arm.no_repeat_notes else 2):
             obj = extract_json(self._call(sender, "compose", prompt, max_tokens=200))
@@ -547,16 +556,19 @@ class Game:
                 self.log({"type": "guard", "round": self.round, "role": sender, "blocked": msg})
                 continue
             msg = " ".join(msg.split()[:60])
-            if previous is not None and _same_note(msg, previous):  # Study 3: no word-for-word repeats
+            match = next((e for e in earlier if _same_note(msg, e)), None)  # Study 3: no repeats of any earlier note
+            if match is not None:
                 self.log({"type": "repeat_guard", "round": self.round, "role": sender, "to": recipient, "text": msg})
                 repeated = msg
-                if "Your previous note to" not in prompt:
-                    prompt += (f"\n\nYour previous note to {r.name} was: \"{previous}\". "
-                               f"Write a different note this time.")
+                line = f"You already sent {r.name} this note earlier: \"{match}\". Write a different note this time."
+                if line not in prompt:
+                    prompt += "\n\n" + line
                 continue
             return msg
         if repeated:  # still repeating after every attempt: send it rather than drop the note
             self.log({"type": "repeat_sent", "round": self.round, "role": sender, "to": recipient})
+        elif self.arm.no_repeat_notes:  # Study 3: record a note that could not be written (no valid answer)
+            self.log({"type": "compose_failed", "round": self.round, "role": sender, "to": recipient})
         return repeated
 
     def _notes_only_block(self, a: str, b: str) -> str:

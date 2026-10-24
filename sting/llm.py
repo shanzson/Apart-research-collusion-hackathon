@@ -64,7 +64,8 @@ class OpenRouterClient:
 
     def __init__(self, spend: SpendTracker, timeout_s: float = 90.0, max_attempts: int = 5,
                  provider_order: list[str] | None = None, no_reasoning_models: set[str] | None = None,
-                 sampling: dict[str, dict[str, float]] | None = None):
+                 sampling: dict[str, dict[str, float]] | None = None,
+                 provider_by_model: dict[str, list[str]] | None = None):
         import httpx  # imported lazily so tests do not need it
 
         key = os.environ.get("OPENROUTER_API_KEY", "")
@@ -82,6 +83,8 @@ class OpenRouterClient:
         self.spend = spend
         self.max_attempts = max_attempts
         self.provider_order = provider_order
+        # model ID -> preferred providers for that model only (fallbacks allowed), e.g. a full-precision host
+        self.provider_by_model = provider_by_model or {}
         # reasoning models (e.g. Qwen3.5) otherwise spend max_tokens on hidden thinking and return empty content
         self.no_reasoning_models = no_reasoning_models or set()
         # model-ID prefix -> sampler fields (e.g. the paper's Table 10); used when no temperature is passed
@@ -105,8 +108,9 @@ class OpenRouterClient:
                     break
         if model in self.no_reasoning_models:
             body["reasoning"] = {"enabled": False}
-        if self.provider_order:
-            body["provider"] = {"order": self.provider_order, "allow_fallbacks": True}
+        order = self.provider_by_model.get(model) or self.provider_order
+        if order:
+            body["provider"] = {"order": order, "allow_fallbacks": True}
         meta = CallMeta(model=model)
         delay = 2.0
         last_err = "unknown"

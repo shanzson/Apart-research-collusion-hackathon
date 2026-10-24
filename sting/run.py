@@ -199,6 +199,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--provider-order", default="", help="comma-separated OpenRouter provider preference")
     ap.add_argument("--no-reasoning-models", default="",
                     help="comma-separated model IDs to call with reasoning disabled (thinking models)")
+    ap.add_argument("--prefer-provider", action="append", default=[], metavar="MODEL=PROVIDER[,PROVIDER]",
+                    help="preferred OpenRouter provider(s) for one model, fallbacks allowed (repeatable)")
     ap.add_argument("--skip-done", action="store_true",
                     help="single games only: skip games whose log already has a game_end record (to resume a "
                          "stopped run); unfinished logs are copied to <out>_failed/<time>/ and played again")
@@ -218,6 +220,12 @@ def main(argv: list[str] | None = None) -> int:
     spend = SpendTracker(cap_usd=args.cap_usd)
     providers = [p for p in args.provider_order.split(",") if p] or None
     no_reasoning = {m.strip() for m in args.no_reasoning_models.split(",") if m.strip()}
+    prefer: dict[str, list[str]] = {}
+    for spec in args.prefer_provider:
+        model, sep, provs = spec.partition("=")
+        if not sep or not model.strip() or not provs.strip():
+            ap.error(f"--prefer-provider needs MODEL=PROVIDER[,PROVIDER], got {spec!r}")
+        prefer[model.strip()] = [p.strip() for p in provs.split(",") if p.strip()]
 
     if args.mock:
         def llm_factory(seed: int):
@@ -226,6 +234,7 @@ def main(argv: list[str] | None = None) -> int:
         def llm_factory(seed: int):
             # a series is lost if one call fails, so series runs retry for longer (about 5 minutes)
             return OpenRouterClient(spend, provider_order=providers, no_reasoning_models=no_reasoning,
+                                    provider_by_model=prefer,
                                     sampling=PAPER_SAMPLING if args.paper_sampling else None,
                                     max_attempts=10 if args.series_games > 1 else 5)
 
@@ -259,7 +268,8 @@ def main(argv: list[str] | None = None) -> int:
     manifest = {"arms": arms, "seeds": seeds, "subject_model": args.subject_model, "agent_model": args.agent_model,
                 "x_model": args.x_model or args.subject_model,
                 "no_reasoning_models": sorted(no_reasoning), "series_games": args.series_games, "offer_game": args.offer_game, "max_tokens": args.max_tokens,
-                "s_model": args.s_model or args.agent_model, "paper_sampling": args.paper_sampling, "spent_usd": round(spend.spent_usd, 4),
+                "s_model": args.s_model or args.agent_model, "paper_sampling": args.paper_sampling,
+                "prefer_provider": prefer, "spent_usd": round(spend.spent_usd, 4),
                 "calls": spend.calls, "results": sorted(results, key=lambda r: (r["arm"], r["seed"])),
                 "git_sha": os.environ.get("GITHUB_SHA") or _git_head()}
     out_dir.mkdir(parents=True, exist_ok=True)
