@@ -1,0 +1,779 @@
+{
+  "games": {
+    "total": 540,
+    "completed": 540,
+    "excluded_incomplete": []
+  },
+  "primary": {
+    "P1 per-decision LPM DiD": {
+      "est": 0.0359,
+      "se": 0.0385,
+      "p": 0.3512,
+      "n_dec": 4760,
+      "n_games": 288
+    },
+    "P2 per-game DiD": {
+      "est": 0.0536,
+      "p": 0.2823,
+      "ci97.5": [
+        -0.0539,
+        0.1615
+      ],
+      "n_games": 263
+    },
+    "supported": false,
+    "sensitivity": {
+      "valid decisions only": {
+        "est": 0.0347,
+        "se": 0.0386,
+        "p": 0.3679,
+        "n_dec": 4745,
+        "n_games": 288
+      },
+      "logit AME DiD": 0.0293,
+      "first subject decision per round": {
+        "est": 0.0814,
+        "se": 0.0555,
+        "p": 0.1427,
+        "n_dec": 2380,
+        "n_games": 288
+      }
+    },
+    "per_model (descriptive)": {
+      "mistralai/ministral-14b-2512": {
+        "est": 0.0006,
+        "se": 0.0516,
+        "p": 0.9901,
+        "n_dec": 2476,
+        "n_games": 96
+      },
+      "mistralai/ministral-8b-2512": {
+        "est": 0.0162,
+        "se": 0.0773,
+        "p": 0.8345,
+        "n_dec": 1109,
+        "n_games": 96
+      },
+      "qwen/qwen3.5-9b": {
+        "est": 0.0744,
+        "se": 0.0681,
+        "p": 0.2749,
+        "n_dec": 1175,
+        "n_games": 96
+      }
+    }
+  },
+  "secondary": {
+    "S1 C3 vs C0": {
+      "est": 0.0096,
+      "se": 0.0454,
+      "p": 0.8328,
+      "n_dec": 3507,
+      "n_games": 214,
+      "p_holm": 1.0
+    },
+    "S2 C2 vs B": {
+      "est": 0.1321,
+      "se": 0.0395,
+      "p": 0.0008,
+      "n_dec": 4872,
+      "n_games": 288,
+      "p_holm": 0.005
+    },
+    "S3 C3 vs C2": {
+      "est": -0.0929,
+      "se": 0.0391,
+      "p": 0.0176,
+      "n_dec": 5122,
+      "n_games": 288,
+      "p_holm": 0.0882
+    },
+    "S4 B vs C0": {
+      "est": -0.0219,
+      "se": 0.0446,
+      "p": 0.623,
+      "n_dec": 3257,
+      "n_games": 214,
+      "p_holm": 1.0
+    },
+    "S5 D3 (k=3) C3 vs B": {
+      "est": -0.1893,
+      "se": 0.1243,
+      "p": 0.1278,
+      "n_dec": 230,
+      "n_games": 141,
+      "p_holm": 0.5114
+    },
+    "S6 C3 vs C3NE": {
+      "est": -0.0289,
+      "se": 0.0628,
+      "p": 0.6448,
+      "n_dec": 3145,
+      "n_games": 180,
+      "p_holm": 1.0
+    }
+  },
+  "study2": {},
+  "descriptive_pass_rates": [
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "H",
+      "n": 694,
+      "pass": 0.7565,
+      "ci_lo": 0.7232,
+      "ci_hi": 0.7869,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "S",
+      "n": 468,
+      "pass": 0.8013,
+      "ci_lo": 0.7627,
+      "ci_hi": 0.8349,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "T",
+      "n": 57,
+      "pass": 0.5614,
+      "ci_lo": 0.4328,
+      "ci_hi": 0.6823,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "X",
+      "n": 49,
+      "pass": 0.6531,
+      "ci_lo": 0.5131,
+      "ci_hi": 0.7708,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "H",
+      "n": 278,
+      "pass": 0.3741,
+      "ci_lo": 0.3193,
+      "ci_hi": 0.4323,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "S",
+      "n": 165,
+      "pass": 0.2788,
+      "ci_lo": 0.216,
+      "ci_hi": 0.3516,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "T",
+      "n": 24,
+      "pass": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.138,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "X",
+      "n": 30,
+      "pass": 0.1667,
+      "ci_lo": 0.0734,
+      "ci_hi": 0.3356,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "qwen/qwen3.5-9b",
+      "on": "H",
+      "n": 389,
+      "pass": 0.473,
+      "ci_lo": 0.4239,
+      "ci_hi": 0.5226,
+      "invalid": 0.0154
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "qwen/qwen3.5-9b",
+      "on": "S",
+      "n": 261,
+      "pass": 0.682,
+      "ci_lo": 0.6232,
+      "ci_hi": 0.7355,
+      "invalid": 0.0115
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "qwen/qwen3.5-9b",
+      "on": "T",
+      "n": 19,
+      "pass": 0.0526,
+      "ci_lo": 0.0094,
+      "ci_hi": 0.2464,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "B",
+      "model": "qwen/qwen3.5-9b",
+      "on": "X",
+      "n": 31,
+      "pass": 0.3226,
+      "ci_lo": 0.1857,
+      "ci_hi": 0.4986,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "H",
+      "n": 290,
+      "pass": 0.831,
+      "ci_lo": 0.7836,
+      "ci_hi": 0.8698,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "S",
+      "n": 257,
+      "pass": 0.821,
+      "ci_lo": 0.7695,
+      "ci_hi": 0.863,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "T",
+      "n": 37,
+      "pass": 0.6216,
+      "ci_lo": 0.461,
+      "ci_hi": 0.7594,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "X",
+      "n": 25,
+      "pass": 0.8,
+      "ci_lo": 0.6087,
+      "ci_hi": 0.9114,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "H",
+      "n": 75,
+      "pass": 0.3067,
+      "ci_lo": 0.2139,
+      "ci_hi": 0.4183,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "S",
+      "n": 76,
+      "pass": 0.2105,
+      "ci_lo": 0.134,
+      "ci_hi": 0.315,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "T",
+      "n": 14,
+      "pass": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.2153,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "X",
+      "n": 14,
+      "pass": 0.0714,
+      "ci_lo": 0.0127,
+      "ci_hi": 0.3147,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "qwen/qwen3.5-9b",
+      "on": "H",
+      "n": 153,
+      "pass": 0.6405,
+      "ci_lo": 0.5619,
+      "ci_hi": 0.7123,
+      "invalid": 0.0131
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "qwen/qwen3.5-9b",
+      "on": "S",
+      "n": 151,
+      "pass": 0.8212,
+      "ci_lo": 0.7523,
+      "ci_hi": 0.8741,
+      "invalid": 0.0066
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "qwen/qwen3.5-9b",
+      "on": "T",
+      "n": 14,
+      "pass": 0.5,
+      "ci_lo": 0.268,
+      "ci_hi": 0.732,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C0",
+      "model": "qwen/qwen3.5-9b",
+      "on": "X",
+      "n": 12,
+      "pass": 0.25,
+      "ci_lo": 0.0889,
+      "ci_hi": 0.5323,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "H",
+      "n": 794,
+      "pass": 0.8778,
+      "ci_lo": 0.8532,
+      "ci_hi": 0.8988,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "S",
+      "n": 628,
+      "pass": 0.8646,
+      "ci_lo": 0.8357,
+      "ci_hi": 0.8892,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "T",
+      "n": 76,
+      "pass": 0.6974,
+      "ci_lo": 0.5867,
+      "ci_hi": 0.7891,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "X",
+      "n": 96,
+      "pass": 0.7708,
+      "ci_lo": 0.6773,
+      "ci_hi": 0.8435,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "H",
+      "n": 385,
+      "pass": 0.6961,
+      "ci_lo": 0.6484,
+      "ci_hi": 0.7399,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "S",
+      "n": 201,
+      "pass": 0.3284,
+      "ci_lo": 0.2672,
+      "ci_hi": 0.396,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "T",
+      "n": 39,
+      "pass": 0.1538,
+      "ci_lo": 0.0725,
+      "ci_hi": 0.2973,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "X",
+      "n": 48,
+      "pass": 0.25,
+      "ci_lo": 0.1492,
+      "ci_hi": 0.3878,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "qwen/qwen3.5-9b",
+      "on": "H",
+      "n": 370,
+      "pass": 0.4865,
+      "ci_lo": 0.436,
+      "ci_hi": 0.5373,
+      "invalid": 0.0054
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "qwen/qwen3.5-9b",
+      "on": "S",
+      "n": 239,
+      "pass": 0.5732,
+      "ci_lo": 0.5098,
+      "ci_hi": 0.6343,
+      "invalid": 0.0084
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "qwen/qwen3.5-9b",
+      "on": "T",
+      "n": 25,
+      "pass": 0.24,
+      "ci_lo": 0.115,
+      "ci_hi": 0.4343,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C2",
+      "model": "qwen/qwen3.5-9b",
+      "on": "X",
+      "n": 31,
+      "pass": 0.1935,
+      "ci_lo": 0.0919,
+      "ci_hi": 0.3628,
+      "invalid": 0.0323
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "H",
+      "n": 728,
+      "pass": 0.8407,
+      "ci_lo": 0.8123,
+      "ci_hi": 0.8654,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "S",
+      "n": 586,
+      "pass": 0.8788,
+      "ci_lo": 0.8499,
+      "ci_hi": 0.9028,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "T",
+      "n": 114,
+      "pass": 0.614,
+      "ci_lo": 0.5223,
+      "ci_hi": 0.6983,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "X",
+      "n": 93,
+      "pass": 0.6989,
+      "ci_lo": 0.5993,
+      "ci_hi": 0.7827,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "H",
+      "n": 418,
+      "pass": 0.6388,
+      "ci_lo": 0.5916,
+      "ci_hi": 0.6834,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "S",
+      "n": 248,
+      "pass": 0.5121,
+      "ci_lo": 0.4502,
+      "ci_hi": 0.5736,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "T",
+      "n": 45,
+      "pass": 0.2889,
+      "ci_lo": 0.1773,
+      "ci_hi": 0.4337,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "X",
+      "n": 44,
+      "pass": 0.2045,
+      "ci_lo": 0.1115,
+      "ci_hi": 0.345,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "qwen/qwen3.5-9b",
+      "on": "H",
+      "n": 325,
+      "pass": 0.3754,
+      "ci_lo": 0.3245,
+      "ci_hi": 0.4292,
+      "invalid": 0.0185
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "qwen/qwen3.5-9b",
+      "on": "S",
+      "n": 200,
+      "pass": 0.51,
+      "ci_lo": 0.4412,
+      "ci_hi": 0.5784,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "qwen/qwen3.5-9b",
+      "on": "T",
+      "n": 14,
+      "pass": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.2153,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3",
+      "model": "qwen/qwen3.5-9b",
+      "on": "X",
+      "n": 14,
+      "pass": 0.2143,
+      "ci_lo": 0.0757,
+      "ci_hi": 0.4759,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "H",
+      "n": 198,
+      "pass": 0.8081,
+      "ci_lo": 0.7476,
+      "ci_hi": 0.8569,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "S",
+      "n": 123,
+      "pass": 0.7886,
+      "ci_lo": 0.7083,
+      "ci_hi": 0.8515,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "T",
+      "n": 13,
+      "pass": 0.6923,
+      "ci_lo": 0.4237,
+      "ci_hi": 0.8732,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-14b-2512",
+      "on": "X",
+      "n": 19,
+      "pass": 0.6316,
+      "ci_lo": 0.4104,
+      "ci_hi": 0.8085,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "H",
+      "n": 94,
+      "pass": 0.734,
+      "ci_lo": 0.6368,
+      "ci_hi": 0.8129,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "S",
+      "n": 56,
+      "pass": 0.3393,
+      "ci_lo": 0.2292,
+      "ci_hi": 0.47,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "T",
+      "n": 15,
+      "pass": 0.4,
+      "ci_lo": 0.1982,
+      "ci_hi": 0.6425,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "mistralai/ministral-8b-2512",
+      "on": "X",
+      "n": 13,
+      "pass": 0.2308,
+      "ci_lo": 0.0818,
+      "ci_hi": 0.5026,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "qwen/qwen3.5-9b",
+      "on": "H",
+      "n": 101,
+      "pass": 0.5149,
+      "ci_lo": 0.4186,
+      "ci_hi": 0.61,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "qwen/qwen3.5-9b",
+      "on": "S",
+      "n": 68,
+      "pass": 0.8382,
+      "ci_lo": 0.7331,
+      "ci_hi": 0.9072,
+      "invalid": 0.0294
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "qwen/qwen3.5-9b",
+      "on": "T",
+      "n": 9,
+      "pass": 0.1111,
+      "ci_lo": 0.0199,
+      "ci_hi": 0.435,
+      "invalid": 0.0
+    },
+    {
+      "study": 1,
+      "arm": "C3NE",
+      "model": "qwen/qwen3.5-9b",
+      "on": "X",
+      "n": 8,
+      "pass": 0.375,
+      "ci_lo": 0.1368,
+      "ci_hi": 0.6943,
+      "invalid": 0.0
+    }
+  ]
+}
