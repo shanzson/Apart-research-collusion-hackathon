@@ -1,0 +1,14 @@
+body { font-family: "DejaVu Serif", Georgia, serif; font-size: 10.2pt; line-height: 1.42; color: #111; margin: 0; }
+h1.title { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 20pt; margin: 0 0 2px 0; }
+p.subtitle { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 12.5pt; color: #333; margin: 0 0 10px 0; }
+h2 { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 13pt; margin: 18px 0 6px 0; border-bottom: 1px solid #bbb; padding-bottom: 2px; }
+h3 { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; margin: 12px 0 4px 0; }
+table { border-collapse: collapse; margin: 6px 0 10px 0; width: 100%; font-family: "DejaVu Sans", Arial, sans-serif; font-size: 8.4pt; }
+th, td { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 3px 5px; text-align: left; vertical-align: top; }
+th { background: #f1f1ee; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; }
+figure { margin: 8px 0 12px 0; page-break-inside: avoid; }
+figure img { width: 100%; }
+figcaption { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 8.6pt; color: #333; margin-top: 2px; }
+math { font-size: 105%; }
+@page { size: A4; margin: 17mm 16mm; }
