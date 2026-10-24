@@ -2,7 +2,7 @@
 # Study 1 restart main run (Addendum 3, final allocation). Usage: launch.sh [OUT_DIR] [extra flags, e.g. --mock]
 cd /home/user/Apart-research-collusion-hackathon
 export SSL_CERT_FILE=/root/.ccr/ca-bundle.crt
-OUT=${1:-runs/study1_v2}; shift 2>/dev/null
+OUT=${1:-runs/study1_v2}; [ $# -gt 0 ] && shift  # (a bare "shift" with no arguments exits dash)
 LOG=runs/study1_v2_logs; [ "$OUT" != "runs/study1_v2" ] && LOG=$OUT/logs; mkdir -p $LOG
 COMMON="--agent-model google/gemma-3-12b-it --no-reasoning-models qwen/qwen3.5-9b --out $OUT $*"
 run() { # model slug arms seeds cap workers

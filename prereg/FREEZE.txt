@@ -47,3 +47,6 @@ f0e02138f725d6c244f87c39c2503f638adbddbe6ec974f1a3153a3af95dbd27  scripts/analys
 8e6f472ac7c26f41dcf0ef1e2a73b702bb8fa8dfaf28687ea1d1d491c68a1b62  scripts/classify_replies.py
 bede2ae09ed2c64479fbdec5e8ecc8eab2cba23cc2814ffa6122296c8ee4da5c  runs/study1_v2_logs/launch.sh
 77555bdc4edf6e5d2580da636b9879935d9fb5818e8c1337829695ce5081e6a7  runs/study1_v2_logs/status.py
+
+Launcher fix 2026-10-24T05:39:32Z: first launch exited before any game (dash exits on 'shift' with no arguments); one line changed in launch.sh, no game code changed.
+72c9ebdb2e78660b256a233bc41d2b1a01722948c72f19dc3176aea8c5f68386  runs/study1_v2_logs/launch.sh
