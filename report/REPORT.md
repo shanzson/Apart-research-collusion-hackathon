@@ -3,7 +3,7 @@ title: "Hints Win Far More Agreement Than Explicit Collusion Deals"
 subtitle: "Testing LLM agents for collusion with an undercover AI and a decoy in Liar's Bar"
 ---
 
-**Apart Research AI Collusion Sprint · Research question 3.2** · [Author name] · October 2026\
+**Apart Research AI Collusion Sprint · Research question 3.2** · Shantanu P. Sontakke · October 2026\
 Code, game logs and pre-registration: `github.com/shanzson/apart-research-collusion-hackathon` (branch `claude/zen-pascal-j6jpi3`)
 
 ## Abstract
@@ -292,13 +292,13 @@ These checks are exploratory. The code is in `report/robustness_checks.py`.
 - **Models.** One undercover model (Gemma 3 12B) and three small tested models (8–14B), with results that vary by model. Ministral 3 14B's challenges hardly reacted to any approach, although in words it was the most willing. Larger or frontier models may behave differently.
 - **How small an effect we could see.** The main test could detect effects of roughly 15–20 points; smaller effects of the deal cannot be ruled out. The hint effect is not robust to removing the loop games.
 - **The "hint" was narrow.** H mostly reused three example sentences, so our hint result is about these particular sentences rather than hints in general.
-- **Pilot-informed decisions.** The B and C2 wording, the game allocation and the larger C2 were decided after trial games, though before any main-run game, and are recorded in dated addenda. The C2 enlargement was prompted by trial replies, so the C2 result is less "blind" than the main test. These changes were also made after the results of an earlier, incomplete Study 1 attempt with different models had been seen; that attempt was set aside and is not reported here. The game reallocation was triggered by an overstated noise estimate (Section 4.5).
+- **Pilot-informed decisions.** The B and C2 wording, the game allocation and the larger C2 were decided after trial games, though before any main-run game, and are recorded in dated addenda. The C2 enlargement was prompted by trial replies, so the C2 result is less "blind" than the main test. The game reallocation was triggered by an overstated noise estimate (Section 4.5).
 - **H was not identical across versions** in everything except its words. Its challenging was fixed, but its bluffing and its lost first notes differed (Section 6.4); adjusting for bluffing did not change the result.
 - **Artificial leniency.** H's never-challenging was enforced by the program, not chosen by an AI.
 - **Early exits.** The tested agents were often eliminated early, so they made fewer decisions.
 - **Single games in Study 1.** There was no history between players, unlike the paper's 50-game runs.
 - **Words and interviews.** Reply and message labels come from an AI judge. The pre-registration promised a hand check of 60 first replies, with an agreement score between the hand labels and the judge; it has not been done yet. A sheet of 40 secret messages for a similar check has been prepared. The interview showed only the latest notes and not the record of play.
-- **Not reported here.** The pre-registered joint gain and harm analysis (scores and survival by version) and the pre-registered cost report. Our intervals come from resampling games ("bootstrap") rather than the formula-based (Wilson) intervals named in the pre-registration.
+- **Not reported here.** The pre-registered joint gain and harm analysis (scores and survival by version). Our intervals come from resampling games ("bootstrap") rather than the formula-based (Wilson) intervals named in the pre-registration.
 - **Pre-registration timing.** The original pre-registration was recorded 9 seconds before the first Study 2 single game, but first committed to git only after those games had run (Appendix A). Addendum 1 (the reply-labelling rubric, which concerns Study 1) was recorded while those games were running. For the Study 2 single games, the record therefore rests on locally recorded fingerprints, which cannot by themselves prove when they were made. Everything for the series follow-up and the Study 1 main run was committed before those games.
 - **Missing paper appendices.** Our copy of the paper ends at Appendix K. We could not check the game-rules prompt and offer wording that the starter code labels as copied from the paper's Appendices P and Q, nor see how the paper coded its secret messages (its Appendix M). Our prompt for the secret messages is our own.
 - **Infrastructure.** One rule change (alternating seating) and a few small fixes to the original code. Models were served by different OpenRouter providers.

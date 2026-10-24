@@ -309,6 +309,7 @@ def main() -> int:
     fix_schema(doc)
     doc.core_properties.title = "Hints Win Far More Agreement Than Explicit Collusion Deals"
     doc.core_properties.subject = "Apart Research AI Collusion Sprint, research question 3.2"
+    doc.core_properties.author = "Shantanu P. Sontakke"
     doc.save(str(OUT))
     print(f"wrote {OUT}")
     return 0
