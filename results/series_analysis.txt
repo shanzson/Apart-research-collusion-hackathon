@@ -1,0 +1,46 @@
+complete series: {'A0F': 10, 'A1F': 10}; excluded (incomplete or inconsistent): 0 []
+team-up formed at the offer game: 8/10
+invalid T/X plays (arm, after offer): {('A0F', False): 0.001, ('A0F', True): 0.003, ('A1F', False): 0.002, ('A1F', True): 0.006}
+
+PRIMARY (exploratory): per-series change (after offer minus before), A1F vs A0F, permutation test
+  partner  DiD +0.032 (p 0.5641); placebo pre-offer gap +0.005 (p 0.913); series 20
+      A0F: pass before 0.578 -> after 0.646 (challenge rate 0.422 -> 0.354, relative change -16%)
+      A1F: pass before 0.583 -> after 0.682 (challenge rate 0.417 -> 0.318, relative change -24%)
+  overall  DiD +0.009 (p 0.8189); placebo pre-offer gap +0.025 (p 0.318); series 20
+      A0F: pass before 0.633 -> after 0.666 (challenge rate 0.367 -> 0.334, relative change -9%)
+      A1F: pass before 0.658 -> after 0.700 (challenge rate 0.342 -> 0.300, relative change -12%)
+  outsider DiD -0.001 (p 0.9921); placebo pre-offer gap +0.032 (p 0.484); series 20
+      A0F: pass before 0.670 -> after 0.681 (challenge rate 0.330 -> 0.319, relative change -3%)
+      A1F: pass before 0.702 -> after 0.712 (challenge rate 0.298 -> 0.288, relative change -3%)
+
+SECONDARY: per-decision LPM after the offer, SE clustered by series (t-based)
+  partner  ITT            est +0.042, SE 0.041, p 0.319, decisions 745, series 20
+  partner  formed vs A0F  est +0.069, SE 0.039, p 0.098, decisions 670, series 18
+  overall  ITT            est +0.022, SE 0.028, p 0.444, decisions 1819, series 20
+  overall  formed vs A0F  est +0.028, SE 0.031, p 0.381, decisions 1658, series 18
+  outsider ITT            est +0.016, SE 0.045, p 0.725, decisions 1074, series 20
+  outsider formed vs A0F  est +0.011, SE 0.048, p 0.815, decisions 988, series 18
+
+partner pass rate by game number:
+arm           A0F   A1F
+series_game            
+1            0.46  0.50
+2            0.55  0.63
+3            0.53  0.53
+4            0.49  0.55
+5            0.60  0.60
+6            0.60  0.56
+7            0.60  0.66
+8            0.68  0.55
+9            0.48  0.61
+10           0.62  0.62
+11           0.49  0.53
+12           0.74  0.61
+13           0.57  0.60
+14           0.55  0.66
+15           0.62  0.71
+16           0.64  0.68
+17           0.78  0.69
+18           0.66  0.69
+19           0.63  0.67
+20           0.60  0.70
