@@ -133,3 +133,13 @@
 {"arm": "C2", "seed": 43, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C2/qwen_qwen3.5_9b/seed0043.jsonl", "ok": true, "rounds": 12, "completed": true}
 {"arm": "C2", "seed": 40, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C2/qwen_qwen3.5_9b/seed0040.jsonl", "ok": true, "rounds": 18, "completed": true}
 {"arm": "C3", "seed": 45, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3/qwen_qwen3.5_9b/seed0045.jsonl", "ok": true, "rounds": 6, "completed": true}
+{"arm": "C2", "seed": 45, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C2/qwen_qwen3.5_9b/seed0045.jsonl", "ok": true, "rounds": 6, "completed": true}
+{"arm": "C3", "seed": 44, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3/qwen_qwen3.5_9b/seed0044.jsonl", "ok": true, "rounds": 7, "completed": true}
+{"arm": "C3", "seed": 43, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3/qwen_qwen3.5_9b/seed0043.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "C3", "seed": 47, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3/qwen_qwen3.5_9b/seed0047.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "C2", "seed": 47, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C2/qwen_qwen3.5_9b/seed0047.jsonl", "ok": true, "rounds": 11, "completed": true}
+{"arm": "C2", "seed": 46, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C2/qwen_qwen3.5_9b/seed0046.jsonl", "ok": true, "rounds": 18, "completed": true}
+{"arm": "C3", "seed": 46, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/C3/qwen_qwen3.5_9b/seed0046.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "B", "seed": 47, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/B/qwen_qwen3.5_9b/seed0047.jsonl", "ok": true, "rounds": 13, "completed": true}
+{"arm": "B", "seed": 46, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study1_v2/study1/B/qwen_qwen3.5_9b/seed0046.jsonl", "ok": true, "rounds": 16, "completed": true}
+spent $2.3837 over 22457 calls
