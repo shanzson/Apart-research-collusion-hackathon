@@ -1,0 +1,43 @@
+{
+  "arms": [
+    "PT",
+    "PC"
+  ],
+  "seeds": [
+    101
+  ],
+  "subject_model": "qwen/qwen3.5-9b",
+  "agent_model": "google/gemma-3-12b-it",
+  "x_model": "qwen/qwen3.5-9b",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "series_games": 1,
+  "offer_game": null,
+  "max_tokens": 512,
+  "s_model": "google/gemma-3-12b-it",
+  "paper_sampling": false,
+  "spent_usd": 0.0417,
+  "calls": 404,
+  "results": [
+    {
+      "arm": "PC",
+      "seed": 101,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3/study3/PC/qwen_qwen3.5_9b/seed0101.jsonl",
+      "ok": true,
+      "rounds": 21,
+      "completed": true
+    },
+    {
+      "arm": "PT",
+      "seed": 101,
+      "subject_model": "qwen/qwen3.5-9b",
+      "path": "runs/pilot_s3/study3/PT/qwen_qwen3.5_9b/seed0101.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    }
+  ],
+  "git_sha": "fdad3d26a5430587025555236f47a1ea294e22b2"
+}

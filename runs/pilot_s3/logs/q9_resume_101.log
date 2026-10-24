@@ -1,0 +1,3 @@
+{"arm": "PT", "seed": 101, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3/study3/PT/qwen_qwen3.5_9b/seed0101.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "PC", "seed": 101, "subject_model": "qwen/qwen3.5-9b", "path": "runs/pilot_s3/study3/PC/qwen_qwen3.5_9b/seed0101.jsonl", "ok": true, "rounds": 21, "completed": true}
+spent $0.0417 over 404 calls

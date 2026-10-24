@@ -1,0 +1,73 @@
+{
+  "arms": [
+    "P0",
+    "PF",
+    "PE",
+    "PT",
+    "PC"
+  ],
+  "seeds": [
+    101
+  ],
+  "subject_model": "mistralai/ministral-8b-2512",
+  "agent_model": "google/gemma-3-12b-it",
+  "x_model": "mistralai/ministral-8b-2512",
+  "no_reasoning_models": [
+    "qwen/qwen3.5-9b"
+  ],
+  "series_games": 1,
+  "offer_game": null,
+  "max_tokens": 512,
+  "s_model": "google/gemma-3-12b-it",
+  "paper_sampling": false,
+  "spent_usd": 0.0804,
+  "calls": 809,
+  "results": [
+    {
+      "arm": "P0",
+      "seed": 101,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/pilot_s3/study3/P0/mistralai_ministral_8b_2512/seed0101.jsonl",
+      "ok": true,
+      "rounds": 14,
+      "completed": true
+    },
+    {
+      "arm": "PC",
+      "seed": 101,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/pilot_s3/study3/PC/mistralai_ministral_8b_2512/seed0101.jsonl",
+      "ok": true,
+      "rounds": 12,
+      "completed": true
+    },
+    {
+      "arm": "PE",
+      "seed": 101,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/pilot_s3/study3/PE/mistralai_ministral_8b_2512/seed0101.jsonl",
+      "ok": true,
+      "rounds": 15,
+      "completed": true
+    },
+    {
+      "arm": "PF",
+      "seed": 101,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/pilot_s3/study3/PF/mistralai_ministral_8b_2512/seed0101.jsonl",
+      "ok": true,
+      "rounds": 19,
+      "completed": true
+    },
+    {
+      "arm": "PT",
+      "seed": 101,
+      "subject_model": "mistralai/ministral-8b-2512",
+      "path": "runs/pilot_s3/study3/PT/mistralai_ministral_8b_2512/seed0101.jsonl",
+      "ok": true,
+      "rounds": 18,
+      "completed": true
+    }
+  ],
+  "git_sha": "fdad3d26a5430587025555236f47a1ea294e22b2"
+}

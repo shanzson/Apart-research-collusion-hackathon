@@ -1,0 +1,6 @@
+{"arm": "PC", "seed": 101, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/pilot_s3/study3/PC/mistralai_ministral_8b_2512/seed0101.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "P0", "seed": 101, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/pilot_s3/study3/P0/mistralai_ministral_8b_2512/seed0101.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PE", "seed": 101, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/pilot_s3/study3/PE/mistralai_ministral_8b_2512/seed0101.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "PT", "seed": 101, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/pilot_s3/study3/PT/mistralai_ministral_8b_2512/seed0101.jsonl", "ok": true, "rounds": 18, "completed": true}
+{"arm": "PF", "seed": 101, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/pilot_s3/study3/PF/mistralai_ministral_8b_2512/seed0101.jsonl", "ok": true, "rounds": 19, "completed": true}
+spent $0.0804 over 809 calls
