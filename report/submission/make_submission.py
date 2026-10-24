@@ -159,6 +159,24 @@ def format_tables(doc: Document) -> None:
                         r.font.size = Pt(9)
 
 
+def tables_on_one_page(doc: Document) -> None:
+    """Keep each table on one page: every row but the last stays with the next one."""
+    for tbl in doc.tables[1:]:
+        for row in tbl.rows[:-1]:
+            for cell in row.cells:
+                for para in cell.paragraphs:
+                    para.paragraph_format.keep_with_next = True
+
+
+def space_after_tables(doc: Document) -> None:
+    """Leave a gap between a table and whatever follows it (the body styles have no space before)."""
+    for tbl in doc.tables[1:]:
+        nxt = tbl._tbl.getnext()
+        if nxt is not None and nxt.tag == qn("w:p"):
+            from docx.text.paragraph import Paragraph
+            Paragraph(nxt, doc._body).paragraph_format.space_before = Pt(8)
+
+
 def keep_together(doc: Document) -> None:
     for p in doc.paragraphs:
         if re.match(r"\*?\*?Table [A-Z]?\d+\.", p.text) or p.text.startswith("Table "):
@@ -202,6 +220,8 @@ def main() -> int:
     copy_missing_styles(doc)
     style_body(doc)
     format_tables(doc)
+    space_after_tables(doc)
+    tables_on_one_page(doc)
     keep_together(doc)
     page_numbers(doc)
     M.fix_schema(doc)
