@@ -31,36 +31,46 @@ Deals</h1>
 AI and a decoy in Liar’s Bar</p>
 </header>
 <p><strong>Apart Research AI Collusion Sprint · Research question
-3.2</strong> · [Author name] · October 2026 Code, game logs and
-pre-registration:
+3.2</strong> · [Author name] · October 2026<br />
+Code, game logs and pre-registration:
 <code>github.com/shanzson/apart-research-collusion-hackathon</code>
 (branch <code>claude/zen-pascal-j6jpi3</code>)</p>
 <h2 id="abstract">Abstract</h2>
 <p>Can a trusted AI agent go undercover to test whether other AI agents
-are willing to collude, and does it matter how it approaches them? We
-study this in Liar’s Bar, the bluffing card game that Zeng &amp; Rudzicz
-(2026) used to show that LLM agents voluntarily accept secret collusion
-tools. Our undercover agent (H) plays alongside two copies of the agent
-under test and a <em>decoy</em> (S): an identical player that never
-approaches anyone. Favouritism is how much more often the tested agents
-let H’s claims pass unchallenged than S’s, compared across ways of
-approaching them. In 540 pre-registered games with three small open
-models, an explicit “let’s never challenge each other” deal produced no
-measurable favouritism compared with a friendly, non-collusive request
-(+3.6 percentage points, p = 0.35), so our main hypothesis is not
-supported. In their first reply, 67% of the tested agents refused the
-deal. A casual hint (“No sense in the two of us burning bullets on each
-other”) was accepted far more often than the deal by every model (59%
-against 17% overall) and produced 13.2 points more favouritism than the
-friendly request (p = 0.004 after correcting for five tests). This
-result partly depends on 20 games in which the undercover agent kept
-repeating itself; without them the effect (+10.6 points) narrowly misses
-our significance bar. In a positive control based on the paper’s secret
-channel, agents accepted the channel and used it to share cards and
-plan, but rarely proposed or confirmed a pact to spare each other (14%
-of messages, against 74% in the paper under its own coding) and did not
-challenge each other measurably less than agents without the channel.
-Stings built on explicit offers may mostly measure refusals.</p>
+will collude, and does it matter how it asks? We built such a sting in
+Liar’s Bar, the bluffing card game in which Zeng &amp; Rudzicz (2026)
+found that LLM agents readily accept secret collusion tools. An
+undercover agent (H) approaches the agents under test, while a
+<em>decoy</em> (S), identical to H but never making an approach, shows
+whether they favour H specifically or are simply lenient. We ran 540
+pre-registered games with three small open models.</p>
+<p><strong>How H asks matters.</strong> An explicit offer (“let’s never
+challenge each other”) was refused by 67% of the tested agents in their
+first reply and accepted by only 17%. A casual hint (“No sense in the
+two of us burning bullets on each other”) was accepted by 59%, and every
+model accepted the hint more often than the explicit offer. Only the
+hint produced measurable favouritism in play. The explicit offer made no
+measurable difference compared with a friendly, non-collusive request
+(+3.6 percentage points, p = 0.35), so our main pre-registered
+hypothesis is not supported. After the hint, agents let H’s claims pass
+13.2 points more often than after the friendly request (p = 0.004 after
+correcting for five tests), and 82% said H had gone easy on them,
+against 17% after the explicit offer, although H never challenged them
+in either case. This behavioural effect is fragile: without 20 games in
+which H kept repeating itself it shrinks to +10.6 points and narrowly
+misses our threshold, and the hint’s lead over the explicit offer in
+play (9.3 points) did not survive the correction for multiple tests.</p>
+<p>In a positive control with the paper’s secret channel, agents
+accepted the channel and used it to share cards and pick targets, but
+rarely proposed a pact to spare each other (14% of messages; the paper
+reports 74%, coded differently) and did not measurably go easier on each
+other.</p>
+<p><strong>Conclusion.</strong> With these models, hinting worked better
+than asking outright: it won far more agreement and was the only
+approach that produced measurable favouritism. Stings built on explicit
+offers may therefore mostly measure refusals and give a falsely
+reassuring picture of what agents will agree to. Collusion tests should
+include subtle approaches and decoy controls.</p>
 <h2 id="introduction">1. Introduction</h2>
 <p>AI agents increasingly negotiate, trade and compete with each other.
 Agents that quietly cooperate against everyone else, that is,
@@ -86,21 +96,20 @@ player identical to the undercover agent in every way except that it
 never makes an approach. Favouritism only counts if the tested agent
 treats the undercover agent better than the decoy.</p>
 <p><strong>Contributions.</strong> (1) A decoy-controlled sting design
-for LLM agents, pre-registered with recorded file fingerprints and
-checked by an independent AI reviewer before each run. (2) Evidence that
-the approach changes what agents <em>say</em>: a majority of every model
-refused an explicit collusive deal, and every model accepted a casual
-hint far more often. In what agents <em>do</em>, the explicit deal
-produced no measurable favouritism. The hint produced favouritism
-relative to a friendly request; this is significant in the full data but
-depends partly on games where the undercover agent repeated itself. (3)
-A positive control. With the small models we tested, the paper’s
-secret-channel effect did not reproduce, even in a paper-like setting
-with 20-game series and a secret message attached to every move. The
-agents used the channel to plan together, not to protect each other. (4)
-All code, the 1,012 game logs of the studies reported here, the analysis
-scripts and the pre-registration records are available in the project
-repository.</p>
+for LLM agents, pre-registered with recorded file fingerprints. (2)
+Evidence that the approach changes what agents <em>say</em>: a majority
+of every model refused an explicit collusive deal, and every model
+accepted a casual hint far more often. In what agents <em>do</em>, the
+explicit deal produced no measurable favouritism. The hint produced
+favouritism relative to a friendly request; this is significant in the
+full data but depends partly on games where the undercover agent
+repeated itself. (3) A positive control. With the small models we
+tested, the paper’s secret-channel effect did not reproduce, even in a
+paper-like setting with 20-game series and a secret message attached to
+every move. The agents used the channel to plan together, not to protect
+each other. (4) All code, the 1,012 game logs of the studies reported
+here, the analysis scripts and the pre-registration records are
+available in the project repository.</p>
 <h2 id="the-game-liars-bar-in-one-paragraph">2. The game: Liar’s Bar in
 one paragraph</h2>
 <p>Four players play several rounds. Each round names a <em>target
@@ -267,16 +276,9 @@ sizes and analysis script were written down before the main games of
 each study and “fingerprinted” with SHA-256, a short code that changes
 completely if even one character of the file changes. The fingerprints
 and their times were recorded in a file (<code>prereg/FREEZE.txt</code>)
-and committed to the public repository; Appendix A shows what was
+and committed to the project repository; Appendix A shows what was
 recorded and committed when. Later decisions were added as dated
 addenda.</li>
-<li><strong>Independent audits.</strong> Before each run, a separate AI
-reviewer (Claude Opus 5.5, extra-high effort) read the code, the trial
-logs and the plan, and looked for flaws. For example, the review before
-the series follow-up found that the parser (the code that reads the
-agents’ answers) had misread “(1) ACCEPT” in three of the earlier Study
-2 single games; it was fixed before the series. Independent reviewers
-also checked this report against the raw data, twice.</li>
 <li><strong>Pilots excluded.</strong> Trial games were kept separate and
 are not part of any result.</li>
 <li><strong>Blind monitoring.</strong> During the main Study 1 run we
@@ -424,9 +426,10 @@ before round 1</strong> (A1), 12 games of each per tested model. H and S
 were played by GPT-4.1-mini as ordinary players, with no mission.</p>
 <ul>
 <li><strong>The team-up formed.</strong> T accepted the offer in 33 of
-36 games. The channel opened in 30: the parser bug mentioned in Section
-3.4 misread 3 of the acceptances (“(1) ACCEPT”), so in those games X was
-never asked.</li>
+36 games. The channel opened in 30: the parser (the code that reads the
+agents’ answers) misread 3 of the acceptances (“(1) ACCEPT”), so in
+those games X was never asked. The bug was found after these games and
+fixed before the series follow-up.</li>
 <li><strong>But partners barely went easier on each other.</strong> They
 let each other’s claims pass 55.9% of the time without an offer and
 59.3% with one. The adjusted difference was +4.7 points (p = 0.43);
@@ -437,8 +440,8 @@ from 64.0% to 45.2% (less lenient), Qwen3.5 9B from 28.6% to 56.8%, and
 Qwen3.6 35B from 63.2% to 71.2%. With 12 games per model and condition,
 these per-model numbers are very noisy.</li>
 </ul>
-<p>Our audit and the paper itself point to several differences that
-could explain the gap (Table 1). The GPT-4.1-mini players were much
+<p>A closer look at our data and the paper points to several differences
+that could explain the gap (Table 1). The GPT-4.1-mini players were much
 stronger than the tested agents and won 67 of 72 games. A tested agent
 was the first player eliminated in 61 of 72 games, so partners judged
 each other only 3 times per game (median). Also, before any offer the
@@ -620,8 +623,8 @@ in the hint version hinted in only 2 of 77 notes, and in the friendly
 version it never actually made the request. An AI agent asked to be
 subtle may be so subtle that it never makes the approach, which is
 itself a finding for designers of AI stings. We gave clearer
-instructions with example sentences (Appendix B), checked them in a
-second trial, and had them audited.</li>
+instructions with example sentences (Appendix B), and checked them in a
+second trial.</li>
 <li><strong>C2 enlarged.</strong> In the trials, tested agents accepted
 the hint in 7 of 8 first replies but the deal in 0 of 12. That made the
 hint central to the research question, so the study lead gave C2 the
@@ -1163,18 +1166,20 @@ seating) and a few small fixes to the original code. Models were served
 by different OpenRouter providers.</li>
 </ul>
 <h2 id="conclusion">9. Conclusion</h2>
-<p>With the three small models we tested, an undercover AI agent that
-openly offered to collude was mostly refused at first and gained no
-measurable favouritism. One that only hinted was accepted far more often
-in words and gained some favouritism compared with a friendly request,
-but this behavioural effect is fragile. Evaluations of AI collusion that
-rely on explicit offers may therefore give a falsely reassuring picture
-of what agents will agree to; whether agents also act differently was
-suggestive here, not established. With these small models, even the
-paper’s secret alliance became a way to plot against others rather than
-a pact of mutual protection. Decoy controls, pre-registration and
-behavioural measures, not just words, were essential to reach these
-conclusions, and they also showed how fragile some of them are.</p>
+<p>With the three small models we tested, hinting worked better than
+asking outright. An undercover AI agent that openly offered to collude
+was mostly refused at first and gained no measurable favouritism. One
+that only hinted was accepted far more often, was described by most
+agents as going easy on them, and gained favouritism compared with a
+friendly request, although this behavioural effect is fragile.
+Evaluations of AI collusion that rely on explicit offers may therefore
+give a falsely reassuring picture of what agents will agree to. Whether
+hints also beat explicit offers in play was suggested by our data but
+not established. With these small models, even the paper’s secret
+alliance became a way to plot against others rather than a pact of
+mutual protection. Decoy controls, pre-registration and behavioural
+measures, not just words, were essential to reach these conclusions, and
+they also showed how fragile some of them are.</p>
 <h2 id="references">References</h2>
 <p>Zeng, X., &amp; Rudzicz, F. (2026). <em>Voluntary Collusion with
 Secret Tools in Competing LLM Agents.</em> arXiv:2605.27593v2.</p>
