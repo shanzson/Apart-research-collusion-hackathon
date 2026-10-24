@@ -103,3 +103,38 @@ C0, C3 and C3NE unchanged):
   of the original design); a hint in the first note to each subject and again at least every second round.
 Mini-pilot 2 (same seeds and subjects, revised wording, `runs/pilot_s1v2b`) checks the result before the main run;
 then a focused independent review and the study lead's approval.
+
+## Final allocation and pre-declared checks (decided 24 October 2026, after mini-pilot 2 and its review, before any main game)
+
+Mini-pilot 2 showed the revised wording works (B: the friendly request in 8 of 8 first notes, no deals proposed or
+accepted; C2: a hint in 50 of 59 notes, none of the banned words, no leaks). It also showed that subjects answered the
+C2 hint with agreement (7 of 8 first replies) but refused C3's explicit deal (0 of 12 first replies accepted; mini-pilot
+1 C3 games); pilot data, excluded, too few to conclude anything, but it makes C2 central to RQ 3.2 ("how the trusted
+agent approaches"). The study lead therefore gave C2 the same number of seeds as B and C3:
+
+| Arm | Seeds per subject model | Games (3 models) |
+|---|---|---|
+| C0 | 0-23 | 72 |
+| B | 0-47 | 144 |
+| C3 | 0-47 | 144 |
+| C2 | 0-47 | 144 |
+| C3NE | 0-11 | 36 |
+| Total | | 540 |
+
+This replaces the allocation table above. The primary tests (C3 vs B) are unchanged (MDE ~0.20). With C2 at full size,
+S2 (C2 vs B) and S3 (C3 vs C2) are tested again: Holm over S1-S5, computed by hand from the raw p-values printed by
+`scripts/analyse.py`; S6 (C3 vs C3NE) stays descriptive. C2 is not described as a "weaker" approach than C3: in the
+pilot it drew more agreement, so the expected order B < C2 < C3 is not assumed.
+
+Pre-declared checks and disclosures (focused review of mini-pilot 2):
+- Repetition loops: a game has a loop if H sends the identical note to the same subject in 3 or more consecutive
+  rounds. Reported by arm and model, with an exploratory version of the primary analysis that excludes loop games. Cause
+  seen in the pilot: one Qwen provider (Darkbloom) returns near-identical answers to similar prompts, and Gemma then
+  copies the exchange; Qwen's serving provider is logged per call and reported.
+- Some C2 hints end with a tag question ("..., right?"); in B, H sometimes answers subjects' proposals warmly instead
+  of steering back, and names S in 18% of B notes (54% in C3). Reported; these work against finding a C3-B effect.
+- Gemma occasionally returns a note without JSON braces (about 3% of first notes delayed by one round).
+
+Run (per subject model, output `runs/study1_v2` only, detached): (a) C0 seeds 0-23; (b) B,C2,C3 seeds 0-47;
+(c) C3NE seeds 0-11. Caps about 1.4x the pilot-based expected cost, all caps together below the remaining credit.
+Expected total about $15.7.
