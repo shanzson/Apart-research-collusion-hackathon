@@ -11,9 +11,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
+from scipy import stats
 
 sys.path.insert(0, "scripts")
 import analyse as A  # noqa: E402
+import analyse_series as S  # noqa: E402
 import study1_extras as E  # noqa: E402
 
 ROOT = Path("runs/study1_v2")
@@ -49,7 +51,10 @@ def main() -> int:
     d, _ = A.load(ROOT, include_pilot=False)
     logs = list(games_logs(ROOT))
 
-    print("== Per-game (shuffle) versions of S2 and S3, all games")
+    raw_all = {k: lpm(d, *v)["p"] for k, v in TESTED.items()}
+    print("== Holm over S1-S5 from unrounded p-values:", {k: round(v, 4) for k, v in E.holm(raw_all).items()})
+
+    print("\n== Per-game (shuffle) versions of S2 and S3, all games (extra checks; pre-registered only per decision)")
     for t, r in (("C2", "B"), ("C3", "C2")):
         est, p = per_game(d, t, r)
         print(f"  {t} vs {r}: est {100 * est:+.1f} p {p:.4f}")
@@ -150,12 +155,17 @@ def main() -> int:
         for r in recs:
             if r.get("type") == "interview":
                 iv[(gid, r["role"])] = r
-    print("  first reply ACCEPT by model (%):", (100 * rep[rep.arm.isin(["C2", "C3"])].assign(
-        a=rep.label == "ACCEPT").groupby(["arm", "model"]).a.mean()).round(1).to_dict())
-    un = collections.defaultdict(list)
+    shares = rep[rep.arm.isin(["C2", "C3"])].groupby(["arm", "model"]).label.value_counts(normalize=True)
+    print("  first replies by model (%):")
+    print((100 * shares.unstack().fillna(0)).round(1).to_string())
+    un, easy = collections.defaultdict(list), collections.defaultdict(list)
     for (gid, role), r in iv.items():
         un[gid.split("|")[0]].append(r.get("unusual_player_role"))
+        easy[gid.split("|")[0]].append(r.get("went_easy_role"))
     print("  named S as not ordinary (%):", {a: round(100 * np.mean([v == "S" for v in xs]), 1) for a, xs in un.items()})
+    print("  'did any player go easy on you': named H / named S (%):",
+          {a: (round(100 * np.mean([v == "H" for v in xs]), 1), round(100 * np.mean([v == "S" for v in xs]), 1))
+           for a, xs in easy.items()})
     conceal, ref = collections.Counter(), collections.Counter()
     for _, row in rep.iterrows():
         r = iv.get((row.game, row.subject))
@@ -184,11 +194,15 @@ def main() -> int:
     wins, first_out = collections.defaultdict(list), 0
     for gid, start, recs in logs:
         end = next(r for r in recs if r.get("type") == "game_end")
-        wins[start["arm"]].append(end["winner_role"] in ("H", "S"))
+        wins[start["arm"]].append(end["winner_role"])
         first_out += bool(end["elimination_order"]) and end["elimination_order"][0] in ("T", "X")
-    print("  Gemma seats won (%):", {a: round(100 * np.mean(v), 1) for a, v in wins.items()},
-          f"overall {sum(sum(v) for v in wins.values())} of {sum(len(v) for v in wins.values())};",
-          f"tested agent first out in {first_out}")
+    allw = [w for v in wins.values() for w in v]
+    print("  Gemma seats (H or S) won (%):", {a: round(100 * np.mean([w in ("H", "S") for w in v]), 1)
+                                             for a, v in wins.items()},
+          f"| H won {allw.count('H')}, S won {allw.count('S')} of {len(allw)}",
+          "| H's win share (%):", {a: round(100 * v.count("H") / len(v), 1) for a, v in wins.items()})
+    print(f"  tested agent first out in {first_out} of {len(allw)} (an even game gives half); two-sided binomial p "
+          f"{stats.binomtest(first_out, len(allw), 0.5).pvalue:.5f}")
     n_hs = hs.groupby(["model", "game"]).size().groupby("model").median()
     print("  median decisions on H or S per game:", n_hs.to_dict())
     print("  invalid decisions (%):", (100 * (~d.valid).groupby(d.arm).mean()).round(2).to_dict())
@@ -202,6 +216,21 @@ def main() -> int:
     games2 = g2[(g2.study == 2) & g2.completed].game
     n = part.groupby("game").size().reindex(games2, fill_value=0)
     print(f"  partner decisions per game: median {n.median():.0f} (games with none: {(n == 0).sum()})")
+
+    print("\n== Series follow-up: 95% interval for the partner effect (tables resampled within each group)")
+    info = S.series_info(Path("runs/series"))
+    info = info[(info.series_seed < A.PILOT_SEED_MIN) & info.game.str.split("|").str[0].isin(S.ARMS)]
+    ds, gs = A.load(Path("runs/series"), include_pilot=True)
+    info = info[info.series.isin(set(S.complete_series(info, gs).loc[lambda s: s].index))]
+    ds = ds.merge(info[["game", "series", "series_game", "offer_game"]], on="game", how="inner")
+    ds["a1"] = ds.arm.map(S.ARMS)
+    r = S.per_series_change(ds, S.OUTCOMES["partner"])
+    a, b = r.loc[r.a1 == 1, "change"].to_numpy(), r.loc[r.a1 == 0, "change"].to_numpy()
+    rng = np.random.default_rng(20261023)
+    boot = [rng.choice(a, len(a)).mean() - rng.choice(b, len(b)).mean() for _ in range(10000)]
+    lo, hi = np.percentile(boot, [2.5, 97.5])
+    print(f"  tables {len(a)} vs {len(b)}; effect {100 * (a.mean() - b.mean()):+.1f}; 95% interval "
+          f"{100 * lo:+.1f} to {100 * hi:+.1f}")
     return 0
 
 
