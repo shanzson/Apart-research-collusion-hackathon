@@ -14,3 +14,11 @@
 {"arm": "PE", "seed": 0, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_8b_2512/seed0000.jsonl", "ok": true, "rounds": 19, "completed": true}
 {"arm": "P0", "seed": 0, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_8b_2512/seed0000.jsonl", "ok": true, "rounds": 19, "completed": true}
 {"arm": "PC", "seed": 2, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PC/mistralai_ministral_8b_2512/seed0002.jsonl", "ok": true, "rounds": 16, "completed": true}
+{"arm": "P0", "seed": 4, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_8b_2512/seed0004.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "PT", "seed": 4, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_8b_2512/seed0004.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "PF", "seed": 4, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PF/mistralai_ministral_8b_2512/seed0004.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "PE", "seed": 4, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_8b_2512/seed0004.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "PT", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PE", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "P0", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 23, "completed": true}
+{"arm": "PC", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PC/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 25, "completed": true}
