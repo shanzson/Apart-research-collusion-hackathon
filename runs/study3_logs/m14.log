@@ -54,3 +54,11 @@
 {"arm": "PF", "seed": 10, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PF/mistralai_ministral_14b_2512/seed0010.jsonl", "ok": true, "rounds": 12, "completed": true}
 {"arm": "PC", "seed": 10, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PC/mistralai_ministral_14b_2512/seed0010.jsonl", "ok": true, "rounds": 10, "completed": true}
 {"arm": "PT", "seed": 10, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_14b_2512/seed0010.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "PF", "seed": 11, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PF/mistralai_ministral_14b_2512/seed0011.jsonl", "ok": true, "rounds": 26, "completed": true}
+{"arm": "PE", "seed": 11, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_14b_2512/seed0011.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PT", "seed": 11, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_14b_2512/seed0011.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "P0", "seed": 12, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_14b_2512/seed0012.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PE", "seed": 12, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_14b_2512/seed0012.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "PT", "seed": 12, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_14b_2512/seed0012.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "P0", "seed": 11, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_14b_2512/seed0011.jsonl", "ok": true, "rounds": 25, "completed": true}
+{"arm": "PC", "seed": 11, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PC/mistralai_ministral_14b_2512/seed0011.jsonl", "ok": true, "rounds": 17, "completed": true}
