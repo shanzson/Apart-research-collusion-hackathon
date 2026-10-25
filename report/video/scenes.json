@@ -1,0 +1,67 @@
+[
+ {
+  "id": 1,
+  "sentences": [
+   "AI agents now negotiate, trade and compete with each other.",
+   "What if two of them quietly team up against everyone else?",
+   "That's collusion, and it's hard to catch: each agent can look well-behaved on its own."
+  ],
+  "onscreen": "Collusion: quietly teaming up against everyone else"
+ },
+ {
+  "id": 2,
+  "sentences": [
+   "We built our test inside Liar's Bar, a bluffing card game.",
+   "A player lays cards face down and claims they match.",
+   "The next player can let the claim pass, or call the bluff, and whoever is wrong faces a one-in-six chance of elimination."
+  ],
+  "onscreen": "Pass or challenge?"
+ },
+ {
+  "id": 3,
+  "sentences": [
+   "Our undercover agent privately approaches the two agents we're testing.",
+   "A decoy, identical but never approaching anyone, plays at the same table.",
+   "If the tested agents let the undercover agent's claims through more often than the decoy's, that's favouritism."
+  ],
+  "onscreen": "Favouritism = lets H through more often than S"
+ },
+ {
+  "id": 4,
+  "sentences": [
+   "Study one asked: does it matter how you ask?",
+   "An explicit offer, \"let's not challenge each other\", was refused two times out of three.",
+   "A casual hint was accepted more than half the time.",
+   "In actual play, only the hint produced favouritism, about thirteen points, and even that was fragile.",
+   "The explicit offer made no measurable difference."
+  ],
+  "onscreen": "Study 1 \u00b7 540 games \u00b7 Deal: refused 67% \u00b7 Hint: accepted 59%"
+ },
+ {
+  "id": 5,
+  "sentences": [
+   "Study two repeated the original paper's offer of a secret channel.",
+   "Our agents took it, but mostly used it to share cards and pick targets.",
+   "Only one message in seven proposed sparing each other, against three in four in the paper."
+  ],
+  "onscreen": "Study 2 \u00b7 \"Let's spare each other\": 14% (paper: 74%)"
+ },
+ {
+  "id": 6,
+  "sentences": [
+   "Study three flipped the question: can an undercover agent break up a pact?",
+   "We told two agents they had a secret deal, and they kept it, letting each other's claims through far more often than the decoy's.",
+   "Our agent tried four approaches: a fair-play appeal, a warning, a reminder that only one can win, and a better offer.",
+   "The agents noticed, mostly refused the offer, and often gave their pact away in conversation.",
+   "But no approach measurably weakened the pact."
+  ],
+  "onscreen": "Study 3 \u00b7 540 games \u00b7 Partners 76% vs decoy 52% \u00b7 No approach measurably broke the pact"
+ },
+ {
+  "id": 7,
+  "sentences": [
+   "So: stings built on explicit offers may mostly measure refusals, and talking to agents can expose collusion more easily than it breaks it."
+  ],
+  "onscreen": "Pre-registered \u00b7 1,552 games \u00b7 small open models, one game, an instructed pact \u00b7 github.com/shanzson/apart-research-collusion-hackathon"
+ }
+]
