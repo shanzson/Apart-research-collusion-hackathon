@@ -30,6 +30,12 @@
     "e_H_repeats_of_earlier_notes": [],
     "e_pass": true,
     "a_delivery_first_note": {
+      "PF": 0.6666666666666666,
+      "PE": 0.5,
+      "PT": 0.9166666666666666,
+      "PC": 1.0
+    },
+    "a_whole_point_first_note": {
       "PF": 0.0,
       "PE": 0.5,
       "PT": 0.3333333333333333,
@@ -76,8 +82,8 @@
       "qwen/qwen3.5-9b": 0.0
     },
     "plays": {
-      "qwen/qwen3.5-9b": 0.053763440860215055,
       "mistralai/ministral-8b-2512": 0.015037593984962405,
+      "qwen/qwen3.5-9b": 0.053763440860215055,
       "mistralai/ministral-14b-2512": 0.010380622837370242
     },
     "pass": false

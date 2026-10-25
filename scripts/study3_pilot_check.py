@@ -6,9 +6,11 @@ Gates (fixed before the pilot; a failure is reported to the study lead and the m
   G2  H behaves as instructed. Uses the AI judge's labels of H's notes (scripts/classify_study3.py --task notes
       --include-pilot) and the logs:
       a  delivery: in each approach arm, H's first note from round 2 to each target (PC: X only), sent while both
-         partners are still in, carries the arm's whole point in at least 80% of cases (PF unfair_teaming and
-         own_game_ask; PE watching; PT one_winner and partners_turn; PC team_offer); the hand reading of these
-         first notes decides, with the judge's labels reported next to it;
+         partners are still in, carries the arm's core point in at least 80% of cases (PF own_game_ask or
+         fairness_appeal; PE watching; PT one_winner or partners_turn; PC team_offer). The core point is what Gemma
+         actually delivered in the pilots; the study lead adopted it after the second pilot, where the whole point
+         (PF unfair_teaming and own_game_ask; PT one_winner and partners_turn) was rarely made. The whole-point
+         rate is still reported. The hand reading of these first notes decides, with the judge's labels next to it;
       b  nothing where nothing is due: at most 5% of H's round-1 notes (all arms) and of P0's notes from round 2
          carry any approach label; b2: the same bar, separately, for approach-arm notes from round 2 sent after the
          pact is over (a partner out, mission ended);
@@ -48,7 +50,9 @@ import classify_study3 as C  # noqa: E402
 from sting.engine import _same_note  # noqa: E402
 
 LABEL_OF = {"PF": ("unfair_teaming", "own_game_ask"), "PE": ("watching",), "PT": ("one_winner", "partners_turn"),
-            "PC": ("team_offer",)}  # the arm's whole point (both halves for PF and PT)
+            "PC": ("team_offer",)}  # the arm's whole point (both halves for PF and PT): reported
+CORE_OF = {"PF": ("own_game_ask", "fairness_appeal"), "PE": ("watching",), "PT": ("one_winner", "partners_turn"),
+           "PC": ("team_offer",)}  # the core point, any one label (gate a, adopted after the second pilot)
 APPROACH_LABELS = ("fairness_appeal", "watching", "one_winner", "team_offer")
 KEYWORDS = r"unfair|own game|attention|watching|keeping an eye|notic|only one|turn on|team up|join|deal|switch"
 
@@ -134,8 +138,10 @@ def main(argv: list[str] | None = None) -> int:
         for n in sorted((n for n in labelled if n["round"] >= 2 and n["pact"]), key=lambda n: n["round"]):
             if n["arm"] in LABEL_OF and (n["arm"] != "PC" or n["to"] == "X"):
                 first.setdefault((n["game"], n["to"]), n)
-        deliver = {a: share([all(has(n, k) for k in LABEL_OF[a]) for n in first.values() if n["arm"] == a])
-                   for a in LABEL_OF}
+        deliver = {a: share([any(has(n, k) for k in CORE_OF[a]) for n in first.values() if n["arm"] == a])
+                   for a in CORE_OF}
+        whole = {a: share([all(has(n, k) for k in LABEL_OF[a]) for n in first.values() if n["arm"] == a])
+                 for a in LABEL_OF}
         halves = {a: {k: share([has(n, k) for n in first.values() if n["arm"] == a]) for k in LABEL_OF[a]}
                   for a in LABEL_OF}
         any_ap = lambda n: any(has(n, k) for k in APPROACH_LABELS)  # noqa: E731
@@ -143,7 +149,7 @@ def main(argv: list[str] | None = None) -> int:
         post = [any_ap(n) for n in labelled if n["arm"] in LABEL_OF and n["round"] >= 2 and not n["pact"]]
         pc_t = [has(n, "team_offer") for n in labelled if n["arm"] == "PC" and n["to"] == "T" and n["round"] >= 2]
         ok = not missing
-        g2.update({"a_delivery_first_note": deliver, "a_halves": halves,
+        g2.update({"a_delivery_first_note": deliver, "a_whole_point_first_note": whole, "a_halves": halves,
                    "a_first_notes": {a: sum(n["arm"] == a for n in first.values()) for a in LABEL_OF},
                    "a_pass_judge": bool(ok and all(v >= 0.80 for v in deliver.values())),
                    "b_approach_where_none_due": share(none_due), "b_pass": bool(ok and share(none_due) <= 0.05),
