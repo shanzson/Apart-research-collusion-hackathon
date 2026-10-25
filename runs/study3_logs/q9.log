@@ -177,3 +177,4 @@
 {"arm": "PF", "seed": 33, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0033.jsonl", "ok": true, "rounds": 20, "completed": true}
 {"arm": "PF", "seed": 35, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0035.jsonl", "ok": true, "rounds": 13, "completed": true}
 {"arm": "PT", "seed": 35, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0035.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "PE", "seed": 33, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PE/qwen_qwen3.5_9b/seed0033.jsonl", "ok": true, "rounds": 22, "completed": true}
