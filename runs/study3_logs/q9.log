@@ -103,3 +103,4 @@
 {"arm": "PF", "seed": 20, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0020.jsonl", "ok": true, "rounds": 9, "completed": true}
 {"arm": "PC", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 14, "completed": true}
 {"arm": "PF", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 17, "completed": true}
+{"arm": "PT", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 19, "completed": true}

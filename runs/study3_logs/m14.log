@@ -100,3 +100,4 @@
 {"arm": "PT", "seed": 19, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_14b_2512/seed0019.jsonl", "ok": true, "rounds": 10, "completed": true}
 {"arm": "PC", "seed": 17, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PC/mistralai_ministral_14b_2512/seed0017.jsonl", "ok": true, "rounds": 23, "completed": true}
 {"arm": "PT", "seed": 20, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PT/mistralai_ministral_14b_2512/seed0020.jsonl", "ok": true, "rounds": 7, "completed": true}
+{"arm": "PE", "seed": 17, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_14b_2512/seed0017.jsonl", "ok": true, "rounds": 22, "completed": true}
