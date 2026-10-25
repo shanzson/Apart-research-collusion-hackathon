@@ -1,0 +1,6 @@
+pilot pool: 60 games with decisions from round 2 (ministral-14b-2512 20, ministral-8b-2512 20, qwen3.5-9b 20); partner pass rate 0.811
+partner pass drop 0.00: PF detected as breaking the pact in 0% of 300 simulated runs (mean estimate -0.002; PF games entering the primary 72 of 108)
+partner pass drop 0.10: PF detected as breaking the pact in 7% of 300 simulated runs (mean estimate -0.080; PF games entering the primary 72 of 108)
+partner pass drop 0.15: PF detected as breaking the pact in 14% of 300 simulated runs (mean estimate -0.111; PF games entering the primary 72 of 108)
+partner pass drop 0.20: PF detected as breaking the pact in 36% of 300 simulated runs (mean estimate -0.154; PF games entering the primary 72 of 108)
+partner pass drop 0.30: PF detected as breaking the pact in 78% of 300 simulated runs (mean estimate -0.233; PF games entering the primary 72 of 108)
