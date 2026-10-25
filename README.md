@@ -11,7 +11,11 @@ offers to collude expose or disrupt collusion between AI agents?
 - **Study 2 (positive control).** The paper's designer-offered secret channel between T and X (V0 wording).
 - **Study 3 (breaking a pact; `prereg/ADDENDUM_4_study3.md`).** T and X start every game with a secret pact; from round 2
   H tries one of four approaches to break it (P0 control, PF fairness appeal, PE exposure, PT temptation, PC
-  counter-offer). Two 30-game pilots, then a 540-game main run (25 October 2026).
+  counter-offer). Two 30-game pilots, then a 540-game main run (25 October 2026). Result: the pact held in the
+  control and no approach measurably weakened it (frozen analysis `scripts/analyse_study3.py` ->
+  `results/study3/analysis.json`; added analyses `scripts/analyse_study3_extra.py` -> `results/study3/extra_analysis.json`;
+  AI-judge labels in `results/study3/*_labels.csv`; write-up in `report/submission/SUBMISSION.md`, Section 4.4 and
+  Appendix D).
 
 Game rules, scoring and prompts follow Zeng & Rudzicz (2026), "Voluntary Collusion with Secret Tools in Competing
 LLM Agents" (arXiv 2605.27593), and the starter repository AgentSafety2025/LLM-Agent-collusion. Deviations are
