@@ -1,0 +1,7 @@
+games: {'P0': {'ended': 108, 'capped': 0, 'crashed': 0, 'rounds_mean': 11.666666666666666, 'h_out_before_r2': 1}, 'PF': {'ended': 108, 'capped': 0, 'crashed': 0, 'rounds_mean': 11.916666666666666, 'h_out_before_r2': 1}, 'PE': {'ended': 108, 'capped': 0, 'crashed': 0, 'rounds_mean': 11.953703703703704, 'h_out_before_r2': 3}, 'PT': {'ended': 108, 'capped': 0, 'crashed': 0, 'rounds_mean': 11.944444444444445, 'h_out_before_r2': 3}, 'PC': {'ended': 108, 'capped': 0, 'crashed': 0, 'rounds_mean': 12.25, 'h_out_before_r2': 2}}
+manipulation check, P0 favouritism toward the partner: +0.138 (95% interval +0.050 to +0.226; 70 games)
+primary (per-game favouritism vs P0; Holm over four; PC uses X's decisions):
+  PF: effect -0.035 (95% -0.156 to +0.089) p 0.5875 Holm 1.0000; partner-only -0.006; S-only +0.046; breaks pact: False; backfire: False
+  PE: effect +0.069 (95% -0.082 to +0.219) p 0.3840 Holm 1.0000; partner-only +0.091; S-only +0.025; breaks pact: False; backfire: False
+  PT: effect +0.048 (95% -0.073 to +0.175) p 0.4639 Holm 1.0000; partner-only +0.069; S-only +0.038; breaks pact: False; backfire: False
+  PC: effect -0.031 (95% -0.236 to +0.183) p 0.7958 Holm 1.0000; partner-only +0.006; S-only -0.049; breaks pact: False; backfire: False

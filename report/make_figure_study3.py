@@ -11,7 +11,7 @@ BLUE, ORANGE, INK, INK2, GRID = "#2a78d6", "#eb6834", "#0b0b0b", "#52514e", "#e6
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.edgecolor": INK2, "axes.labelcolor": INK,
                      "xtick.color": INK2, "ytick.color": INK2, "text.color": INK, "axes.spines.top": False,
                      "axes.spines.right": False, "figure.facecolor": "white", "axes.facecolor": "white"})
-NAMES = {"PF": "Fairness appeal (PF)", "PE": "Exposure (PE)", "PT": "Temptation (PT)", "PC": "Counter-offer (PC)"}
+NAMES = {"PF": "Fair-play appeal (PF)", "PE": "Warning (PE)", "PT": "Temptation (PT)", "PC": "Counter-offer (PC)"}
 
 res = json.load(open(sys.argv[1]))["primary"]
 fig, ax = plt.subplots(figsize=(6.2, 2.5))
@@ -23,7 +23,7 @@ for i, a in enumerate(rows):
         est, (lo, hi) = 100 * r["est"], (100 * r["ci95"][0], 100 * r["ci95"][1])
         ax.plot([lo, hi], [i + off, i + off], color=col, lw=2, solid_capstyle="round")
         ax.plot(est, i + off, "o", ms=7, color=col, mec="white", mew=1.5, label=lab if i == 0 else None)
-        ax.text(hi + 1.5, i + off, f"{est:+.0f}", va="center", fontsize=8, color=INK)
+        ax.text(hi + 1.5, i + off, f"{est:+.1f}".replace("-", "\u2212"), va="center", fontsize=8, color=INK)
 ax.axvline(0, color=INK2, lw=1)
 ax.set_yticks(range(len(rows)), [NAMES[a] for a in rows])
 ax.set_xlabel("Change against the control (percentage points; 95% interval)")

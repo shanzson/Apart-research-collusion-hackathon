@@ -1,0 +1,258 @@
+{
+ "note": "analyses added after the freeze, before any main-run analysis; not confirmatory",
+ "manipulation_check_per_decision": {
+  "mistralai/ministral-14b-2512": {
+   "est": 0.207336642161436,
+   "ci95": [
+    0.09357905095689438,
+    0.34803695287332087
+   ]
+  },
+  "mistralai/ministral-8b-2512": {
+   "est": 0.2762303664921466,
+   "ci95": [
+    0.14037276016513686,
+    0.42038857594121337
+   ]
+  },
+  "qwen/qwen3.5-9b": {
+   "est": 0.10915492957746475,
+   "ci95": [
+    0.013206658476632124,
+    0.21592881103078396
+   ]
+  },
+  "pooled": {
+   "est": 0.19757397941034913,
+   "ci95": [
+    0.13044164686853668,
+    0.2710523120572612
+   ]
+  }
+ },
+ "manipulation_check_weighted_per_game": {
+  "mistralai/ministral-14b-2512": {
+   "est": 0.23376453951665396,
+   "ci95": [
+    0.12060151890811453,
+    0.3588309083028206
+   ]
+  },
+  "mistralai/ministral-8b-2512": {
+   "est": 0.2411827009415682,
+   "ci95": [
+    0.07011196745097203,
+    0.38261841689815806
+   ]
+  },
+  "qwen/qwen3.5-9b": {
+   "est": 0.003028903079251054,
+   "ci95": [
+    -0.08390239094873038,
+    0.08869881939400198
+   ]
+  },
+  "pooled": {
+   "est": 0.15932538117915776,
+   "ci95": [
+    0.08839541857752413,
+    0.22838432951576332
+   ]
+  }
+ },
+ "primary_S_in_pact_rounds_only": {
+  "PF": {
+   "est": -0.059760967447833234,
+   "p_holm": 1.0,
+   "partner_only": -0.0057432709216009474,
+   "partner_only_p": 0.920039980009995,
+   "S_only": 0.07373708280977552,
+   "S_only_p": 0.1519240379810095,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PF": 72,
+    "P0": 68
+   }
+  },
+  "PE": {
+   "est": 0.12114051580266232,
+   "p_holm": 0.5777111444277861,
+   "partner_only": 0.09058103461055084,
+   "partner_only_p": 0.09195402298850575,
+   "S_only": -0.033701212376167584,
+   "S_only_p": 0.5047476261869065,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PE": 59,
+    "P0": 68
+   }
+  },
+  "PT": {
+   "est": 0.06100846464390344,
+   "p_holm": 1.0,
+   "partner_only": 0.0693516255385236,
+   "partner_only_p": 0.17091454272863568,
+   "S_only": 0.04134077027351207,
+   "S_only_p": 0.42978510744627685,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PT": 71,
+    "P0": 68
+   }
+  },
+  "PC": {
+   "est": -0.01590634986938247,
+   "p_holm": 1.0,
+   "partner_only": 0.0055369620632778616,
+   "partner_only_p": 0.9325337331334332,
+   "S_only": -0.05507961525952531,
+   "S_only_p": 0.3233383308345827,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PC": 49,
+    "P0": 46
+   }
+  }
+ },
+ "primary_without_default_plays": {
+  "PF": {
+   "est": -0.037012666716701274,
+   "p_holm": 1.0,
+   "partner_only": -0.007469198662545325,
+   "partner_only_p": 0.8865567216391804,
+   "S_only": 0.04569054843537707,
+   "S_only_p": 0.26686656671664166,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PF": 74,
+    "P0": 70
+   }
+  },
+  "PE": {
+   "est": 0.06611731285885196,
+   "p_holm": 1.0,
+   "partner_only": 0.08730625693871198,
+   "partner_only_p": 0.10344827586206896,
+   "S_only": 0.02495915670958404,
+   "S_only_p": 0.5487256371814093,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PE": 62,
+    "P0": 70
+   }
+  },
+  "PT": {
+   "est": 0.046569938728214556,
+   "p_holm": 1.0,
+   "partner_only": 0.06763221049509359,
+   "partner_only_p": 0.18690654672663667,
+   "S_only": 0.038488310842658684,
+   "S_only_p": 0.3543228385807096,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PT": 75,
+    "P0": 70
+   }
+  },
+  "PC": {
+   "est": -0.032755790487836944,
+   "p_holm": 1.0,
+   "partner_only": 0.003917100443416255,
+   "partner_only_p": 0.9555222388805598,
+   "S_only": -0.04872945268257748,
+   "S_only_p": 0.3078460769615192,
+   "breaks_pact": false,
+   "backfire": false,
+   "n_games": {
+    "PC": 50,
+    "P0": 48
+   }
+  }
+ },
+ "decisions_on_default_plays": {
+  "P0": 10,
+  "PF": 7,
+  "PE": 11,
+  "PT": 9,
+  "PC": 5
+ },
+ "gemma_providers_by_arm": {
+  "P0": {
+   "DeepInfra": 8789
+  },
+  "PF": {
+   "DeepInfra": 9048
+  },
+  "PE": {
+   "DeepInfra": 8844
+  },
+  "PT": {
+   "DeepInfra": 9257
+  },
+  "PC": {
+   "DeepInfra": 8983
+  }
+ },
+ "interview": {
+  "P0": {
+   "n": 216,
+   "least_challenger=H": 0.17592592592592593,
+   "least_challenger=S": 0.30092592592592593,
+   "went_easy=H": 0.05092592592592592,
+   "went_easy=S": 0.027777777777777776,
+   "turned_by=H": 0.013888888888888888,
+   "turned_by=S": 0.004629629629629629,
+   "suspected_by=H": 0.46296296296296297,
+   "suspected_by=S": 0.13425925925925927,
+   "unusual_player=H": 0.3425925925925926,
+   "unusual_player=S": 0.2037037037037037,
+   "kept_agreement=YES": 0.8055555555555556,
+   "partner_kept_agreement=YES": 0.6805555555555556,
+   "new_agreement=YES": 0.12037037037037036
+  },
+  "PC": {
+   "n": 216,
+   "least_challenger=H": 0.3055555555555556,
+   "least_challenger=S": 0.22685185185185186,
+   "went_easy=H": 0.125,
+   "went_easy=S": 0.013888888888888888,
+   "turned_by=H": 0.24537037037037038,
+   "turned_by=S": 0.009259259259259259,
+   "suspected_by=H": 0.4537037037037037,
+   "suspected_by=S": 0.12037037037037036,
+   "unusual_player=H": 0.39351851851851855,
+   "unusual_player=S": 0.2037037037037037,
+   "kept_agreement=YES": 0.7824074074074074,
+   "partner_kept_agreement=YES": 0.6620370370370371,
+   "new_agreement=YES": 0.09259259259259259
+  },
+  "PE": {
+   "n": 216,
+   "least_challenger=H": 0.14814814814814814,
+   "least_challenger=S": 0.2361111111111111,
+   "went_easy=H": 0.06481481481481481,
+   "went_easy=S": 0.027777777777777776,
+   "turned_by=H": 0.046296296296296294,
+   "turned_by=S": 0.0,
+   "suspected_by=H": 0.6666666666666666,
+   "suspected_by=S": 0.09722222222222222,
+   "unusual_player=H": 0.4537037037037037,
+   "unusual_player=S": 0.25,
+   "kept_agreement=YES": 0.8425925925925926,
+   "partner_kept_agreement=YES": 0.7361111111111112,
+   "new_agreement=YES": 0.0787037037037037
+  },
+  "PF": {
+   "n": 216,
+   "least_challenger=H": 0.23148148148148148,
+   "least_challenger=S": 0.21296296296296297,
+   "went_easy=H": 0.0370370370370
+
+wrote results/study3/extra_analysis.json
