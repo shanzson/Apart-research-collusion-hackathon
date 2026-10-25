@@ -151,3 +151,12 @@
 {"arm": "PT", "seed": 29, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0029.jsonl", "ok": true, "rounds": 8, "completed": true}
 {"arm": "PC", "seed": 28, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0028.jsonl", "ok": true, "rounds": 13, "completed": true}
 {"arm": "PE", "seed": 30, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PE/qwen_qwen3.5_9b/seed0030.jsonl", "ok": true, "rounds": 6, "completed": true}
+{"arm": "PF", "seed": 30, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0030.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "PC", "seed": 30, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0030.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "PF", "seed": 31, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0031.jsonl", "ok": true, "rounds": 8, "completed": true}
+{"arm": "P0", "seed": 31, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/P0/qwen_qwen3.5_9b/seed0031.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "PT", "seed": 31, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0031.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "PC", "seed": 31, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0031.jsonl", "ok": true, "rounds": 11, "completed": true}
+{"arm": "PE", "seed": 31, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PE/qwen_qwen3.5_9b/seed0031.jsonl", "ok": true, "rounds": 10, "completed": true}
+{"arm": "P0", "seed": 32, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/P0/qwen_qwen3.5_9b/seed0032.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "PT", "seed": 30, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0030.jsonl", "ok": true, "rounds": 9, "completed": true}
