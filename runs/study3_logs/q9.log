@@ -1,1 +1,3 @@
 {"skip_done": 0, "to_run": 180}
+{"arm": "PF", "seed": 1, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0001.jsonl", "ok": true, "rounds": 6, "completed": true}
+{"arm": "PE", "seed": 1, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PE/qwen_qwen3.5_9b/seed0001.jsonl", "ok": true, "rounds": 7, "completed": true}

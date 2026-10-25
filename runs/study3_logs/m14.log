@@ -1,1 +1,2 @@
 {"skip_done": 0, "to_run": 180}
+{"arm": "PF", "seed": 1, "subject_model": "mistralai/ministral-14b-2512", "path": "runs/study3/study3/PF/mistralai_ministral_14b_2512/seed0001.jsonl", "ok": true, "rounds": 7, "completed": true}
