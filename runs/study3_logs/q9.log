@@ -171,3 +171,5 @@
 {"arm": "PT", "seed": 34, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0034.jsonl", "ok": true, "rounds": 8, "completed": true}
 {"arm": "PC", "seed": 33, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0033.jsonl", "ok": true, "rounds": 18, "completed": true}
 {"arm": "P0", "seed": 33, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/P0/qwen_qwen3.5_9b/seed0033.jsonl", "ok": true, "rounds": 21, "completed": true}
+{"arm": "P0", "seed": 35, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/P0/qwen_qwen3.5_9b/seed0035.jsonl", "ok": true, "rounds": 12, "completed": true}
+{"arm": "PT", "seed": 33, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0033.jsonl", "ok": true, "rounds": 20, "completed": true}
