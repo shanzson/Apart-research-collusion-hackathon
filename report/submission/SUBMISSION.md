@@ -113,7 +113,7 @@ The explicit deal was refused in two thirds of first replies (Figure 2), by a ma
 
 ### 4.4 Robustness
 
-H bluffed more often relative to S in the hint version than in the friendly version, but adjusting for bluffing leaves the hint effect at +12.9 points (p = 0.001), and excluding plays whose public description gave away the cards leaves +11.7 (p = 0.003). In the hint version 38 of 288 agents missed H's first note, which works against the effect. Tested agents were often eliminated first (312 of 540 games, against 270 expected by chance), so they judged only 10–24 of H's or S's claims per game (median by model), which limits power. Unreadable decisions were below 0.4% in every version.
+Adjusting for H's extra bluffing in the hint version leaves the hint effect at +12.9 points (p = 0.001), and excluding plays whose public description gave away the cards leaves +11.7 (p = 0.003). Tested agents were often eliminated first (312 of 540 games, against 270 expected), so each judged only 10–24 of H's or S's claims per game (median by model), which limits power. Unreadable decisions were below 0.4% in every version (more checks in Appendix B).
 
 ## 5. Discussion
 
@@ -140,7 +140,7 @@ With three small open models, an undercover agent that openly offered to collude
 ## Code and Data
 
 - **Code:** https://github.com/shanzson/apart-research-collusion-hackathon, branch `claude/zen-pascal-j6jpi3` (engine and prompts in `sting/`, analysis in `scripts/` and `report/`, long report in `report/REPORT.pdf`).
-- **Data:** logs of the 1,012 reported games in `runs/study1_v2/`, `runs/main/study2/` and `runs/series/` (other folders are not used here); pre-registration in `prereg/`.
+- **Data:** logs of the 1,552 reported games in `runs/study1_v2/`, `runs/main/study2/`, `runs/series/` and `runs/study3/` (other folders are not used here); pre-registration in `prereg/`.
 
 ## References
 
@@ -215,6 +215,11 @@ With three small open models, an undercover agent that openly offered to collude
 | 23 Oct 10:33 | Addendum 1: reply-labelling rubric (Study 1) | recorded while the Study 2 single games ran; committed 15:57 |
 | 23 Oct 13:05 | Addendum 2: series design | committed 15:57, before any series game |
 | 24 Oct 05:38 | Addendum 3: Study 1 models, allocation, B/C2 wording, loop check | committed before any Study 1 main game (05:39:39) |
+| 24 Oct 18:02 | Addendum 4: Study 3 design (draft), then three independent audits | committed before any Study 3 game |
+| 24 Oct 21:17–23:43 | Two Study 3 pilots of 30 games (seeds 100–103), excluded from results | each followed by fixes or decisions, committed before the main run |
+| 25 Oct 08:45 | Study lead's decisions after the second pilot (core point, sample size, Qwen's invalid plays) | committed 08:45 |
+| 25 Oct 10:22 | Study 3 freeze: fingerprints of the 19 files the run and analysis use | recorded 10:22:06, committed 10:23:11, before the first main game (10:23:20) |
+| 25 Oct 10:35 | Dated note: which verdict counts; added sensitivity analyses | committed 10:34:55, before any main-run analysis |
 
 ## LLM Usage Statement
 
