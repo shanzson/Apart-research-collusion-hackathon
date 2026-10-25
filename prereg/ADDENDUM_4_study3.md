@@ -3,7 +3,11 @@
 Status: DRAFT, revised after three rounds of independent audit (all findings applied), after the first pilot (six
 fixes chosen by the study lead on 24 October 2026) and after the second pilot (three decisions by the study lead on
 25 October 2026: H's approaches are judged by their core point, the main run keeps its planned size, and Qwen's
-invalid-play rate is accepted; see "Before the main run"). No main game has been played. The design was chosen by the study
+invalid-play rate is accepted; see "Before the main run").
+
+FROZEN on 25 October 2026 before the first main game, at the study lead's request to start now: file fingerprints in
+`prereg/FREEZE_study3.txt`. The pre-main-run audit was still running at launch; its findings are reported in a
+dated note below this file's frozen text, and any change they cause is disclosed there. The design was chosen by the study
 lead on 24 October 2026, before any Study 3 game was played. Before the main run this file is completed with the
 pilot results and frozen with file fingerprints in `FREEZE.txt`, after a second audit and the study lead's
 approval. The freeze lists every file the run and the analysis use: `sting/*.py`, `scripts/analyse_study3.py`,
