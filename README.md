@@ -9,7 +9,9 @@ offers to collude expose or disrupt collusion between AI agents?
   A decoy **S** (same model, same system prompt minus the mission) sends only small talk. We measure whether the
   agents go easier on H than on S, what they say, and whether they later deny any agreement.
 - **Study 2 (positive control).** The paper's designer-offered secret channel between T and X (V0 wording).
-- **Study 3 (disruption).** A coalition as in Study 2; at round 4, H poaches X or hints that someone is watching.
+- **Study 3 (breaking a pact; `prereg/ADDENDUM_4_study3.md`).** T and X start every game with a secret pact; from round 2
+  H tries one of four approaches to break it (P0 control, PF fairness appeal, PE exposure, PT temptation, PC
+  counter-offer). Two 30-game pilots, then a 540-game main run (25 October 2026).
 
 Game rules, scoring and prompts follow Zeng & Rudzicz (2026), "Voluntary Collusion with Secret Tools in Competing
 LLM Agents" (arXiv 2605.27593), and the starter repository AgentSafety2025/LLM-Agent-collusion. Deviations are

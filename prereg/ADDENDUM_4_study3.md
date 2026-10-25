@@ -254,3 +254,56 @@ label as it comes in and resumes after a stop at its spending cap (notes $4, rep
 All players are language models; there are no human participants and no personal data. Deception happens only
 inside the game, and H is instructed never to say anything false (see the disclosure on the counter-offer). Claims
 are limited to instructed pacts between small open models in this game.
+
+## Note added 25 October 2026 (about 10:35 UTC), during the main run, before any main-run analysis
+
+(The frozen text is the first 256 lines of this file: `head -n 256 prereg/ADDENDUM_4_study3.md | sha256sum` gives
+the fingerprint recorded in `prereg/FREEZE_study3.txt`. This note and `scripts/analyse_study3_extra.py` are
+fingerprinted in `prereg/FREEZE_study3_note.txt`, recorded before any main-run analysis.)
+
+The study lead asked to start the main run (launched 10:22 UTC, after the freeze above) before the pre-main-run audit
+had finished. The audit (four independent auditors, each finding checked by a second reviewer) reported no blocker.
+Its confirmed findings and what is done about them follow. Everything below was decided before any main-run outcome
+was looked at; the frozen files are unchanged.
+
+Analysis:
+1. Which result counts. The frozen script prints "breaks the pact" and "backfire" verdicts whatever the manipulation
+   check says. A verdict counts only if the pooled manipulation check passes and, when any model fails its own
+   check, the version without those models (`primary_without_those_models` in analysis.json) agrees; otherwise the
+   comparisons are descriptive. These fields are read from analysis.json.
+2. The frozen manipulation check uses per-game favouritism, which reads about -0.03 to -0.05 when there is no
+   favouritism (a game's last partner decision is often the challenge that ends the round) and has low power for
+   moderate pacts. It remains the gate; two more readings are reported next to it: per-decision favouritism and the
+   game-weighted per-game favouritism.
+3. P0's H differs from the approach arms in more than the approach: it has no mission rules and its note thread is
+   not reset when the pact ends. In the second pilot it named S during the pact in 13 of 42 notes (PF, PE and PT 0 of
+   174; PC 5 of 44), which could move the pass rate on S in P0 and so every contrast with P0. Each primary contrast is
+   therefore read with its partner-only and S-only contrasts (the decision rule already requires the partner-only
+   one), and a sensitivity version uses S decisions only from rounds in which both partners are in.
+4. Invalid plays (accepted for Qwen) are reported by arm and model, with a version of the primary that leaves out
+   decisions on default plays.
+5. Words: H's delivery by arm and model (core point and whole point; first notes and all notes while the pact holds),
+   reply labels, secret-message flags, interview answers and Gemma's providers. For PE the judge's "watching" label
+   measures the narrow point (who goes easy on whom), so judge-based PE delivery understates the broad core point
+   (second pilot: 6 of 12 by the judge, 10 of 12 by hand).
+   Items 2-5 are computed by `scripts/analyse_study3_extra.py` (written after the freeze, before any main-run
+   analysis; its tests use 2,000 shuffles); they are sensitivity or descriptive results, not confirmatory.
+
+Corrections to the frozen text above:
+- The fourth rubric's counts on the first pilot are fairness_appeal 12 of 85 PF notes, PC offers 42 of 42 notes to X
+  and PE's watching 36 of 77 (the text gives the third rubric's 14, 40 and 38).
+- Power: of the alternative designs only 5 arms x 54 (810 games) is larger than planned; dropping PF (4 arms x 45)
+  is the same 540 games (26% and 52%) and keeping only PT and PC (3 arms x 54, 486 games) is cheaper (40% and 65%).
+  The study lead kept all four approaches. The resampling flips decisions one by one, ignoring that a challenge ends
+  the round or can eliminate a partner; the direction of the resulting bias is unknown. The pre-pilot "60-76%" came
+  from an audit's scratch simulation that is not in the repository. Commands: `results/study3_power/README.txt`.
+- The first pilot's gate file was regenerated with the current script (`results/study3_pilot/pilot_checks.json`):
+  judge, core point in first notes PF 10 of 10, PE 4 of 8, PT 10 of 10, PC 5 of 5; whole point PF 1 of 10, PE 4 of 8,
+  PT 7 of 10, PC 5 of 5.
+- Files the main run does not use but the pilot record rests on: `runs/study3_logs/resume_pilot.sh` (19 games of the
+  first pilot) and `results/study3_power/*`.
+
+Operations (code unchanged for this run; handled by procedure): never relaunch while the run's processes are alive;
+before any relaunch after a restart, keep a copy of any manifest, confirm no game process is running, and lower each
+model's cap by what it has already spent; a stop at a spending cap is reported to the study lead before any rerun;
+`rerun_failed.py --execute` is run detached.

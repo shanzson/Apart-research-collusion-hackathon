@@ -1,0 +1,3 @@
+Study 3 dated note and added analysis script: SHA-256 recorded 2026-10-25T10:34:55Z, before any main-run analysis (main run in progress; parent commit d2b707a).
+cb976fc3e6660639af4ac38911186c0222453b47e024649b69a9707de83c92dd  prereg/ADDENDUM_4_study3.md (lines after the frozen text: the dated note)
+88550695ac461a8e6196f72cdfee95f68a90168fabf95a2cab0942c8eb3aee6c  scripts/analyse_study3_extra.py

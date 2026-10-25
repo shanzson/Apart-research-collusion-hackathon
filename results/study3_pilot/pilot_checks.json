@@ -35,6 +35,12 @@
     ],
     "e_pass": false,
     "a_delivery_first_note": {
+      "PF": 1.0,
+      "PE": 0.5,
+      "PT": 1.0,
+      "PC": 1.0
+    },
+    "a_whole_point_first_note": {
       "PF": 0.1,
       "PE": 0.5,
       "PT": 0.7,
@@ -81,9 +87,9 @@
       "qwen/qwen3.5-9b": 0.0
     },
     "plays": {
-      "qwen/qwen3.5-9b": 0.03731343283582089,
       "mistralai/ministral-14b-2512": 0.0035971223021582736,
-      "mistralai/ministral-8b-2512": 0.0
+      "mistralai/ministral-8b-2512": 0.0,
+      "qwen/qwen3.5-9b": 0.03731343283582089
     },
     "pass": true
   },
