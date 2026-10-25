@@ -94,3 +94,12 @@
 {"arm": "PC", "seed": 18, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0018.jsonl", "ok": true, "rounds": 9, "completed": true}
 {"arm": "PC", "seed": 17, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0017.jsonl", "ok": true, "rounds": 27, "completed": true}
 {"arm": "PF", "seed": 17, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0017.jsonl", "ok": true, "rounds": 27, "completed": true}
+{"arm": "PE", "seed": 20, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PE/qwen_qwen3.5_9b/seed0020.jsonl", "ok": true, "rounds": 6, "completed": true}
+{"arm": "P0", "seed": 20, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/P0/qwen_qwen3.5_9b/seed0020.jsonl", "ok": true, "rounds": 6, "completed": true}
+{"arm": "PE", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PE/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "P0", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/P0/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 15, "completed": true}
+{"arm": "PT", "seed": 20, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PT/qwen_qwen3.5_9b/seed0020.jsonl", "ok": true, "rounds": 11, "completed": true}
+{"arm": "PC", "seed": 20, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0020.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "PF", "seed": 20, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0020.jsonl", "ok": true, "rounds": 9, "completed": true}
+{"arm": "PC", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PC/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 14, "completed": true}
+{"arm": "PF", "seed": 19, "subject_model": "qwen/qwen3.5-9b", "path": "runs/study3/study3/PF/qwen_qwen3.5_9b/seed0019.jsonl", "ok": true, "rounds": 17, "completed": true}
