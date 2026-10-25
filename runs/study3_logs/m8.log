@@ -22,3 +22,5 @@
 {"arm": "PE", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PE/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 15, "completed": true}
 {"arm": "P0", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 23, "completed": true}
 {"arm": "PC", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PC/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 25, "completed": true}
+{"arm": "PF", "seed": 3, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/PF/mistralai_ministral_8b_2512/seed0003.jsonl", "ok": true, "rounds": 24, "completed": true}
+{"arm": "P0", "seed": 6, "subject_model": "mistralai/ministral-8b-2512", "path": "runs/study3/study3/P0/mistralai_ministral_8b_2512/seed0006.jsonl", "ok": true, "rounds": 4, "completed": true}
